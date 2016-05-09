@@ -1,1 +1,0 @@
-Virtual-developers e-commerce project , for our norway client 
