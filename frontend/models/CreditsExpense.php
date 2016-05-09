@@ -29,8 +29,8 @@ class CreditsExpense extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'date'], 'required'],
-            [['id', 'user_id', 'ad_id', 'credit_exp'], 'integer'],
+            [['date'], 'required'],
+            [['user_id', 'ad_id', 'credit_exp','status'], 'integer'],
             [['date'], 'safe']
         ];
     }
@@ -46,6 +46,7 @@ class CreditsExpense extends \yii\db\ActiveRecord
             'ad_id' => Yii::t('app', 'Ad ID'),
             'credit_exp' => Yii::t('app', 'Credit Exp'),
             'date' => Yii::t('app', 'Date'),
+            'status' => Yii::t('app', 'Status'),
         ];
     }
 }

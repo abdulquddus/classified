@@ -1082,12 +1082,23 @@ class SiteController extends Controller
 
         $find->v_code = 1;
        $find->save();
-         return  $this->redirect(["index"]);
+       
+                $categoryce=  \frontend\models\Category::find()->Where(['id'=>$find->category_id])->one();
+                $modelce= new \frontend\models\CreditsExpense();
+           
+
+         $modelce->user_id=Yii::$app->user->id; echo "<br />";
+         $modelce->ad_id=$find->id; echo "<br />";
+         $modelce->credit_exp= $categoryce->credits; echo "<br />";
+         $modelce->date= date('Y-m-d'); echo "<br />";
+          $modelce->save();
+       
+       return  $this->redirect(["index"]);
         Yii::$app->session->setFlash('success', 'Your');
 
         } else {
          // user does not exist 
-           Yii::$app->session->setFlash('success', 'Please tyr again ');
+           Yii::$app->session->setFlash('success', 'Please try again ');
 
 
             }
