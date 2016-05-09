@@ -234,7 +234,7 @@ $id=0;
           <ul class="dropdown-menu">
               <li class="sub"><a href="<?= Url::toRoute(['/user/setting'])?>">Messages</a></li>
             <li class="sub"><a href="#">Favourites</a></li>
-            <li id="" class="sub"><a href="<?= Url::toRoute(['/user/setting'])?>">Ads</a></li>
+            <li id="" class="sub"><a href="<?= Url::toRoute(['/user/setting','active-page'=>1])?>">Ads</a></li>
             <li role="separator" class="divider sub"></li>
             <li class="sub"><a href="<?= Url::toRoute(['/user/setting'])?>">Account Settings</a></li>
              <li class="sub"><a href="<?= Url::toRoute(['/site/logout'])?>">logout</a></li>
