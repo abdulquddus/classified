@@ -42,10 +42,10 @@ phpunit.phar
 #ignore design files of backend
 
 #/admin/css
-#/admin/assets
+/admin/assets
 #/admin/bootstrap
 #/admin/uploads
-#/backend/web
+/backend/web
 /backend/runtime
 
 #ignore design files from the root
@@ -60,6 +60,6 @@ phpunit.phar
 /deshboard
 /frontend/runtime
 /frontend/assets
-
+/uploads
 
 /environments

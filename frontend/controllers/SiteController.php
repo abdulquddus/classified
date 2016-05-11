@@ -468,18 +468,26 @@ class SiteController extends Controller
 //        $counter=ArrayHelper::map($city,'code','name');
        
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            //print_r($_REQUEST);
-            //exit();
-//            echo $_POST['city_id'];
-//            echo $model->city_id;
-//            echo $model->state_id;
-//            echo $model->furnished;
-//            echo $model->rooms;
-//            echo $model->square_feet;
-//            echo $model->address;
-//         echo   $model->mobile_number ;
-//         print_r($model->additional_field);
-//            echo $_POST['Advertisements']['6'],
+            
+        $credits_purchased=\frontend\models\CreditsDetails::find()
+        ->where(['user_id' => Yii::$app->user->id])
+        ->orderBy(['id' => SORT_DESC,])->sum('credits');
+         
+            
+        echo $credits_purchased;
+        $credits_expense=  \frontend\models\CreditsExpense::find()
+        ->where(['user_id' => Yii::$app->user->id])
+        ->orderBy(['id' => SORT_DESC,])->sum('credit_exp');
+         
+         echo $credits_expense;
+         $categoryce=  \frontend\models\Category::find()->Where(['id'=>$model->category_id])->one();
+         
+         $credits_left= $credits_purchased-$credits_expense;
+         echo $credits_left;
+         
+         if($credits_left >= $categoryce->credits)
+         {       
+            
        $model->user_id = Yii::$app->user->id;
        $model->created_date = date("Y-m-d H:i:s");
         $model->v_code = rand(1000, 9999);
@@ -529,6 +537,13 @@ class SiteController extends Controller
                 return $this->redirect(\Yii::$app->urlManager->createUrl("site/verifysms_ad")); 
                 }
             }
+        }
+        
+        else{
+            
+             Yii::$app->session->setFlash('success', 'You do not have enough credits');
+            return $this->redirect(['user/setting']); 
+        }
         }
          $main_cat = \frontend\models\Category::find()->where(['parent_id'=>0])->all();
         $sub_cat = \frontend\models\Category::find()->where('parent_id != :parent_id', ['parent_id'=>0])->all();
