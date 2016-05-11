@@ -200,7 +200,7 @@ class UserController extends Controller
         
    if(isset($_GET['success'])){
            
-            echo "I am here";
+            
            $modelcd = new \frontend\models\CreditsDetails();
            $session = Yii::$app->session;
            $uid= $session['user_id'];

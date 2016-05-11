@@ -1064,49 +1064,23 @@ window.location="<?= $url = Url::to(['user/deleteuser']) ?>";
                   </thead>
 
                   <tbody>
-
+                 <?php foreach($credits_details as $credits_purchased){?>
                     <tr>
                       <td><input type="checkbox" class="checkthis" /></td>
                       <td class="ads-msg-icon">
-                        <p>100</p>
+                        <p><?= $credits_purchased->credits?></p>
                       </td>
-                      <td class="ad-msg-username">80</td>
+                      <td class="ad-msg-username"><?= $credits_purchased->amount_paid?></td>
+                      <?php $tax=$credits_purchased->amount_paid *(0.2);
+                      ?>
                       <td class="ad-dtl-msg">
                         
-                        <p>20</p>
+                        <p><?= $tax ?></p>
                       </td>
-                      <td>From: 8 Aug <br>To: 7 Sep</td>
+                      <td><?= $credits_purchased->date?></td>
                     </tr>
-
+                 <?php } ?>
                    
-                    <tr>
-                      <td><input type="checkbox" class="checkthis" /></td>
-                      <td class="ads-msg-icon">
-                        <p>100</p>
-                      </td>
-                      <td class="ad-msg-username">80</td>
-                      <td class="ad-dtl-msg">
-                        
-                        <p>20</p>
-                      </td>
-                      <td>From: 8 Aug <br>To: 7 Sep</td>
-                    </tr>
-
-
-
-                    
-                    <tr>
-                      <td><input type="checkbox" class="checkthis" /></td>
-                      <td class="ads-msg-icon">
-                        <p>100</p>
-                      </td>
-                      <td class="ad-msg-username">80</td>
-                      <td class="ad-dtl-msg">
-                        
-                        <p>20</p>
-                      </td>
-                      <td>From: 8 Aug <br>To: 7 Sep</td>
-                    </tr>
 
                   
                   </tbody>  

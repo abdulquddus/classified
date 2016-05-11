@@ -232,8 +232,8 @@ $transaction->setAmount($amount)
 // payment approval/ cancellation.
 //$baseUrl = getBaseUrl();
 $redirectUrls = new RedirectUrls();
-$redirectUrls->setReturnUrl("http://localhost/classified/frontend/web/index.php?r=user%2Fsetting&success=true")
-             ->setCancelUrl("http://localhost/classified/frontend/web/index.php?r=user%2Fsetting&cancel=true");
+$redirectUrls->setReturnUrl("http://localhost/classified/index.php?r=user%2Fsetting&success=true")
+             ->setCancelUrl("http://localhost/classified/index.php?r=user%2Fsetting&cancel=true");
 
 // ### Payment
 // A Payment Resource; create one using
