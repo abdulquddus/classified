@@ -20,6 +20,7 @@ use backend\models\Email;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 use yii\data\Pagination;
+use backend\models\NotificationAdmin;
 /**
  * Site controller
  */
@@ -799,7 +800,10 @@ class SiteController extends Controller
             $user->password_hash = Yii::$app->getSecurity()->generatePasswordHash($find->password_hash);
           if($user->save()){
             Yii::$app->session->setFlash('success', 'Your Registration has been completed sucessfully... Please login');
+          $noti = new NotificationAdmin;
+         if( $noti->usercreated($user->id)){
             return  $this->redirect(array("login"));
+         }
           }
             } else {
              // user does not exist 
