@@ -178,12 +178,12 @@ $id=0;
           else{
            $imgsrc = \backend\models\CommercialAds::find()->orderBy(['id'=>SORT_DESC])->where(['category_id'=>0])->one();
           }
-          if(file_exists(Yii::$app->request->baseUrl.'/backend/web/uploads/'.$imgsrc->top_ad))
+          if(file_exists(Yii::$app->request->baseUrl.'/admin/uploads/'.$imgsrc->top_ad))
           { ?>
              <a target="_blank" href="<?= $imgsrc->top_ad_url ?>">
-             <img class="img-responsive" src="<?= Yii::$app->request->baseUrl ?>/backend/web/uploads/<?= $imgsrc->top_ad ?>"></a>
+             <img class="img-responsive" src="<?= Yii::$app->request->baseUrl ?>/admin/uploads/<?= $imgsrc->top_ad ?>"></a>
           <?php } else{ ?>
-              <img class="img-responsive" src="<?= Yii::$app->request->baseUrl?>/backend/web/uploads/Desert.jpg">
+              <img class="img-responsive" src="<?= Yii::$app->request->baseUrl?>/admin/uploads/Desert.jpg">
          <?php }
           ?>
               
@@ -232,11 +232,11 @@ $id=0;
             
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= $user[0] ?> <span class="caret"></span></a>
           <ul class="dropdown-menu">
-              <li class="sub"><a href="<?= Url::toRoute(['/user/setting'])?>">Messages</a></li>
+              <li class="sub"><a href="<?= Url::toRoute(['/user/setting', 'message'=>'1'])?>">Messages</a></li>
             <li class="sub"><a href="#">Favourites</a></li>
-            <li id="" class="sub"><a href="<?= Url::toRoute(['/user/setting','active-page'=>1])?>">Ads</a></li>
+            <li id="" class="sub"><a href="<?= Url::toRoute(['/user/setting','ads'=>1])?>">Ads</a></li>
             <li role="separator" class="divider sub"></li>
-            <li class="sub"><a href="<?= Url::toRoute(['/user/setting'])?>">Account Settings</a></li>
+            <li class="sub"><a href="<?= Url::toRoute(['/user/setting', 'setting'=>1])?>">Account Settings</a></li>
              <li class="sub"><a href="<?= Url::toRoute(['/site/logout'])?>">logout</a></li>
           </ul>
         </li>
@@ -288,11 +288,11 @@ $id=0;
   
   
   <div class="ads-vr ads-vr-left">
-    <img class="img-responsive" src="<?= Yii::$app->request->baseUrl?>/backend/web/uploads/<?= $imgsrc->left_ad ?>" >
+    <img class="img-responsive" src="<?= Yii::$app->request->baseUrl?>/admin/uploads/<?= $imgsrc->left_ad ?>" >
   </div>
   <div class="ads-vr ads-vr-right">
       <a target="_blank" href="<?php echo $imgsrc->right_ad_url; ?>" >
-          <img class="img-responsive" src="<?= Yii::$app->request->baseUrl?>/backend/web/uploads/<?=$imgsrc->right_ad ?>" >
+          <img class="img-responsive" src="<?= Yii::$app->request->baseUrl?>/admin/uploads/<?=$imgsrc->right_ad ?>" >
       </a>
   </div>
   <!-- /Ads Boxes -->
@@ -713,8 +713,8 @@ function getimg(id) {
         },
 
         success: function(data) {
-            //  alert('<img src="/my_classified/backend/web/uploads/ '+ data +'" class="img-responsive">');
-            document.getElementById("cat_image").innerHTML = '<img style="padding-top:4px" width="60px" height="65px" src="../../backend/web/uploads/' + data + '">';
+            //  alert('<img src="/my_classified/admin/uploads/ '+ data +'" class="img-responsive">');
+            document.getElementById("cat_image").innerHTML = '<img style="padding-top:4px" width="60px" height="65px" src="<?= Yii::$app->request->baseUrl?>/admin/uploads/' + data + '">';
         }
     });
 }
@@ -734,8 +734,8 @@ function getimg(id) {
         },
 
         success: function(data) {
-            //  alert('<img src="/my_classified/backend/web/uploads/ '+ data +'" class="img-responsive">');
-            document.getElementById("cat_image").innerHTML = '<img style="padding-top:4px" width="60px" height="65px" src="../../backend/web/uploads/' + data + '">';
+            //  alert('<img src="/my_classified/admin/uploads/ '+ data +'" class="img-responsive">');
+            document.getElementById("cat_image").innerHTML = '<img style="padding-top:4px" width="60px" height="65px" src="<?= Yii::$app->request->baseUrl?>/admin/uploads/' + data + '">';
         }
     });
 }

@@ -117,7 +117,7 @@ $this->title = 'My Yii Application';
         foreach($category_all as $category){                
             //echo '<li><a href=""><i class=""></i>' . $category['title'] . '</a></li>';
 
-            echo  '<li><a href="'. \yii\helpers\Url::to(['category/categories', 'id'=>$category['id']]). '"><div class="cat-img-box"><img class="img-responsive"  src='.Yii::$app->request->baseUrl.'/backend/web/uploads/' . $category['image'] . '></div>' . $category['title'] . '</a></li>';
+            echo  '<li><a href="'. \yii\helpers\Url::to(['category/categories', 'id'=>$category['id']]). '"><div class="cat-img-box"><img class="img-responsive"  src='.Yii::$app->request->baseUrl.'/admin/uploads/' . $category['image'] . '></div>' . $category['title'] . '</a></li>';
 
 
         } ?>
@@ -133,7 +133,7 @@ $id=0;
 ?>
 <?php $imgsrc = \backend\models\CommercialAds::find()->orderBy(['id'=>SORT_DESC])->where(['category_id'=>$id])->one(); ?>
         <div  class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hm-btm-ad">
-         <a target="_blank" href="<?php echo $imgsrc->centre_ad_url; ?>"><img class="img-responsive" src="<?= Yii::$app->request->baseUrl?>/backend/web/uploads/<?=$imgsrc->centre_ad ?>" ></a>
+         <a target="_blank" href="<?php echo $imgsrc->centre_ad_url; ?>"><img class="img-responsive" src="<?= Yii::$app->request->baseUrl?>/admin/uploads/<?=$imgsrc->centre_ad ?>" ></a>
         </div>
       </div><!-- /cat-wrap-->
 
@@ -177,7 +177,7 @@ $id=0;
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 hm-col-right-ads">
             <a target="_blank" href="<?php echo $imgsrc->bottom_ad_url; ?>">
-                <img class="img-responsive" src="<?= Yii::$app->request->baseUrl?>/backend/web/uploads/<?=$imgsrc->bottom_ad ?>" >
+                <img class="img-responsive" src="<?= Yii::$app->request->baseUrl?>/admin/uploads/<?=$imgsrc->bottom_ad ?>" >
                 </div>
             </a>
       </div>

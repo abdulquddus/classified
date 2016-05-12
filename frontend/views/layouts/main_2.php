@@ -46,7 +46,7 @@ if (class_exists('yii\debug\Module')) {
 
       <section class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div class="container  top-ad-box">
-            <img class="img-responsive" src="../../../../classified/backend/web/uploads/Desert.jpg">
+            <img class="img-responsive" src="../../../../classified/admin/uploads/Desert.jpg">
           </div>
       </section>
   

@@ -19,22 +19,23 @@ use frontend\models\Messages;
     <h2 id="setting" class="">Kontoinnstillinger</h2>
     <p id="ad_heading" class="">Here you can change your account settings</p>
     <!-- Nav tabs -->
+    <?php // if (isset($_GET['unactive-page']) || isset($_GET['active-page'])|| isset($_GET['moderate-page'])) {echo 'class="active"'; $set_tab=1; } ?>
     <div class="card">
         <?php $set_tab=0; ?>
       <ul class="nav nav-tabs" role="tablist">
-          <li id="ads_tab" role="presentation" <?php if (isset($_GET['unactive-page']) || isset($_GET['active-page'])|| isset($_GET['moderate-page'])) {echo 'class="active"'; $set_tab=1; } ?> ><a onclick="adLabel()"href="#ads" aria-controls="ads" role="tab" data-toggle="tab">Ads</a></li>
-         <li  id="msg_tab" role="presentation" <?php if($set_tab!=1){ echo'class="active"'; } ?>><a onclick="messagesLabel()" href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
-         <li  id="setting_tab" role="presentation"><a onclick="settingLabel()" href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+          <li id="ads_tab" role="presentation" <?php if(isset($_GET['ads'])) { echo 'class="active"'; } ?> ><a onclick="adLabel()"href="#ads" aria-controls="ads" role="tab" data-toggle="tab">Ads</a></li>
+         <li  id="msg_tab" role="presentation" <?php if(isset($_GET['message'])) { echo 'class="active"'; } ?>><a onclick="messagesLabel()" href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+         <li  id="setting_tab" role="presentation" <?php if(isset($_GET['setting'])) { echo 'class="active"'; } ?>><a onclick="settingLabel()" href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
          <?php if ($company_user->is_company==1){?>
           <li role="presentation"><a href="#companyusers" aria-controls="companyusers" role="tab" data-toggle="tab">Company Users</a></li>
          <?php }?>
-     <li role="presentation"><a onclick="creditLabel()" href="#purchase" aria-controls="settings" role="tab" data-toggle="tab">Credit for Ads</a></li>
+     <li role="presentation" <?php if(isset($_GET['credits'])) { echo 'class="active"'; } ?>><a onclick="creditLabel()" href="#purchase" aria-controls="settings" role="tab" data-toggle="tab">Credit for Ads</a></li>
          
       </ul>
 
       <!-- Tab panes -->
       <div class="tab-content">
-            <div class="tab-pane account-ads-wrap <?php if($set_tab==1) { echo 'active'; } ?>" role="tabpanel" id="ads">
+            <div class="tab-pane account-ads-wrap <?php if(isset($_GET['ads'])) { echo 'active'; } ?>" role="tabpanel" id="ads">
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 account-ads-nav">
             <ul> 
               <li class="active-tab <?php if (isset($_GET['active-page'])) { echo 'active'; } ?> "><a id="active_id" href="#active" aria-controls="active" role="tab" data-toggle="tab"> Active (<?php echo count($active_ads);?>)</a></li>
@@ -296,7 +297,7 @@ use frontend\models\Messages;
           </div>
 
        </div><!-- /Tab panes -->
-       <div class="tab-pane account-msg-wrap  <?php if($set_tab!=1) { echo 'active'; } ?> " role="tabpanel" id="messages">
+       <div class="tab-pane account-msg-wrap  <?php if(isset($_GET['message'])) { echo 'active'; } ?> " role="tabpanel" id="messages">
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 account-ads-nav">
             <ul>
               <li class="active-tab active" id="message_inbox"><a href="#inbox" aria-controls="inbox" role="tab" data-toggle="tab"> Inbox </a></li>
@@ -713,7 +714,7 @@ $i=1; foreach($conversation_ids as $tinbox)
           </div>
            </div>
         </div><!-- /Tab panes -->
-        <div role="tabpanel" class="tab-pane account-set-wrap" id="settings">
+        <div role="tabpanel" class="tab-pane account-set-wrap <?php if(isset($_GET['setting'])) { echo 'active'; } ?> " id="settings">
           <div class="panel-group" id="accordion">
               <div class="panel panel-default">
                   <div class="panel-heading">
@@ -976,7 +977,7 @@ window.location="<?= $url = Url::to(['user/deleteuser']) ?>";
               </div> <!-- /Panel Default -->
           </div><!-- /Panel Group -->
         </div><!-- /Tab panes -->
-        <div role="tabpanel" class="tab-pane account-set-wrap" id="purchase">
+        <div role="tabpanel" class="tab-pane account-set-wrap <?php if(isset($_GET['credits'])) { echo 'active'; } ?> " id="purchase">
           <div class="panel-group" id="accordion">
               <div class="panel panel-default">
                   <div class="panel-heading">

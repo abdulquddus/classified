@@ -542,7 +542,7 @@ class SiteController extends Controller
         else{
             
              Yii::$app->session->setFlash('success', 'You do not have enough credits');
-            return $this->redirect(['user/setting']); 
+            return $this->redirect(['user/setting','credits'=>1]); 
         }
         }
          $main_cat = \frontend\models\Category::find()->where(['parent_id'=>0])->all();

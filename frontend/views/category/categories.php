@@ -44,7 +44,7 @@ $this->title = 'Classified';
           
           $category_name = \backend\models\Category::find()->where("id = $category_id and status=1")->all();
           foreach ($category_name as $main_category){?>    
-            <div class="image-box" id="category_image" ><img class="img-responsive" src="<?= Yii::$app->request->baseUrl?>/backend/web/uploads/<?php echo $main_category['image'] ?>"></div>
+            <div class="image-box" id="category_image" ><img class="img-responsive" src="<?= Yii::$app->request->baseUrl?>/admin/uploads/<?php echo $main_category['image'] ?>"></div>
           
           
               <h3 id="main_cat_heading"> <?php echo $main_category['title']; ?> </h3>
@@ -59,7 +59,7 @@ $this->title = 'Classified';
         <div id="" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 subcat-box">
           <ul id="categories_list">
              <?php foreach($categories as $cate){ ?>
-              <li class="sub" data-toggle="modal" data-target="#myModal" onclick="modal_cat(this)" value="<?= $cate->id ?>" title="<?php echo $cate['title']?>" ><a  id="category_names" ><div class="cat-img-box"><img class="img-responsive"  src="<?= Yii::$app->request->baseUrl?>/backend/web/uploads/<?php echo $cate['image'] ?>"></div><span> <?php echo $cate['title']?></span></a> <?php //echo $cate['title']?></li>
+              <li class="sub" data-toggle="modal" data-target="#myModal" onclick="modal_cat(this)" value="<?= $cate->id ?>" title="<?php echo $cate['title']?>" ><a  id="category_names" ><div class="cat-img-box"><img class="img-responsive"  src="<?= Yii::$app->request->baseUrl?>/admin/uploads/<?php echo $cate['image'] ?>"></div><span> <?php echo $cate['title']?></span></a> <?php //echo $cate['title']?></li>
              <?php } ?>
           </ul>
         </div>
@@ -140,7 +140,7 @@ jQuery(document).ready(function($) {
             success: function(response){
             var category =''
             for (i = 0; i < response.length; i++) {
-                category +='<li data-toggle="modal" data-target="#myModal" onclick="modal_cat(this)" value="' + response[i]["id"] +'" title="' + response[i]["title"] +'" id="' + response[i]["id"] +'"><a id="category_names" href="#"><div class="cat-img-box"><img class="img-responsive"  src="<?= Yii::$app->request->baseUrl?>/backend/web/uploads/'   +response[i]["image"]+'"> </div><span> '+response[i]["title"]+'</span></a></li>';
+                category +='<li data-toggle="modal" data-target="#myModal" onclick="modal_cat(this)" value="' + response[i]["id"] +'" title="' + response[i]["title"] +'" id="' + response[i]["id"] +'"><a id="category_names" href="#"><div class="cat-img-box"><img class="img-responsive"  src="<?= Yii::$app->request->baseUrl?>/admin/uploads/'   +response[i]["image"]+'"> </div><span> '+response[i]["title"]+'</span></a></li>';
             }
             $('#categories_list').html(category)
             }
@@ -158,7 +158,7 @@ jQuery(document).ready(function($) {
             var  m_link = ''
             for (i = 0; i < response.length; i++) {
                 category +='<h3>'+response[i]["title"]+'</h3>';
-                cat_image +='<div class="image-box" id="category_image" ><img class="img-responsive" src="<?= Yii::$app->request->baseUrl?>/backend/web/uploads/'+response[i]["image"]+'"></div>'; 
+                cat_image +='<div class="image-box" id="category_image" ><img class="img-responsive" src="<?= Yii::$app->request->baseUrl?>/admin/uploads/'+response[i]["image"]+'"></div>'; 
                 m_link +=' <a id="m_link" href="<?= \yii\helpers\Url::to(['site/search']) ?>&id='+response[i]["id"]+'">View all ads >></a>';
             }
             $('#main_cat_heading').html(category);
