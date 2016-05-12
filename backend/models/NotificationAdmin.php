@@ -1,6 +1,7 @@
 <?php
 
 namespace backend\models;
+use yii\helpers\Url;
 
 use Yii;
 
@@ -47,4 +48,22 @@ class NotificationAdmin extends \yii\db\ActiveRecord
             'status' => Yii::t('app', 'Status'),
         ];
     }
+    
+    /**
+     * @inheritdoc
+     */
+    public function usercreated($user)
+    {
+        Url::base('https');
+       $url = Url::base('http')."/admin/index.php?r=user%2Fupdate&id=$user";
+        $this->date = date("Y-m-d H:i:s");
+        $this->description = "Registered new user $url";
+        $this->status = 1;
+        if($this->save()){  return TRUE;  }
+        
+    }
+    
+    
+    
+    
 }
