@@ -3,9 +3,13 @@ use yii\helpers\Html;
 use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\helpers\Url;
+use backend\models\NotificationAdmin;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
+
+ $noti = NotificationAdmin::find()->where(['status'=>1])->all();
+  $count = NotificationAdmin::find()->where(['status'=>1])->count();
 ?>
 
 <header class="main-header">
@@ -106,14 +110,23 @@ use yii\helpers\Url;
 -->                <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <i class="fa fa-bell-o"></i>
-                        <span class="label label-warning">10</span>
+                        <span class="label label-warning"><?= $count ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="header">You have 10 notifications</li>
                         <li>
-                             inner menu: contains the actual data 
+                             <!--inner menu: contains the actual data--> 
                             <ul class="menu">
-                                <li>
+                                <?php foreach($noti as $notifi){
+                                    ?>
+                                 <li>
+                                    <a href="#">
+                                        <i class="fa fa-users text-red"></i> <?= $notifi->description; ?>
+                                    </a>
+                                </li>
+                                <?php
+                                } ?>
+<!--                                <li>
                                     <a href="#">
                                         <i class="fa fa-users text-aqua"></i> 5 new members joined today
                                     </a>
@@ -139,7 +152,7 @@ use yii\helpers\Url;
                                     <a href="#">
                                         <i class="fa fa-user text-red"></i> You changed your username
                                     </a>
-                                </li>
+                                </li>-->
                             </ul>
                         </li>
                         <li class="footer"><a href="#">View all</a></li>
