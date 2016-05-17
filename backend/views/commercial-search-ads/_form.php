@@ -43,6 +43,9 @@ use backend\models\Category;
 	    ?>
 
     <?= $form->field($model, 'notes')->textInput() ?>
+    
+    <?= $form->field($model, 'status')->dropDownList(['1' => 'Activate', '0' => 'Deactivate']); ?>
+
 
     <?php // $form->field($model, 'user_id')->textInput() ?>
 

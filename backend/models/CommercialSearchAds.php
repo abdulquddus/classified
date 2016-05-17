@@ -31,13 +31,13 @@ class CommercialSearchAds extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'category_id', 'user_id'], 'required'],
+            [['title', 'category_id', 'user_id','image'], 'required'],
             [['image'], 'required', 'on'=>'insert'],
             [['image'], 'file', 'extensions' => 'jpg, jpeg, gif, png', 'skipOnEmpty' => true, 
-'checkExtensionByMimeType'=>false],
+                    'checkExtensionByMimeType'=>false],
             [['image'], 'string'],
             [['image_type'], 'string', 'max' => 35],
-            [['category_id', 'notes', 'user_id'], 'integer'],
+            [['category_id', 'notes', 'user_id','status'], 'integer'],
             [['title'], 'string', 'max' => 255],
 	     [['url'], 'url'],
         ];
