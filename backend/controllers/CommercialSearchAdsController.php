@@ -8,6 +8,7 @@ use backend\models\CommercialSearchAdsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * CommercialSearchAdsController implements the CRUD actions for CommercialSearchAds model.
@@ -61,17 +62,83 @@ class CommercialSearchAdsController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+   public function actionCreate()
     {
+        $chkOrg = CommercialSearchAds::find()->all();
+	if(!empty($chkOrg)) {
+		throw new NotFoundHttpException('The requested page does not exist.');
+	}
+	
         $model = new CommercialSearchAds();
+	if(isset($_POST['CommercialSearchAds']) && $model->load(Yii::$app->request->post()))
+	{
+		$model->attributes=$_POST['CommercialSearchAds'];
+		$model->url = strtolower($_POST['CommercialSearchAds']['url']);
+		$model->user_id = \yii::$app->user->id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
-        }
+		ob_start();
+
+		if(!empty($_FILES['CommercialSearchAds']['tmp_name']['image']))
+		{
+			$file = UploadedFile::getInstance($model,'image');
+			$model->image_type = $file->type;
+			$fp = fopen($file->tempName, 'r');
+			$content = fread($fp, filesize($file->tempName));
+			fclose($fp);
+			if($model->image_type == "image/png") 
+			{
+				$src_img = imagecreatefrompng($file->tempName);
+				$dst_img = imagecreatetruecolor(90, 70);
+				imagealphablending($dst_img, false);
+				imagesavealpha($dst_img,true);
+				$transparent = imagecolorallocatealpha($dst_img, 255, 255, 255, 127);
+				imagefilledrectangle($dst_img, 0, 0, 90, 70, $transparent);
+				imagecopyresampled($dst_img, $src_img, 0,0,0,0, 90, 70, imagesx($src_img), imagesy($src_img));
+				imagepng($dst_img);                                
+				ob_start();
+				imagepng($dst_img);
+				$image_string = ob_get_contents();
+				ob_end_flush();
+			}
+			if($model->image_type == "image/jpg" || $model->image_type == "image/jpeg") 
+			{
+				$src_img = imagecreatefromjpeg($file->tempName);
+				$dst_img = imagecreatetruecolor(90, 70);
+				imagealphablending($dst_img, false);
+				imagesavealpha($dst_img,true);
+				$transparent = imagecolorallocatealpha($dst_img, 255, 255, 255, 127);
+				imagefilledrectangle($dst_img, 0, 0, 90, 70, $transparent);
+				imagecopyresampled($dst_img, $src_img, 0,0,0,0, 90, 70, imagesx($src_img), imagesy($src_img));
+				imagejpeg($dst_img);                                
+				ob_start();
+				imagepng($dst_img);
+				$image_string = ob_get_contents();
+				ob_end_flush();
+			}
+			if($model->image_type == "image/gif") 
+			{
+				$src_img = imagecreatefromgif($file->tempName);
+				$dst_img = imagecreatetruecolor(90, 70);
+				imagealphablending($dst_img, false);
+				imagesavealpha($dst_img,true);
+				$transparent = imagecolorallocatealpha($dst_img, 255, 255, 255, 127);
+				imagefilledrectangle($dst_img, 0, 0, 90, 70, $transparent);
+				imagecopyresampled($dst_img, $src_img, 0,0,0,0, 90, 70, imagesx($src_img), imagesy($src_img));
+				imagepng($dst_img);                                
+				ob_start();
+				imagecreatefromgif($dst_img);
+				$image_string = ob_get_contents();
+				ob_end_flush();
+			}
+			$model->image = $image_string;
+		}
+		if($model->save())
+		return $this->redirect(['view', 'id' => $model->id]);
+	}
+
+		return $this->render('create', [
+					'model' => $model,
+				    ]);
     }
 
     /**
@@ -83,14 +150,102 @@ class CommercialSearchAdsController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+	$old_model=$this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
+        if(isset($_POST['CommercialSearchAds']) && $model->load(Yii::$app->request->post()))
+	{
+		$model->attributes=$_POST['CommercialSearchAds'];
+		
+		$model->url = strtolower($_POST['CommercialSearchAds']['url']);
+		
+		ob_start();
+
+		if(empty($_FILES['CommercialSearchAds']['tmp_name']['image'])) 
+		{
+	
+			$model->image = $old_model->image;
+		}
+		else 
+		{
+
+		if(!empty($_FILES['CommercialSearchAds']['tmp_name']['image']))
+   	 	{
+			$file = UploadedFile::getInstance($model,'image');
+			$model->image_type = $file->type;
+			$fp = fopen($file->tempName, 'r');
+			$content = fread($fp, filesize($file->tempName));
+			fclose($fp);
+			
+			if($model->image_type == "image/png") {
+				$src_img = imagecreatefrompng($file->tempName);
+		                $dst_img = imagecreatetruecolor(90, 70);
+				imagealphablending($dst_img, false);
+				imagesavealpha($dst_img,true);
+				$transparent = imagecolorallocatealpha($dst_img, 255, 255, 255, 127);
+				imagefilledrectangle($dst_img, 0, 0, 90, 70, $transparent);
+				imagecopyresampled($dst_img, $src_img, 0,0,0,0, 90, 70, imagesx($src_img), imagesy($src_img));
+		                imagepng($dst_img);                                
+		                ob_start();
+		                imagepng($dst_img);
+		                $image_string = ob_get_contents();
+		                ob_end_flush();
+			}
+			if($model->image_type == "image/jpeg" || $model->image_type =="image/jpg") {
+				$src_img = imagecreatefromjpeg($file->tempName);
+		                $dst_img = imagecreatetruecolor(90, 70);
+				imagealphablending($dst_img, false);
+				imagesavealpha($dst_img,true);
+				$transparent = imagecolorallocatealpha($dst_img, 255, 255, 255, 127);
+				imagefilledrectangle($dst_img, 0, 0, 90, 70, $transparent);
+		                imagecopyresampled($dst_img, $src_img, 0,0,0,0, 90, 70, imagesx($src_img), imagesy($src_img));
+		                imagejpeg($dst_img);                                
+		                ob_start();
+		                imagejpeg($dst_img);
+		                $image_string = ob_get_contents();
+		                ob_end_flush();
+			}
+			if($model->image_type == "image/gif") {
+				$src_img = imagecreatefromgif($file->tempName);
+		                $dst_img = imagecreatetruecolor(90, 70);
+				imagealphablending($dst_img, false);
+				imagesavealpha($dst_img,true);
+				$transparent = imagecolorallocatealpha($dst_img, 255, 255, 255, 127);
+				imagefilledrectangle($dst_img, 0, 0, 90, 70, $transparent);
+		                imagecopyresampled($dst_img, $src_img, 0,0,0,0, 90, 70, imagesx($src_img), imagesy($src_img));
+		                imagegif($dst_img);                                
+		                ob_start();
+		                imagegif($dst_img);
+		                $image_string = ob_get_contents();
+		                ob_end_flush();
+			
+			}
+			$model->image = $image_string;
+		}
+	     }			                
+
+		if ($model->save()) 
+            		return $this->redirect(['view', 'id' => $model->id]);
+	
+	} else {
             return $this->render('update', [
                 'model' => $model,
             ]);
         }
+    }
+    
+    
+    
+    public function actionLoadimage()
+    {
+		$model = CommercialSearchAds::find()->asArray()->all();
+
+        header('Pragma: public');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Content-Transfer-Encoding: binary');
+		header('Content-type: '.$model[0]['image_type']);
+		echo $model[0]['image'];  
+	
     }
 
     /**

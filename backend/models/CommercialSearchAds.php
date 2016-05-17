@@ -31,9 +31,15 @@ class CommercialSearchAds extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'title', 'category_id', 'url', 'image', 'notes', 'user_id'], 'required'],
-            [['id', 'category_id', 'image', 'notes', 'user_id'], 'integer'],
-            [['title', 'url'], 'string', 'max' => 255],
+            [['title', 'category_id', 'user_id'], 'required'],
+            [['image'], 'required', 'on'=>'insert'],
+            [['image'], 'file', 'extensions' => 'jpg, jpeg, gif, png', 'skipOnEmpty' => true, 
+'checkExtensionByMimeType'=>false],
+            [['image'], 'string'],
+            [['image_type'], 'string', 'max' => 35],
+            [['category_id', 'notes', 'user_id'], 'integer'],
+            [['title'], 'string', 'max' => 255],
+	     [['url'], 'url'],
         ];
     }
 
@@ -46,9 +52,10 @@ class CommercialSearchAds extends \yii\db\ActiveRecord
             'id' => Yii::t('app', 'ID'),
             'title' => Yii::t('app', 'Title'),
             'category_id' => Yii::t('app', 'Category ID'),
-            'url' => Yii::t('app', 'Url'),
+            'url' => Yii::t('app', 'URL'),
             'image' => Yii::t('app', 'Image'),
             'notes' => Yii::t('app', 'Notes'),
+	    'image_type' => Yii::t('app', 'Image Type'),
             'user_id' => Yii::t('app', 'User ID'),
         ];
     }

@@ -32,9 +32,14 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'category_id',
             'url:url',
-            'image',
-            'notes',
-            'user_id',
+           // 'image',
+            [
+		'attribute'=>'image',
+		'value'=>Yii::$app->urlManager->createUrl('/commercial-search-ads/loadimage'),	
+		'format'=>['image',['width'=>'130','height'=>'70', 'alt'=>'No Image']],
+            ],
+           // 'notes',
+            //'user_id',
         ],
     ]) ?>
 
