@@ -35,7 +35,7 @@ use yii\helpers\ArrayHelper;
             <?= $form->field($model, 'category_id', ['template' => ' <div class="input-group custom-field-wrap" id="cate">
               <label>Kategori<b class="asterisk">*</b></label>
               {input}<div class="error-placement">{error}</div>
-            </div>'])->textInput(['data-target'=>'#category', 'data-toggle'=>'modal', 'id'=>'showcat']); ?> 
+            </div>'])->textInput(['data-target'=>'#category', 'data-toggle'=>'modal', 'id'=>'showcat','readonly'=>true,'placeholder'=>"Please select category by clicking here"]); ?> 
              <div class="hiddene" >
                  <input id="advertisement-category_id" class="form-control" name="Advertisements[category_id]">
                  
@@ -191,7 +191,8 @@ use yii\helpers\ArrayHelper;
         <!--/form-->
      </section>
 
-
+      </div>
+      </section>
 <!-- category_select-->
 <div id="category" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" class="modal fade custom-modal custom-modal2">
       <div class="modal-dialog">

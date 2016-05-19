@@ -561,11 +561,11 @@ return side
 
 }
 
-    $('#showcat').on('focus', function() {
-    // alert("hello");
-    $('#showcat').click();
-
-});
+//    $('#showcat').on('focus', function() {
+//    // alert("hello");
+//    $('#showcat').click();
+//
+//});
 $(".hiddene").hide();
 $('.main li').click(function() {
     var sel = $(this).attr("id");
