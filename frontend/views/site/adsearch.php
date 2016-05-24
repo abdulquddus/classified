@@ -19,9 +19,10 @@ use yii\helpers\Url;
                         <input type="text" name="city"  class="hidden" id="region" value="<?php if(isset( $_GET['city'])) { echo $_GET['city']; } ?>">
                         <input type="text" name="location" class="form-control custom-sel-form-control" value="<?php if(isset( $_GET['city'])) { echo $_GET['city']; } ?>" id="location" placeholder="Location" data-toggle="modal" data-target="#myModal"  />
                     <!--<input id="sel1" class="form-control custom-sel-form-control" type="text" placeholder="Category">-->
-                        <input type="hidden" name="skey" value="<?php if(isset( $_GET['skey'])) { echo $_GET['skey']; } ?>" />
-                        <input type="submit" id="key" class="form-control search-box-ad-screen" onclick="search__()" placeholder="Search">
-            <!--             <button onclick="search(); return false" class="btn btn-default btn-hdr-search"><i class="fa fa-search"></i>Søk</button> -->
+                        <input type="text" class="form-control search-box-ad-screen"  placeholder="e.g Samsung, swift, shirts etc" name="skey" value="<?php if(isset( $_GET['skey'])) { echo $_GET['skey']; } ?>" />
+                       
+                        <button type="submit" id="key" class="btn btn-default btn-hdr-search" onclick="search__()"><i class="fa fa-search"></i>Søk</button>    
+ <!--             <button onclick="search(); return false" class="btn btn-default btn-hdr-search"><i class="fa fa-search"></i>Søk</button> -->
                         <div class="header" style="display:none">
                             <div class="container-tag" >   
                                 <nav>
