@@ -2354,6 +2354,108 @@ footer {
 .userotherads p {
     margin: 0;
 }
+
+
+.pricelabel {
+    margin: 0;
+    position: relative;
+    border-radius: 0 5px 5px 0;
+    background: #ffee7e;
+    padding: 18px 5px;
+    width: 100%;
+    font-size: 26px;
+    line-height: 39px;
+    /*height: 49px;*/
+    z-index: 2;
+    text-shadow: 0 1px 0 #fff;
+}
+
+.pricelabel:before {
+    width: 30px;
+    height: 75px;
+    background: url(http://localhost/classified/design/img/sprite-img.png) no-repeat -268px -67px;
+    top: 0px;
+    left: -30px;
+    position: absolute;
+    content: ' ';
+}
+
+.userdatabox, .safetyTipsBox, .verifiednumberbox, .sendmsgbox{
+	float: left;
+	width: 100%;
+	padding: 12px 17px;
+    background: #f1f5fc;
+    margin: 7px 0 0 0;
+}
+.userbox {
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+}
+.icon-user {
+	float: left;
+    background: url(http://localhost/classified/design/img/sprite-img.png) no-repeat;
+    width: 28px;
+    height: 28px;
+    background-position: -56px -268px;
+}
+
+.userdetails {
+	float: left;
+	width: 75%;
+	margin-left: 15px;
+}
+
+.ad-user-name {
+	font-size: 20px;
+	line-height: 20px;
+}
+
+.ad-user-status {
+    color: #ab0;
+}
+
+.sinceline {
+	font-size: 13px;
+	line-height: 14px;
+    color: #babdc1;
+    margin: 3px 0;
+}
+
+.icon-verify{
+	float: left;
+    background: url(http://localhost/classified/design/img/sprite-img.png) no-repeat;
+    background-position: -390px -112px;
+    width: 85px;
+    height: 40px;
+}
+
+.verifiednumberbox b {
+	float: left;
+	font-weight: normal;
+	margin: 13px 0 0 15px;
+}
+
+.safetyTipsBox h4 {
+font-size: 14px;
+margin:0 0 10px 0;
+}
+
+.safetyTipsBox ol {
+	margin:0;
+	font-size: 14px;
+	line-height: 16px;
+	padding-left: 30px;
+	list-style: decimal;
+}
+
+.safetyTipsBox ol li {
+	margin-bottom: 5px;
+}
+
+.sendmsgbox textarea {margin: 10px 0 15px 0;}
+.sendmsgbox button, .sendmsgbox button:hover, .sendmsgbox button:focus {width:100%;display:block;background:#a4b502;color:#fff;font-size: 18px;}
+
 .google-ads-container {
     float: left;
     width: 100%;
@@ -2717,4 +2819,16 @@ footer {
 .you::before {
     box-shadow: 2px -2px 2px 0 rgba( 178, 178, 178, .4 );
     right: -9px;    
+}
+.item .thumb {
+	width: 25%;
+	cursor: pointer;
+	float: left;
+}
+.item .thumb img {
+	width: 100%;
+	margin: 2px;
+}
+.item img {
+	width: 100%;	
 }

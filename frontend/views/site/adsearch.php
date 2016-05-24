@@ -170,11 +170,11 @@ use yii\helpers\Url;
                     
                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 search-left">
 
-                    <div class="breadcrums">
+<!--                    <div class="breadcrums">
                         <a href="">Home</a><i class="fa fa-angle-double-right"></i>
                         <a href="">All ads</a><i class="fa fa-angle-double-right"></i>
                         <a href="">Mobile</a><i class="fa fa-angle-double-right"></i>
-                    </div>
+                    </div>-->
                     <!--          <div class="search-left-box-btn">
                                 <a href="" class="btn btn-default">Save Search</a><br/>
                                 <a href="" class="btn btn-default">Reset</a>
@@ -264,6 +264,27 @@ use yii\helpers\Url;
                     <div  class="col-lg-8 col-md-8 col-sm-8 col-xs-12 search-wide">
                         <?php
                         if (!empty($result)) {
+                          
+                             foreach ($search_commer as $cate) {
+//print_r($cate);
+//break;
+//                                $img = \frontend\models\Images::findOne(['advertise_id' => $cate->id]);
+                                ?>
+                                <div id="" class="selectedcat-box">
+                                    <div class="image-box">
+                                        <img class="img-responsive" src="<?= Yii::$app->urlManager->createUrl('/site/loadimage'); ?>" alt="" />
+                                    </div>
+                                    <div class="caption">
+                                        <a href="<?= $cate['url']; ?>">
+                                            <h3><?= $cate['title']; ?></h3>
+                                            <!--<b>1,33,256 Ads</b>-->
+
+                                        </a>
+                                    </div>
+                                </div>
+                            <?php
+                            }
+                            
                             foreach ($result as $cate) {
 
                                 $img = \frontend\models\Images::findOne(['advertise_id' => $cate->id]);
@@ -475,5 +496,4 @@ $(".myCategory").click(function(){
         //  $( ".navbar-form" ).submit();
     }
 </script>
-</body>
-</html>
+

@@ -314,16 +314,23 @@ $id=0;
       <div class="col-lg-3 col-md-4 col-sm-4 col-xs-5 ftr-menu">
         <h3>Popular Cities</h3>
         <ul>
-          <li><a href="#">Karachi</a></li>
-          <li><a href="#">Karachi</a></li>
-          <li><a href="#">Karachi</a></li>
-          <li><a href="#">Karachi</a></li>
-          <li><a href="#">Karachi</a></li>
-          <li><a href="#">Karachi</a></li>
-          <li><a href="#">Karachi</a></li>
-          <li><a href="#">Karachi</a></li>
-          <li><a href="#">Karachi</a></li>
-          <li><a href="#">Karachi</a></li>
+          <li><a  href="<?= Url::toRoute(['/site/searchad'])?>&city=Buskerud">Buskerud</a></li>
+          <li><a  href="<?= Url::toRoute(['/site/searchad'])?>&city=Finnmark">Finnmark</a></li>
+          <li><a  href="<?= Url::toRoute(['/site/searchad'])?>&city=Karachi">Hedmark</a></li>
+          <li><a  href="<?= Url::toRoute(['/site/searchad'])?>&city=Hordaland">Hordaland</a></li>
+          <li><a  href="<?= Url::toRoute(['/site/searchad'])?>&city=Møre Og Romsdal">Møre Og Romsdal</a></li>
+          <li><a  href="<?= Url::toRoute(['/site/searchad'])?>&city=Nord-trøndelag">Nord-trøndelag</a></li>
+          <li><a  href="<?= Url::toRoute(['/site/searchad'])?>&city=Oppland">Oppland</a></li>
+          <li><a  href="<?= Url::toRoute(['/site/searchad'])?>&city=Oslo">Oslo</a></li>
+          <li><a  href="<?= Url::toRoute(['/site/searchad'])?>&city=Østfold">Østfold</a></li>
+          <li><a  href="<?= Url::toRoute(['/site/searchad'])?>&city=Rogaland">Rogaland</a></li>
+          <li><a  href="<?= Url::toRoute(['/site/searchad'])?>&city=Sogn Og Fjordane">Sogn Og Fjordane</a></li>
+          <li><a  href="<?= Url::toRoute(['/site/searchad'])?>&city=Sør-trøndelag">Sør-trøndelag</a></li>
+          <li><a  href="<?= Url::toRoute(['/site/searchad'])?>&city=Telemark">Telemark</a></li>
+          <li><a  href="<?= Url::toRoute(['/site/searchad'])?>&city=Troms">Troms</a></li>
+         <li><a  href="<?= Url::toRoute(['/site/searchad'])?>&city=Vest-agder">Vest-agder</a></li>
+         <li><a  href="<?= Url::toRoute(['/site/searchad'])?>&city=Vestfold">Vestfold</a></li>
+          
         </ul>
       </div>  
 
@@ -374,6 +381,7 @@ $id=0;
 <script>
     
     $(document).ready(function () {
+       // alert('ssssss')
 //        $('.searchable tr').hide();
     (function ($) {
 

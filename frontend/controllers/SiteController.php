@@ -351,6 +351,24 @@ class SiteController extends Controller
               andWhere($key)->
               orderBy($order_by);
     
+    $search_commer = \backend\models\CommercialSearchAds::find()->
+              where(['status'=>1])->
+              andWhere($category)->
+//              andWhere($category_filters)->
+//              andWhere($max_price)->
+//              andWhere($min_price)->
+//              andWhere($created)->
+//              andWhere($condition)->
+//              andWhere($type)->
+//              andWhere($city)->
+//              andWhere($key)->
+              orderBy($order_by);
+    
+    
+          $count = $search_commer->count();
+          $pagination = new Pagination(['totalCount'=>$count, 'pageSize'=>3]);
+          $adscomm=$search_commer->offset($pagination->offset)->limit($pagination->limit)->all();
+    
           $count = $search->count();
           $pagination = new Pagination(['totalCount'=>$count, 'pageSize'=>10]);
           $ads=$search->offset($pagination->offset)->limit($pagination->limit)->all();
@@ -384,12 +402,31 @@ class SiteController extends Controller
                                           'relcategory'=>$relcategory,
                                           'filters'=>$filerts,
                                           'ajax'=>0,
-                                           'selected_category'=>$cat_ids
+                                          'selected_category'=>$cat_ids,
+                                          'search_commer'=>$adscomm
                                           ]);
               
           } 
    
     }
+    
+    
+    
+     public function actionLoadimage()
+    {
+	$model = \backend\models\CommercialSearchAds::find()->asArray()->all();
+
+        header('Pragma: public');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Content-Transfer-Encoding: binary');
+		header('Content-type: '.$model[0]['image_type']);
+		echo $model[0]['image'];  
+	
+    }
+    
+    
+    
 
     /**
      * Logs in a user.
