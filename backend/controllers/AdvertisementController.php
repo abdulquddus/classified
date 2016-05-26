@@ -14,6 +14,7 @@ use common\components\AccessRule;
 use yii\filters\AccessControl;
 use common\models\Admin;
 use app\models\Notifications;
+use backend\models\Email;
 
 
 /**
@@ -136,6 +137,20 @@ class AdvertisementController extends Controller
          
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            
+            if($model->status==1){
+                    
+                     $user = \common\models\User::findOne($model->user_id);
+          
+             $email_user = Email::find()->where(['id'=>22])->orderBy(['id' => SORT_DESC])->one();
+             Yii::$app->mailer->compose()
+            ->setFrom('info@virtual-developers.com')
+            ->setTo($user->email)
+            ->setSubject($email_user->title)
+            ->setHtmlBody($email_user->content)
+            ->send();
+                }
+            
             
             if($model->photo_name = UploadedFile::getInstance($model, 'photo_name'))
             {

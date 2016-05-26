@@ -1131,11 +1131,21 @@ class SiteController extends Controller
     if(isset($_POST['code'])){
      $code = $_POST['code'];
      $find = \frontend\models\Advertisements::find()->where(['v_code'=>$code])->one();
-
      if (!empty($find)){
          // users exists
-          Yii::$app->session->setFlash('success', 'Your ad has been posted ');
+          Yii::$app->session->setFlash('success', 'Your ad is now pending for Admin Approval ');
 
+          $user = \common\models\User::findOne(Yii::$app->user->id);
+          
+            $email_user = Email::find()->where(['id'=>21])->orderBy(['id' => SORT_DESC])->one();
+            Yii::$app->mailer->compose()
+            ->setFrom('info@virtual-developers.com')
+            ->setTo($user->email)
+            ->setSubject($email_user->title)
+            ->setHtmlBody($email_user->content)
+            ->send();
+          
+          
         $find->v_code = 1;
        $find->save();
        

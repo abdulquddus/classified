@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'status',
             
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn', 'template' => '{view} {update}'],
         ],
     ]); ?>
 
