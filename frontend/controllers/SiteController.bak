@@ -20,7 +20,6 @@ use backend\models\Email;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 use yii\data\Pagination;
-use backend\models\NotificationAdmin;
 /**
  * Site controller
  */
@@ -258,7 +257,7 @@ class SiteController extends Controller
             $filters_categories = \backend\models\CategoryAdditionalFields::find()->
                     where(['optional_field_id'=>$filters_search])->
                     select(['category_id'])->all();
-            //print_r($filters_categories);
+            print_r($filters_categories);
            $filter_cates =array(); 
               foreach ($filters_categories as $filters_category) {
                 array_push($filter_cates, $filters_category->optional_field_id);
@@ -348,26 +347,8 @@ class SiteController extends Controller
               andWhere($condition)->
               andWhere($type)->
               andWhere($city)->
-              andWhere($key)->
+             andWhere($key)->
               orderBy($order_by);
-    
-    $search_commer = \backend\models\CommercialSearchAds::find()->
-              where(['status'=>1])->
-              andWhere($category)->
-//              andWhere($category_filters)->
-//              andWhere($max_price)->
-//              andWhere($min_price)->
-//              andWhere($created)->
-//              andWhere($condition)->
-//              andWhere($type)->
-//              andWhere($city)->
-//              andWhere($key)->
-              orderBy($order_by);
-    
-    
-          $count = $search_commer->count();
-          $pagination = new Pagination(['totalCount'=>$count, 'pageSize'=>3]);
-          $adscomm=$search_commer->offset($pagination->offset)->limit($pagination->limit)->all();
     
           $count = $search->count();
           $pagination = new Pagination(['totalCount'=>$count, 'pageSize'=>10]);
@@ -402,31 +383,12 @@ class SiteController extends Controller
                                           'relcategory'=>$relcategory,
                                           'filters'=>$filerts,
                                           'ajax'=>0,
-                                          'selected_category'=>$cat_ids,
-                                          'search_commer'=>$adscomm
+                                           'selected_category'=>$cat_ids
                                           ]);
               
           } 
    
     }
-    
-    
-    
-     public function actionLoadimage()
-    {
-	$model = \backend\models\CommercialSearchAds::find()->asArray()->all();
-
-        header('Pragma: public');
-        header('Expires: 0');
-        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-        header('Content-Transfer-Encoding: binary');
-		header('Content-type: '.$model[0]['image_type']);
-		echo $model[0]['image'];  
-	
-    }
-    
-    
-    
 
     /**
      * Logs in a user.
@@ -506,26 +468,18 @@ class SiteController extends Controller
 //        $counter=ArrayHelper::map($city,'code','name');
        
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            
-        $credits_purchased=\frontend\models\CreditsDetails::find()
-        ->where(['user_id' => Yii::$app->user->id])
-        ->orderBy(['id' => SORT_DESC,])->sum('credits');
-         
-            
-        //echo $credits_purchased;
-        $credits_expense=  \frontend\models\CreditsExpense::find()
-        ->where(['user_id' => Yii::$app->user->id])
-        ->orderBy(['id' => SORT_DESC,])->sum('credit_exp');
-         
-        // echo $credits_expense;
-         $categoryce=  \frontend\models\Category::find()->Where(['id'=>$model->category_id])->one();
-         
-         $credits_left= $credits_purchased-$credits_expense;
-        // echo $credits_left;
-         
-         if($credits_left >= $categoryce->credits)
-         {       
-            
+            //print_r($_REQUEST);
+            //exit();
+//            echo $_POST['city_id'];
+//            echo $model->city_id;
+//            echo $model->state_id;
+//            echo $model->furnished;
+//            echo $model->rooms;
+//            echo $model->square_feet;
+//            echo $model->address;
+//         echo   $model->mobile_number ;
+//         print_r($model->additional_field);
+//            echo $_POST['Advertisements']['6'],
        $model->user_id = Yii::$app->user->id;
        $model->created_date = date("Y-m-d H:i:s");
         $model->v_code = rand(1000, 9999);
@@ -575,13 +529,6 @@ class SiteController extends Controller
                 return $this->redirect(\Yii::$app->urlManager->createUrl("site/verifysms_ad")); 
                 }
             }
-        }
-        
-        else{
-            
-             Yii::$app->session->setFlash('success', 'You do not have enough credits');
-            return $this->redirect(['user/setting','credits'=>1]); 
-        }
         }
          $main_cat = \frontend\models\Category::find()->where(['parent_id'=>0])->all();
         $sub_cat = \frontend\models\Category::find()->where('parent_id != :parent_id', ['parent_id'=>0])->all();
@@ -837,10 +784,7 @@ class SiteController extends Controller
             $user->password_hash = Yii::$app->getSecurity()->generatePasswordHash($find->password_hash);
           if($user->save()){
             Yii::$app->session->setFlash('success', 'Your Registration has been completed sucessfully... Please login');
-          $noti = new NotificationAdmin;
-         if( $noti->usercreated($user->id)){
             return  $this->redirect(array("login"));
-         }
           }
             } else {
              // user does not exist 
@@ -1131,40 +1075,19 @@ class SiteController extends Controller
     if(isset($_POST['code'])){
      $code = $_POST['code'];
      $find = \frontend\models\Advertisements::find()->where(['v_code'=>$code])->one();
+
      if (!empty($find)){
          // users exists
-          Yii::$app->session->setFlash('success', 'Your ad is now pending for Admin Approval');
+          Yii::$app->session->setFlash('success', 'Your ad has been posted ');
 
-          $user = \common\models\User::findOne(Yii::$app->user->id);
-          
-            $email_user = Email::find()->where(['id'=>21])->orderBy(['id' => SORT_DESC])->one();
-            Yii::$app->mailer->compose()
-            ->setFrom('info@virtual-developers.com')
-            ->setTo($user->email)
-            ->setSubject($email_user->title)
-            ->setHtmlBody($email_user->content)
-            ->send();
-          
-          
         $find->v_code = 1;
        $find->save();
-       
-                $categoryce=  \frontend\models\Category::find()->Where(['id'=>$find->category_id])->one();
-                $modelce= new \frontend\models\CreditsExpense();
-           
-
-         $modelce->user_id=Yii::$app->user->id;
-         $modelce->ad_id=$find->id;
-         $modelce->credit_exp= $categoryce->credits;
-         $modelce->date= date('Y-m-d');
-         $modelce->save();
-       
-       return  $this->goHome();
+         return  $this->redirect(["index"]);
         Yii::$app->session->setFlash('success', 'Your');
 
         } else {
          // user does not exist 
-           Yii::$app->session->setFlash('success', 'Please try again ');
+           Yii::$app->session->setFlash('success', 'Please tyr again ');
 
 
             }

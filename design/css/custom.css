@@ -157,7 +157,7 @@ header {
 }
 
 .header-search-main .navbar-form {
-	padding: 18px 15px;
+	padding: 0px 15px;
 	margin: 0;
 }
 
@@ -168,7 +168,7 @@ header {
 }
 
 .navbar-form .form-control {
-	width: 24%;
+	width: 30%;
 	height: 40px;
     border-radius: 5px;
     background: url(../img/sprite-hm.png) no-repeat 8px -62px;
@@ -195,7 +195,7 @@ header {
 }
 
 .search-box-ad-screen {
-	width: 30% !important;
+	width: 18% !important;
 	background-position: 8px 9px !important;
 	padding-left: 38px !important;
 }

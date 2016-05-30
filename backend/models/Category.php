@@ -39,7 +39,7 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             [['parent_id', 'status', 'credits'], 'integer'],
-            [['title', 'status'], 'required'],
+            [['title', 'status','credits'], 'required'],
             //[['image'], 'string', 'max' => 45],
             [['image'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'on' => self::SCENARIO_CREATE],
             [['description'], 'string', 'max' => 55],

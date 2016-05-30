@@ -168,7 +168,7 @@ use yii\helpers\ArrayHelper;
              <?= $form->field($model, 'address', ['template' => '<div class="input-group contact-field-wrap">
               <label>Address</label>
               {input}<div class="error-placement">{error}</div>
-            </div>'])->textarea(array('rows'=>3, 'class'=>'form-control')); ?>  
+            </div>'])->textinput(array('rows'=>3, 'class'=>'form-control')); ?>  
 
 
             <div class="submit-ad-button-box">

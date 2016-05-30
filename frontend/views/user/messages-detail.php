@@ -17,16 +17,16 @@
             <div class="titlebar">
               <p>
                  <span class="pull-right time">31 Jan, 01:28 am</span>
-                 <a class="tdnone link" href="http://www.olx.com.pk/all-results/user/FRa5/" id="" target="_blank"><span>rizwanexp786</span></a>
+                 <a class="tdnone link" href="#" id="" target="_blank"><span>rizwanexp786</span></a>
               </p>
             </div>
             <div class="cloud br5">
-              <a class="thumb fleft rel tdnone marginright15" href="http://www.olx.com.pk/item/web-developent-web-designe-IDTrzmh.html" target="_blank" title="web developent &amp; Web Designe">
-              <img width="42" class="list_thumbnail" src="http://s1.olx.com.pk/static/olxpk/naspersclassifieds-regional/olxsa-atlas-web-olxpk/static/img/nophoto_camera.png?v=3" alt="">
+              <a class="thumb fleft rel tdnone marginright15" href="#" target="_blank" title="web developent &amp; Web Designe">
+              <img width="42" class="list_thumbnail" src="#" alt="">
               </a>
               <div class="msgbar">
                   <h4 class="" id="adTitle">web developent &amp; Web Designe</h4>
-                  <a class="" href="http://www.olx.com.pk/item/web-developent-web-designe-IDTrzmh.html" title="web developent &amp; Web Designe" target="_blank">
+                  <a class="" href="#" title="web developent &amp; Web Designe" target="_blank">
                   <span class="icon inlblk mini external2">&nbsp;</span> <span class="link tdnone"><span>view</span></span>
                   </a>
                   <small class="">Ad ID: 819269257</small>
