@@ -15,7 +15,7 @@ use yii\helpers\ArrayHelper;
         $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);
         ?>
          <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 submitad-main">
-           <?= $form->field($model, 'advertise_title', ['template' => ' <div class="input-group hvr_div active custom-field-wrap">
+           <?= $form->field($model, 'advertise_title', ['template' => ' <div class="input-group custom-field-wrap">
               <label>Tittel<b class="asterisk">*</b></label>
               <a href="#" class="title-popover" data-html="true" title="<b>Want to get you ad noticed?</b>" data-toggle="popover" data-placement="right" data-content="                    <ul>
 			<li>1. Give your ad an attractive title.</li>
@@ -32,7 +32,7 @@ use yii\helpers\ArrayHelper;
               
             
             
-            <?= $form->field($model, 'category_id', ['template' => ' <div class="input-group hvr_div custom-field-wrap" id="cate">
+            <?= $form->field($model, 'category_id', ['template' => ' <div class="input-group custom-field-wrap" id="cate">
               <label>Kategori<b class="asterisk">*</b></label>
               {input}<div class="error-placement">{error}</div>
             </div>'])->textInput(['data-target'=>'#category', 'data-toggle'=>'modal', 'id'=>'showcat','readonly'=>true,'placeholder'=>"Please select category by clicking here"]); ?> 
@@ -45,7 +45,7 @@ use yii\helpers\ArrayHelper;
                
              </div>
              
-            <?= $form->field($model, 'description', ['template' => '  <div class="input-group hvr_div custom-field-wrap description-popover">
+            <?= $form->field($model, 'description', ['template' => '  <div class="input-group custom-field-wrap description-popover">
               <label>Beskrivelse<b class="asterisk">*</b></label>
               <a href="#" data-html="true" href = "#" title = "<b>Items with good description sell faster!</b>" data-container = "body" 
                 data-toggle = "popover" data-content = "<ul>
@@ -57,7 +57,7 @@ use yii\helpers\ArrayHelper;
             {input}</a><div class="error-placement">{error}<span id="textarea_description"></span></div>
             </div>'])->textarea(array('rows'=>5, 'class'=>'form-control abc', 'placeholder'=>"Include the brand, model, age, and any included accessories.")); ?>  
                  
-        <?= $form->field($model, 'price', ['template' => '<div class="input-group hvr_div custom-field-wrap">
+        <?= $form->field($model, 'price', ['template' => '<div class="input-group custom-field-wrap">
               <label>Pris<b class="asterisk">*</b></label>
               <a href="#!" data-placement="right" data-html="true" href = "#" title = "<b>Buyers prefer ads with realistic prices!</b>" data-container = "body" 
                 data-toggle = "popover" data-content = "
@@ -69,15 +69,93 @@ use yii\helpers\ArrayHelper;
 
               {input}</a><div class="error-placement">{error}</div>
             </div>']); ?> 
-        <?= $form->field($model, 'condition', ['template'=>'<div class="input-group hvr_div contact-field-wrap">
+        <?= $form->field($model, 'condition', ['template'=>'<div class="input-group contact-field-wrap">
               <label>Condition<b class="asterisk">*</b></label>
               {input}<div class="error-placement">{error}</div>
-            </div>'])->dropDownList(['used'=>'Used', 'new'=>'New'],['class'=>'form-control abc']) ?>     
+            </div>'])->dropDownList(['used'=>'Used', 'new'=>'New','class'=>'form-control abc']) ?>     
            
 
             <div class="input-group custom-field-wrap">
               <label>Last opp bilder</label>
               <div class="custom-file-input-wrap">
+                  <ul class="photos-show-mini clr ui-sortable">
+                      <li>																													<li style="z-index: 0;" id="add-file-1" class="fleft empty rel first-child   {slot: 1}">
+			<div class="br5">
+			   <a href="javascript:void(0);" class="block" title="Add photo">
+			     <span class="icon margin0_a rel add2 block"></span>
+		          </a>
+			</div>
+		      </li>
+                       <li>																													<li style="z-index: 0;" id="add-file-1" class="fleft empty rel first-child   {slot: 1}">
+			<div class="br5">
+			   <a href="javascript:void(0);" class="block" title="Add photo">
+			     <span class="icon margin0_a rel add2 block"></span>
+		          </a>
+			</div>
+		      </li>
+                       <li>																													<li style="z-index: 0;" id="add-file-1" class="fleft empty rel first-child   {slot: 1}">
+			<div class="br5">
+			   <a href="javascript:void(0);" class="block" title="Add photo">
+			     <span class="icon margin0_a rel add2 block"></span>
+		          </a>
+			</div>
+		      </li>
+                       <li>																													<li style="z-index: 0;" id="add-file-1" class="fleft empty rel first-child   {slot: 1}">
+			<div class="br5">
+			   <a href="javascript:void(0);" class="block" title="Add photo">
+			     <span class="icon margin0_a rel add2 block"></span>
+		          </a>
+			</div>
+		      </li>
+                       <li>																													<li style="z-index: 0;" id="add-file-1" class="fleft empty rel first-child   {slot: 1}">
+			<div class="br5">
+			   <a href="javascript:void(0);" class="block" title="Add photo">
+			     <span class="icon margin0_a rel add2 block"></span>
+		          </a>
+			</div>
+		      </li>
+                       <li>																													<li style="z-index: 0;" id="add-file-1" class="fleft empty rel first-child   {slot: 1}">
+			<div class="br5">
+			   <a href="javascript:void(0);" class="block" title="Add photo">
+			     <span class="icon margin0_a rel add2 block"></span>
+		          </a>
+			</div>
+		      </li>
+                       <li>																													<li style="z-index: 0;" id="add-file-1" class="fleft empty rel first-child   {slot: 1}">
+			<div class="br5">
+			   <a href="javascript:void(0);" class="block" title="Add photo">
+			     <span class="icon margin0_a rel add2 block"></span>
+		          </a>
+			</div>
+		      </li>
+                       <li>																													<li style="z-index: 0;" id="add-file-1" class="fleft empty rel first-child   {slot: 1}">
+			<div class="br5">
+			   <a href="javascript:void(0);" class="block" title="Add photo">
+			     <span class="icon margin0_a rel add2 block"></span>
+		          </a>
+			</div>
+		      </li>
+																																							<li style="z-index: 0;" id="add-file-2" class="fleft empty rel    {slot: 2}">
+									
+                  </ul>
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
+                  
                   
                 <?= $form->field($model, 'imageFiles[]', ['template'=>'{input}'])->fileInput(['multiple' => true, 'type'=>'file', 'accept' => 'image/*', 'class'=>'custom-file-input']) ?>
                 <?= $form->field($model, 'imageFiles[]', ['template'=>'{input}'])->fileInput(['multiple' => true, 'type'=>'file', 'accept' => 'image/*', 'class'=>'custom-file-input']) ?>
@@ -111,7 +189,7 @@ use yii\helpers\ArrayHelper;
         <!--form role="form"-->
          <div class="col-md-9 col-md-offset-1 col-sm-8 col-sm-offset-2 contact-dtl-main">
 
-              <?= $form->field($model, 'contact_name', ['template' => ' <div class="input-group hvr_div contact-field-wrap">
+              <?= $form->field($model, 'contact_name', ['template' => ' <div class="input-group hvr_div active contact-field-wrap">
 <div class="popup_shw"></div>              
 <label>Name<b class="asterisk">*</b></label>
               <a href="#!" data-placement="right" data-html="true" href = "#" data-container = "body" data-toggle = "popover" data-content = "
@@ -124,7 +202,7 @@ use yii\helpers\ArrayHelper;
             </div>'])->textInput(['value'=>$user->name, 'class'=>'form-control abc']); ?> 
             
             
-             <?= $form->field($model, 'mobile_number', ['template' => '<div class="input-group  hvr_div contact-field-wrap">
+             <?= $form->field($model, 'mobile_number', ['template' => '<div class="input-group contact-field-wrap">
               <label>Phone<b class="asterisk">*</b></label>
               <a href="#!" data-placement="right" data-html="true" href = "#" data-container = "body" data-toggle = "popover" data-content = "
                     <ul>
@@ -146,14 +224,14 @@ use yii\helpers\ArrayHelper;
         $state = \frontend\models\Region::findOne($user->state);
         $selected_city = \frontend\models\City::findOne($user->city);//         $state = ArrayHelper::map($array_region, 'id', 'name'); ?>
 
-             <?= $form->field($model, 'state_id', ['template'=>'<div class="input-group hvr_div contact-field-wrap">
+             <?= $form->field($model, 'state_id', ['template'=>'<div class="input-group contact-field-wrap">
               <label>State<b class="asterisk">*</b></label>
               {input}<div class="error-placement">{error}</div>
             </div>'])->dropDownList($region ,['options' => [$state->id => ['Selected'=>'Selected']],'class'=>'form-control abc']); ?>
              
              
             
-              <?= $form->field($model, 'city_id', ['template'=>'<div id="city" class="input-group hvr_div contact-field-wrap">
+              <?= $form->field($model, 'city_id', ['template'=>'<div id="city" class="input-group contact-field-wrap">
               <label>City<b class="asterisk">*</b></label>
               {input}<div class="error-placement">{error}</div>
             </div>'])->dropDownList($city, ['options' => [$user->city => ['Selected'=>'Selected']],'class'=>'form-control abc']); ?>
@@ -168,7 +246,7 @@ use yii\helpers\ArrayHelper;
             </div> /custom-field-wrap-->
                
             
-             <?= $form->field($model, 'address', ['template' => '<div class="input-group hvr_div contact-field-wrap">
+             <?= $form->field($model, 'address', ['template' => '<div class="input-group contact-field-wrap">
               <label>Address</label>
               {input}<div class="error-placement">{error}</div>
             </div>'])->textinput(array('rows'=>3, 'class'=>'form-control abc')); ?>  
@@ -435,12 +513,5 @@ jQuery(document).ready(function($) {
     function img(item){
     alert(item);   
     }
-    
-  $('.input-group').click(function() {
-    $('.input-group.active').removeClass('active');
-    $(this).closest('.input-group').addClass('active');
-});
-
-
 </script>
  

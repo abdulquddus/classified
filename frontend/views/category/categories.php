@@ -18,7 +18,7 @@ $this->title = 'Classified';
       <aside class="col-lg-3 col-md-3 col-sm-3 col-xs-12 category-left-list">
         <h3>Hoved kategorier</h3>
         <ul> 
-            <span style="margin-left: 18px;"><a href="<?= Yii::$app->getUrlManager()->createUrl('site/search&id=3') ?> Alle Annonser</a></span>
+            <span style="margin-left: 18px;"><a href="<?= Yii::$app->getUrlManager()->createUrl('site/search&id=3') ?>" Alle Annonser></a></span>
               
         <?php
         $category_all = \backend\models\Category::find()->where("parent_id = 0 and status=1")->all();
@@ -53,7 +53,7 @@ $this->title = 'Classified';
           <?php }?>
           
           <b id="total_ads"> <?php echo $ads->getadcount($category_id); ?> Ads</b>
-          <span id="m_link"> <a  href="<?= \yii\helpers\Url::to(['site/search', 'id'=>$main_category['id']]) ?>">View all ads >></a></span>
+          <span id="m_link"> <a  href="<?= \yii\helpers\Url::to(['site/searchad', 'id'=>$main_category['id']]) ?>">View all ads >></a></span>
         </div>
 
         <div id="" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 subcat-box">
@@ -159,7 +159,7 @@ jQuery(document).ready(function($) {
             for (i = 0; i < response.length; i++) {
                 category +='<h3>'+response[i]["title"]+'</h3>';
                 cat_image +='<div class="image-box" id="category_image" ><img class="img-responsive" src="<?= Yii::$app->request->baseUrl?>/admin/uploads/'+response[i]["image"]+'"></div>'; 
-                m_link +=' <a id="m_link" href="<?= \yii\helpers\Url::to(['site/search']) ?>&id='+response[i]["id"]+'">View all ads >></a>';
+                m_link +=' <a id="m_link" href="<?= \yii\helpers\Url::to(['site/searchad']) ?>&id='+response[i]["id"]+'">View all ads >></a>';
             }
             $('#main_cat_heading').html(category);
             $('#category_image').html(cat_image);

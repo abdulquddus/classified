@@ -971,7 +971,7 @@ function modal_sub(item) {
             } else {
                 document.getElementById('modal-body').innerHTML = "";
                 //          window.location.navigate("<?php echo Yii::$app->getUrlManager()->createUrl('site/search')?>&id="+cat_id);
-                window.location.href = "<?php echo Yii::$app->getUrlManager()->createUrl('site/search')?>&id=" + cat_id;
+                window.location.href = "<?php echo Yii::$app->getUrlManager()->createUrl('site/searchad')?>&id=" + cat_id;
             }
         }
     });
@@ -981,7 +981,7 @@ function modal_sub(item) {
 
 function link(item) {
     var cat_id = item.id;
-    window.location.href = "<?php echo Yii::$app->getUrlManager()->createUrl('site/search')?>&id=" + cat_id;
+    window.location.href = "<?php echo Yii::$app->getUrlManager()->createUrl('site/searchad')?>&id=" + cat_id;
 }
 
 
