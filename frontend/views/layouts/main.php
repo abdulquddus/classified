@@ -365,7 +365,7 @@ $id=0;
   <section class="col-lg-12 col-md-12 col-sm-12 col-sm-12 footer-btm2">
     <div class="container">
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 footer-btm2-left">
-        © 2015 Abc Company, All Rights Reserved
+        © 2015 adpost.no, All Rights Reserved
       </div>
       <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 footer-btm2-right pull-right">
         Powered By <a href="">Webxdesigner</a>
