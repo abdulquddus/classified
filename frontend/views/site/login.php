@@ -27,7 +27,7 @@ $this->title = 'Login';
                      <div class="input-group custom-field-wrap">
 <!--                        <label for="userPassword">Password</label>
                         <input id="login-password" type="password" class="form-control" name="password" placeholder="">-->
-                      <?= $form->field($model, 'password', ['inputOptions'=>['id'=>'login-username', 'template'=>'{input}']])->passwordInput()->label('Password'); ?>
+                      <?= $form->field($model, 'password', ['inputOptions'=>['id'=>'login-username', 'template'=>'{input}']])->passwordInput(['class'=>'form-control abc'])->label('Password'); ?>
                      </div>
                      <div class="input-group checkbox-main">
                         <div class="checkbox">

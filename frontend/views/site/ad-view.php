@@ -121,7 +121,7 @@ use yii\helpers\Html;
 				<div class="col-lg-4 adview-right">
 					<div class="row">
 						<div class="pricelabel text-center">
-							KOR <?= $ads->price ?>
+							NOK <?= $ads->price ?>
 						</div>
 						<div class="userdatabox">
 						   <div class="userbox">
@@ -192,7 +192,7 @@ use yii\helpers\Html;
 										<!-- <p>Qmobile</p> -->
 									</td>
 									<td class="td-price">
-										<p>KOR <?= $random_ad->price?></p>
+										<p>NOK <?= $random_ad->price?></p>
 									</td>
 								</tr>
 								<?php     } ?>
