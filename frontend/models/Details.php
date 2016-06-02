@@ -35,8 +35,9 @@ class Details extends \yii\db\ActiveRecord
     {
         return [
             [['mobile'], 'integer'],
-            [['name'], 'string'],
+            [['name','address'], 'string'],
             [['state', 'city'], 'integer']
+            
 //            [['created_at', 'updated_at'], 'safe'],
 //            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
 //            [['auth_key'], 'string', 'max' => 32]
@@ -53,7 +54,8 @@ class Details extends \yii\db\ActiveRecord
             'name' => 'Name',
             'mobile' => 'Mobile Number',
             'state' => 'State',
-            'city' => 'city'
+            'city' => 'city',
+            'address' => 'Address'
 //            'auth_key' => 'Auth Key',
 //            'password_hash' => 'Password Hash',
 //            'password_reset_token' => 'Password Reset Token',

@@ -65,7 +65,7 @@ class UserController extends Controller
          $user_city = $_POST['city'];
          $id = Yii::$app->user->getId();
               
-             $sql="UPDATE `user` SET `name`='$detail_model->name', `mobile`='$detail_model->mobile', `city`='$user_city' ,`state`='$detail_model->state' WHERE `id`='$id'";
+             $sql="UPDATE `user` SET `name`='$detail_model->name', `mobile`='$detail_model->mobile', `city`='$user_city' ,`state`='$detail_model->state',`address`='$detail_model->address' WHERE `id`='$id'";
           $sql = \Yii::$app->db->createCommand($sql)->execute();
       if($sql){
            Yii::$app->session->setFlash('success', 'User settings saved successfully.');
@@ -197,6 +197,17 @@ class UserController extends Controller
             ->andWhere(['ad_status' => 1])
             ->count();
         
+        $inactive_ads = \backend\models\Advertisement::find()->distinct()
+            ->where("user_id = '$login_userID'")
+            ->andWhere(['status' => 1])
+            ->andWhere(['ad_status' => 0])
+            ->count();
+        $rejected_ads = \backend\models\Advertisement::find()->distinct()
+            ->where("user_id = '$login_userID'")
+            ->andWhere(['status' => 2])
+            ->andWhere(['ad_status' => 0])
+            ->count();
+        
         
    if(isset($_GET['success'])){
            
@@ -256,6 +267,8 @@ class UserController extends Controller
                                          'conversation'=>$conversation,
                                          'pagination_advert_active'=>$pagination_advert_active,
                                          'active_ads'=> $active_ads,
+                                         'inactive_ads'=>$inactive_ads,
+                                         'rejected_ads'=>$rejected_ads,
                                          'credits_details'=>$credits_details,
                                          'credits_expense'=>$credits_expense,
                                          'ad_info'=>$ad_info,
