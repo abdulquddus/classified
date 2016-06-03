@@ -83,15 +83,15 @@ class SiteController extends Controller
 //      if (!\Yii::$app->user->isGuest) {
 //           $this->layout = 'main_login';
 //           }
-        
-        
-        
+       
+       
+       
         $content_inner=  \backend\models\ContentInner::find()->where(['status'=>1])->all();
-        
-           $regions =  \frontend\models\City::find()->where(['status'=>1])->limit(20)->all();
-        return $this->render('index', ['regions'=>$regions, 'content_inner'=>$content_inner]);
+       
+    //       $regions = \frontend\models\Region::findAll(['status'=>1]);
+ $regions =  \frontend\models\City::find()->where(['status'=>1])->limit(20)->all();     
+      return $this->render('index', ['regions'=>$regions, 'content_inner'=>$content_inner]);
     }
-    
     /**
      * Displays homepage.
      *
@@ -118,46 +118,49 @@ class SiteController extends Controller
      */
     public function city($city)
     {
-        if($city != 0){
+   
+           $city = trim($city);
+          if(isset($city)){
             $city = \frontend\models\City::find()->where(['LIKE', 'name', $city])->one();
-            if ($city) 
+              if ($city)
          return $city->id;
-            else 
+            else
                 return 0;
         }
         else{
             return 0;
-        }       
+        }      
     }
    
     public function category($cate)
     {
+       
+        $cate = trim($cate);
         $category = \frontend\models\Category::find()->where(['LIKE', 'title', $cate])->one();
         if(isset($category->id)){
-         $id = $category->id; 
+         $id = $category->id;
         }
         else{
-            $id = 0;            
-        }  
-        
-//        kkkkkkkk
-       
+            $id = 0;           
+        } 
+      
       $item=[$id];
       $lists = \frontend\models\Category::find()->where(['parent_id'=>$id])->all();
       foreach($lists as $list ){
-         
+        
       array_push($item, $list->id);
       $lists2 = \frontend\models\Category::find()->where(['parent_id'=>$list->id])->all();
                         foreach($lists2 as $list2){
                         array_push($item, $list2->id);
                         }
-          
+         
       }
      return $item;
-        
-        
-        
+       
     }
+
+
+
     
     
      public function related_category($cate)
@@ -225,21 +228,25 @@ class SiteController extends Controller
     {
         $request = Yii::$app->request;
        
-           if(!empty($_GET['city'])){
-               $city =  $_GET['city'];
+           if(!empty($_GET['location'])){
+               $city =  $_GET['location'];
                $c = $this->city($city);
                $city = ['city_id'=> $c]; 
+			   //print_r($city );
+			   //print_r('99999999999999999999999999');
            } else{
                $city = array();
            }
            
            
-            if(!empty($_GET['published'])){
+           /* if(!empty($_GET['published'])){
              
            } else{
                $city = array();
            }
-           
+		   */
+          # on home page there are two key words regin and city 
+			# on search page there are two key words location and city. 
           
            if(!empty($_GET['category'])){
               $cate =  $_GET['category'];

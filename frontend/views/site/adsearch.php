@@ -17,7 +17,7 @@ use yii\helpers\Url;
                     <div class="form-group">
                         <input type="text" name="category"  class="form-control" id="category" value="<?php if(isset( $_GET['category'])) {echo $_GET['category'];  } ?>"   placeholder="Category">
                         <input type="text" name="city"  class="hidden" id="region" value="<?php if(isset( $_GET['city'])) { echo $_GET['city']; } ?>">
-                        <input type="text" name="location" class="form-control custom-sel-form-control" value="<?php if(isset( $_GET['city'])) { echo $_GET['city']; } ?>" id="location" placeholder="Location" data-toggle="modal" data-target="#myModal"  />
+                        <input type="text" name="location" class="form-control custom-sel-form-control" value="<?php if(isset( $_GET['location'])) { echo $_GET['location']; } ?>" id="location" placeholder="Location" data-toggle="modal" data-target="#myModal"  />
                     <!--<input id="sel1" class="form-control custom-sel-form-control" type="text" placeholder="Category">-->
                         <input type="text" class="form-control search-box-ad-screen"  placeholder="e.g Samsung, swift, shirts etc" name="skey" value="<?php if(isset( $_GET['skey'])) { echo $_GET['skey']; } ?>" />
                        
