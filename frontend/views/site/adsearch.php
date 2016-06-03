@@ -4,6 +4,7 @@ use yii\helpers\html;
 use yii\widgets\LinkPager;
 use yii\helpers\Url;
 ?>
+
 <main>
     <form class="navbar-form" role="search" action="" id="search_add_frm">
         <input type="hidden" name="r" value="site/searchad"
@@ -15,7 +16,7 @@ use yii\helpers\Url;
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 header-search-main">
         
                     <div class="form-group">
-                        <input type="text" name="category"  class="form-control" id="category" value="<?php if(isset( $_GET['category'])) {echo $_GET['category'];  } ?>"   placeholder="Category">
+                        <input type="text" name="category"  class="form-control"  value="<?php if(isset( $_GET['category'])) {echo $_GET['category'];  } ?>"  id="category" placeholder="Category">
                         <input type="text" name="city"  class="hidden" id="region" value="<?php if(isset( $_GET['city'])) { echo $_GET['city']; } ?>">
                         <input type="text" name="location" class="form-control custom-sel-form-control" value="<?php if(isset( $_GET['location'])) { echo $_GET['location']; } ?>" id="location" placeholder="Location" data-toggle="modal" data-target="#myModal"  />
                     <!--<input id="sel1" class="form-control custom-sel-form-control" type="text" placeholder="Category">-->
@@ -496,5 +497,27 @@ $(".myCategory").click(function(){
 //          $(form).submit();
         //  $( ".navbar-form" ).submit();
     }
+
+
+//$('#menucontainer').click(function(event){
+//    event.stopPropagation();
+//});
+
 </script>
 
+<script>
+$('body').click(function(event) {
+   // alert('is block display');
+//Hide the menus if visible
+ console.log(event.target.id);
+ if(event.target.id!='category'){
+if ( $('.header').attr('style') == 'display: block;' ) {
+    // do this
+    
+$(".header").css('display','none');
+} }
+//$(".header").css("display","none");
+//alert('hji');
+});
+
+</script>

@@ -64,7 +64,7 @@ use dosamigos\ckeditor\CKEditor;
                 ->count();
         
         for($i=0; $i<$ads_images_count; $i++){
-            echo '<img width="180" src= ../../frontend/web/uploads/'. $model->id . '/'. $ads_images_record[$i]['image'] . '>';
+            echo '<img width="180" src= ../uploads/'. $model->id . '/'. $ads_images_record[$i]['image'] . '>';
 //        echo $form->field($model, 'photo_name')->fileInput();    
             
         }

@@ -96,7 +96,7 @@ $this->params['breadcrumbs'][] = $this->title;
     
     //echo "Ad Image(s)";
     for($i=0; $i<$ads_images_count; $i++){
-            echo '<img width="180" style="margin-left: 10px;" src= ../../frontend/web/uploads/'. $model->id . '/'. $ads_images_record[$i]['image'] . '>';
+            echo '<img width="180" style="margin-left: 10px;" src= ../uploads/'. $model->id . '/'. $ads_images_record[$i]['image'] . '>';
 //        echo $form->field($model, 'photo_name')->fileInput();    
             
         }
