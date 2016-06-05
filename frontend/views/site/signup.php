@@ -66,7 +66,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 register-box-btm">
                   
-                 <?= $form->field($model, 'accept', ['checkboxTemplate'=>'<p>{input}<b class="asterisk">*</b> By registering on OLX, you accept our OLX.com.pk <a href="#">Terms of Use</a>.{error}</p>'])->checkbox(); ?>
+
+                 <?= $form->field($model, 'accept', ['checkboxTemplate'=>'<p>{input}<b class="asterisk">*</b> By registering on adpost.se, you accept our adpost.se <a href="#">Terms of Use</a>.{error}</p>'])->checkbox(); ?>
+
                   <!--<a href="#" class="btn btn-login">Create</a>-->
                   <?= Html::submitButton('Create', ['class' => 'btn btn-login', 'name' => 'signup-button']) ?>
                   </div>   <?php ActiveForm::end(); ?>

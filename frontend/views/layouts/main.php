@@ -38,7 +38,8 @@ if (class_exists('yii\debug\Module')) {
     <!-- Custom Stylesheet -->
     <link href="<?php echo Yii::getAlias('@web') ?>/design/css/custom.css" rel="stylesheet">
     <link href="<?php echo Yii::getAlias('@web') ?>/design/css/slider.css" rel="stylesheet" type="text/css">
-    
+    <link rel="stylesheet" type="text/css" media="screen" href="http://cdnjs.cloudflare.com/ajax/libs/fancybox/1.3.4/jquery.fancybox-1.3.4.css" />
+
     
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -308,7 +309,7 @@ $id=0;
     <div class="container footer-btm-inr">
 
       <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
-        <a href="#"><img src="<?php echo Yii::getAlias('@web') ?>/design/img/ftr-logo.jpg"></a>
+        <a href="#"><img src="<?php echo Yii::getAlias('@web') ?>/design/img/ftr-logo.png"></a>
       </div>
 
       <div class="col-lg-3 col-md-4 col-sm-4 col-xs-5 ftr-menu">

@@ -283,13 +283,13 @@ class SiteController extends Controller
            }
            
             if(!empty($_GET['min_price']) ){
-            $min_price = ['<=', 'price', $_GET['min_price'] ];
+            $min_price = ['>=', 'price', $_GET['min_price'] ];
            }else{
             $min_price = array();
            }
            
             if(!empty($_GET['max_price'])){
-            $max_price = ['>=', 'price', $_GET['max_price']];
+            $max_price = ['<=', 'price', $_GET['max_price']];
             }else{
                 $max_price = array();
            }

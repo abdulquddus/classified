@@ -16,9 +16,9 @@ use yii\helpers\Url;
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 header-search-main">
         
                     <div class="form-group">
-                        <input type="text" name="category"  class="form-control"  value="<?php if(isset( $_GET['category'])) {echo $_GET['category'];  } ?>"  id="category" placeholder="Category">
+                        <input type="text" name="category"  class="form-control custom-sel-form-control"  value="<?php if(isset( $_GET['category'])) {echo $_GET['category'];  } ?>"  id="category" placeholder="Category">
                         <input type="text" name="city"  class="hidden" id="region" value="<?php if(isset( $_GET['city'])) { echo $_GET['city']; } ?>">
-                        <input type="text" name="location" class="form-control custom-sel-form-control" value="<?php if(isset( $_GET['location'])) { echo $_GET['location']; } ?>" id="location" placeholder="Location" data-toggle="modal" data-target="#myModal"  />
+                        <input type="text" name="location" class="form-control" value="<?php if(isset( $_GET['location'])) { echo $_GET['location']; } ?>" id="location" placeholder="Location" data-toggle="modal" data-target="#myModal"  />
                     <!--<input id="sel1" class="form-control custom-sel-form-control" type="text" placeholder="Category">-->
                         <input type="text" class="form-control search-box-ad-screen"  placeholder="e.g Samsung, swift, shirts etc" name="skey" value="<?php if(isset( $_GET['skey'])) { echo $_GET['skey']; } ?>" />
                        
@@ -226,9 +226,9 @@ use yii\helpers\Url;
                     </div>-->
                     <div class="search-left-inr-box">
                         <h3>Conditions</h3>
-                        <ul>
-                            <li><input type="radio" onclick="submit_frm()" value="all" name="condition" checked/> All</li>
-                            <li><input type="radio" onclick="submit_frm()" value="used" name="condition" <?php if(isset($_GET['condition']) && $_GET['condition']=='used' ) { echo "checked"; } ?> /> Used</li>
+                        <ul class="rdio_btn">
+                            <li><input type="radio" class="rdo_main" onclick="submit_frm()" value="all" name="condition" checked/> All</li>
+                            <li><input type="radio" class="rdo_main" onclick="submit_frm()" value="used" name="condition" class="rdo_main" <?php if(isset($_GET['condition']) && $_GET['condition']=='used' ) { echo "checked"; } ?> /> Used</li>
                             <li><input type="radio" onclick="submit_frm()" value="new" name="condition" <?php if(isset($_GET['condition']) && $_GET['condition']=='new' ) { echo "checked"; } ?> /> New</li>
 
                         </ul>
@@ -236,21 +236,21 @@ use yii\helpers\Url;
                     </div>
                     <div class="search-left-inr-box">
                         <h3>Type</h3>
-                        <ul>
-                            <li><input type="radio" onclick="submit_frm()" value="" name="type" checked/> All</li>
-                            <li><input type="radio" onclick="submit_frm()" value="1" name="type" <?php if(isset($_GET['type']) && $_GET['type']==1 ) { echo "checked"; } ?> /> Company</li>
-                            <li><input type="radio" onclick="submit_frm()" value="2" name="type" <?php if(isset($_GET['type']) && $_GET['type']==2 ) { echo "checked"; } ?> /> Private</li>
+                        <ul class="rdio_btn">
+                            <li><input class="rdo_main" type="radio" onclick="submit_frm()" value="" name="type" checked/> All</li>
+                            <li><input class="rdo_main" type="radio" onclick="submit_frm()" value="1" name="type" <?php if(isset($_GET['type']) && $_GET['type']==1 ) { echo "checked"; } ?> /> Company</li>
+                            <li><input class="rdo_main" type="radio" onclick="submit_frm()" value="2" name="type" <?php if(isset($_GET['type']) && $_GET['type']==2 ) { echo "checked"; } ?> /> Private</li>
 
                         </ul>
 
                     </div>
                     <div class="search-left-inr-box">
                         <h3>Filters <?php ?></h3>
-                        <ul id="myList">
+                        <ul id="myList" class="rdio_btn" >
                             <?php   foreach ($filters as $filter) {
                                 ?>
                             
-                                 <li><input type="checkbox" onclick="submit_frm()" value="<?php echo $filter->id ; ?>" name="filters[]" <?php if(isset($_GET['filters']) && $_GET['filters']==$filter->id ) { echo "checked"; } ?> /> <?php echo $filter->titles ; ?></li>
+                                 <li><input type="checkbox" class="rdo_main" onclick="submit_frm()" value="<?php echo $filter->id ; ?>" name="filters[]" <?php if(isset($_GET['filters']) && $_GET['filters']==$filter->id ) { echo "checked"; } ?> /> <?php echo $filter->titles ; ?></li>
                             <?php  } ?>
                         </ul>
 

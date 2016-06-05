@@ -68,7 +68,9 @@ use yii\widgets\ActiveForm;
                     
                    
     <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 register-box-btm">
-                  <p><input type="checkbox" name="remember" value="1"><b class="asterisk">*</b> By registering on OLX, you accept our OLX.com.pk <a href="#">Terms of Use</a>.</p>
+
+                  <p><input type="checkbox" name="remember" value="1"><b class="asterisk">*</b> By registering on adpost.no, you accept our OLX.com.pk <a href="#">Terms of Use</a>.</p>
+
                  
         <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
