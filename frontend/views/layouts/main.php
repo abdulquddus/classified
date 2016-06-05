@@ -298,13 +298,13 @@ $id=0;
   <!-- /Ads Boxes -->
 
 <footer>
-  <section class="col-lg-12 col-md-12 col-sm-12 hidden-xs footer-top">
+<!--  <section class="col-lg-12 col-md-12 col-sm-12 hidden-xs footer-top">
     <div class="container">
         <a href="#"><img src="<?php echo Yii::getAlias('@web') ?>/design/img/ftr-top-img.png"></a>
     </div>
-  </section>
+  </section>-->
 
-  <section class="col-lg-12 col-md-12 col-sm-12 footer-btm">
+  <section class="col-lg-12 col-md-12 col-sm-12 footer-btm " style="margin-top: 20px;">
     <div class="container footer-btm-inr">
 
       <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3">
@@ -864,18 +864,22 @@ $('.detail').click(function(){
 
 $('.small-icon').click(function() {
     $('.selectedcat-box').animate({
-        width: '28%'
+        width: '28%',
+        height:'170px'
     }, 500);
     $('.image-box').animate({
-        width: '100%'
+        width: '100%',
+        height:'120px'
     }, 500);
 });
 $('.compact').click(function() {
     $('.selectedcat-box').animate({
-        width: '100%'
+        width: '100%',
+        height:'100%'
     }, 500);
     $('.image-box').animate({
-        width: '100%'
+        width: '100%',
+        height:'100%'
     }, 500);
 
 });

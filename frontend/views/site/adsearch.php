@@ -145,7 +145,7 @@ use yii\helpers\Url;
                         <input id="max_price" name="max_price" type="text" value="<?php if(isset( $_GET['max_price'])) { echo $_GET['max_price']; } ?>" class="">
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 my-thumb">
-                        <div class="pull-right">
+                        <div class="pull-left">
                             <div class="view">
                                 View:</div>
                             <div class="detail">
@@ -158,7 +158,7 @@ use yii\helpers\Url;
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 sort-main">
                         <label>Sort By</label>
-                        <select name="sort_by" class="form-control custom-sel-form-control" id="sel1">
+                        <select name="sort_by" class="form-control custom-sel-form-control selct_fld" id="sel1">
                             <option value="most_recent" >Most Recent</option>
                             <option value="low_price" >Low Price</option>
                             <option value="high_price">High Price</option>
@@ -205,10 +205,10 @@ use yii\helpers\Url;
                               </div>          -->
                     <div class="search-left-inr-box">
                         <h3>Published</h3>
-                        <ul>
-                            <li><input type="radio" onclick="submit_frm()" value="0" name="published" checked/>All</li>
-                            <li><input type="radio" onclick="submit_frm()" value="1" name="published" <?php if(isset($_GET['published']) && $_GET['published']==1 ) { echo "checked"; } ?>/>Last 24 hours</li>
-                            <li><input type="radio" onclick="submit_frm()" value="2" name="published" <?php if(isset($_GET['published']) && $_GET['published']==2 ) { echo "checked"; } ?> />Last 72 hours</li>
+                        <ul class="rdio_btn">
+                            <li><input type="radio" class="rdo_main" onclick="submit_frm()" value="0" name="published" checked/>All</li>
+                            <li><input type="radio" class="rdo_main" onclick="submit_frm()" value="1" name="published" <?php if(isset($_GET['published']) && $_GET['published']==1 ) { echo "checked"; } ?>/>Last 24 hours</li>
+                            <li><input type="radio" class="rdo_main" onclick="submit_frm()" value="2" name="published" <?php if(isset($_GET['published']) && $_GET['published']==2 ) { echo "checked"; } ?> />Last 72 hours</li>
 
                         </ul>
 

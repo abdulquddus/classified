@@ -126,6 +126,16 @@ header {
 .navbar-default .navbar-nav>.open>a:focus {
 	background-color: #fff;
 }
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+    background-color: none !important;
+    color: #555;
+}
+.navbar-default .navbar-nav>.open>a,
+.navbar-default .navbar-nav>.open>a:focus,
+.navbar-default .navbar-nav>.open>a:hover {
+    color: #555;
+    background-color: #fff !important;
+}
 
 .navbar-default .navbar-nav>li>a>i {
 	margin-right: 10px;
@@ -835,6 +845,10 @@ a.btn-login-fb {
     margin: 0 10px;
     border-bottom: 1px solid #d5d5d5;
     margin-bottom: 15px;
+    padding:10px;
+}
+.selectedcat-box:hover {
+   background:#ddd;
 }
 .image-box {
     position: relative;
@@ -2881,3 +2895,60 @@ margin:0 0 10px 0;
 .icon {
     background: rgba(0, 0, 0, 0) url("../img/2f9cad2626070a12e572388a822cd16312.png") no-repeat scroll 0 0;
 }
+
+.main_pay{border:1px solid #ddd;margin: 20px;width: 93%;padding:10px;border-radius:4px;float:left;}
+
+.icondv{width: 50%;text-align: center;padding:10px 20px 10px 10px;border-right:1px solid #ddd;float:left;}
+
+.icondv:last-child{border:none;}
+.mdl_head{   background: #a4b502 none repeat scroll 0 0;
+    border-radius: 4px 4px 0 0;
+    color: #fff;
+    text-align: center;}
+.btn_mdl{width:100% !important;background:#dddd !important;color:#2e2e2e;}
+.btn_mdl:hover{width:100% !important;background:#2965be !important;color:#fff;}
+.selct_fld {
+  
+    font-size: 13px !important;
+    width: 62% !important;
+}
+@media screen and (max-width: 640px) {
+    .selct_fld {
+  
+    font-size: 13px !important;
+    width: 100% !important;
+    margin-left:0px !important;
+}
+}
+
+
+
+
+
+
+/*............css2.............*/
+/*.image-box {
+    float: left;
+    height: 95px !important;
+}
+.image-box img {
+
+    width: 100%;
+}
+.selectedcat-box{width:28% !important;height: 150px !important;}*/
+.selectedcat-box h3 {
+    font-size: 15px !important;
+    font-weight: 100 !important;
+    line-height: 29px !important;
+    margin-top: 10px !important;
+   
+}
+
+/*............css2.............*/
+.image-box img {
+    width: 100% !important;
+}
+.rdio_btn{width:100%;float:left;list-style: none;margin: 0;padding: 0;}
+.rdio_btn li{margin: 10px 0 0 0;float:left;width: 100%;border-bottom:1px dashed #ddd;font-size:16px;padding:10px;}
+.rdio_btn li:hover{background:#ccc;}
+.rdio_btn li .rdo_main{float:left;margin-right:10px !important;}
