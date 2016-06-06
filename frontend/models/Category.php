@@ -86,7 +86,7 @@ class Category extends \yii\db\ActiveRecord
                         {
                         echo '<ul class="dropdown-menu lft_menu" style="margin-left:0px">';
                         foreach($subcate1 as $subcat1){
-                        echo "<li class='dropdown'><a href='#'>$subcat1->title     <i class='fa fa-angle-right pull-right bold min_mrgn'></i></a>
+                        echo "<li class='dropdown'><a class='myCategory'  href='#'>$subcat1->title     <i class='fa fa-angle-right pull-right bold min_mrgn'></i></a>
                         ";
             
 
@@ -95,7 +95,7 @@ class Category extends \yii\db\ActiveRecord
                         {
                         echo '<ul class="dropdown-menu lft_menun ">';
                         foreach($subcate2 as $subcat2){
-                        echo "<li class='dropdown'><a href='#'>$subcat2->title     <i class='fa fa-angle-right pull-right bold min_mrgn'></i></a>
+                        echo "<li class='dropdown'><a class='myCategory' href='#'>$subcat2->title     <i class='fa fa-angle-right pull-right bold min_mrgn'></i></a>
                         ";
             
                         }

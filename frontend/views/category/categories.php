@@ -1,13 +1,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 <?php
-
 /* @var $this yii\web\View */
 use yii\helpers\Html;
 use backend\models\Category;
 use yii\helpers\Url;
 $this->title = 'Classified';
-
 ?>
 
 <main>
@@ -41,6 +39,10 @@ $this->title = 'Classified';
         <?php
           
           $category_id = $id;
+
+          if ($category_id == Null) {
+              $category_id = 1;
+          }
           
           $category_name = \backend\models\Category::find()->where("id = $category_id and status=1")->all();
           foreach ($category_name as $main_category){?>    
@@ -119,13 +121,21 @@ $this->title = 'Classified';
 
 <script type="text/javascript">
 
+function ChangeUrl(title, url) {
+    if (typeof (history.pushState) != "undefined") {
+        var obj = { Title: title, Url: url };
+        history.pushState(obj, obj.Title, obj.Url);
+    } else {
+        alert("Browser does not support HTML5.");
+    }
+}
+
 jQuery(document).ready(function($) {
     
         jQuery('ul li a').click(function() {
         jQuery('ul').children().removeClass('active');
         jQuery(this).closest('li').addClass('active');
         jQuery('span').children().removeClass('active');
-
     });
     
     jQuery('li:not(.sub)').click(function() {

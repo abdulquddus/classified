@@ -87,22 +87,7 @@ use yii\helpers\Html;
     </div><!-- /clearfix -->
 </div> <!-- /col-xs-12 -->
 
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								
-								<div class="addescriptionwraptxt">
+			<div class="addescriptionwraptxt">
 									<div class="addescriptiontoptxt">
 										<h4>Brand</h4>
 										<p>Nokia</p>
