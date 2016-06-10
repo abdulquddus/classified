@@ -122,7 +122,7 @@ class UserController extends Controller
 //              orderBy($order_by);
 //    
           $count = $conversation_data->count();
-          $pagination = new Pagination(['totalCount'=>$count, 'pageSize'=>10]);
+          $pagination = new Pagination(['totalCount'=>$count, 'pageSize'=>20]);
           $conversation_ids=$conversation_data->offset($pagination->offset)->limit($pagination->limit)->all();
   
           
@@ -190,7 +190,15 @@ class UserController extends Controller
         $pagination_advert_moderate = new Pagination(['pageParam' => 'moderate-page','totalCount'=>$count_add, 'pageSize'=>4]);
         $advert_data_moderate = $advert_counter_moderate->offset($pagination_advert_moderate->offset)->limit($pagination_advert_moderate->limit)->all();
 
+         $advert_counter_pending = \backend\models\Advertisement::find()
+            ->where("user_id = '$login_userID'")->
+                //andWhere(['ad_status'=>1])->
+                andWhere(['status'=>0])->
+                orderBy(['id' => SORT_DESC]);
         
+        $count_add = $advert_counter_pending->count();
+        $pagination_advert_pending = new Pagination(['pageParam' => 'moderate-page','totalCount'=>$count_add, 'pageSize'=>4]);
+        $advert_data_pending = $advert_counter_pending->offset($pagination_advert_moderate->offset)->limit($pagination_advert_moderate->limit)->all();
         $active_ads = \backend\models\Advertisement::find()->distinct()
             ->where("user_id = '$login_userID'")
             ->andWhere(['status' => 1])
@@ -205,7 +213,10 @@ class UserController extends Controller
         $rejected_ads = \backend\models\Advertisement::find()->distinct()
             ->where("user_id = '$login_userID'")
             ->andWhere(['status' => 2])
-            ->andWhere(['ad_status' => 0])
+            ->count();
+        $pending_ads = \backend\models\Advertisement::find()->distinct()
+            ->where("user_id = '$login_userID'")
+            ->andWhere(['status' => 0])
             ->count();
         
         
@@ -278,6 +289,8 @@ class UserController extends Controller
                                          'pagination_advert_unactive'=>$pagination_advert_unactive,
                                          'pagination_advert_moderate'=>$pagination_advert_moderate,
                                          'pagination'=>$pagination,
+                                         'advert_data_pending'=>$advert_data_pending,
+                                         'pending_ads'=>$pending_ads
                  ]);
          
     }
@@ -674,4 +687,23 @@ class UserController extends Controller
   exit;
  }
     
+ public function actionMarksold($id)
+    {
+        $request = Yii::$app->request;
+//        if ($request->isAjax) {
+            $model= \frontend\models\Advertisements::find()->where(['id'=>$id])->one();
+//            $model= \frontend\models\Advertisements::findOne($id);
+//            echo "<pre>";
+//            print_r($model);
+//            echo "</pre>";
+//            exit();
+            if ($model->sold_status== 0){
+                $model->sold_status= 1; $model->save();
+            echo 'sold';
+            
+            }
+             
+//        }
+    }
+ 
 }

@@ -40,9 +40,7 @@ $this->title = 'Classified';
           
           $category_id = $id;
 
-          if ($category_id == Null) {
-              $category_id = 1;
-          }
+         
           
           $category_name = \backend\models\Category::find()->where("id = $category_id and status=1")->all();
           foreach ($category_name as $main_category){?>    

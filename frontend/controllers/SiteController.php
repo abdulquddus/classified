@@ -334,6 +334,15 @@ class SiteController extends Controller
             $op_fi =  $_GET['op_fi'];
            }
 
+           if(!empty($_GET['id'])){
+               
+               $list = new \frontend\models\Category();
+      $cate = $list->getsubcateidesname($_GET['id']);
+       $category = $this->category($cate);
+              $cat_ids = $category; 
+              $category  = ['category_id'=>$category];
+           }
+           
            $list = new \frontend\models\Category();
     
  if(!empty($_GET['category'])){
@@ -355,6 +364,7 @@ class SiteController extends Controller
               andWhere($condition)->
               andWhere($type)->
               andWhere($city)->
+              andWhere(['sold_status'=>0])->
               andWhere($key)->
               orderBy($order_by);
     

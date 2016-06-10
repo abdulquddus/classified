@@ -71,6 +71,14 @@ class Category extends \yii\db\ActiveRecord
     }
     
     
+    public function getsubcateidesname($id)
+    {
+        
+        $item = $this->find()->where(['id'=>$id])->one();
+      
+     return $item->title;
+    }
+    
     
     public function getsubcate($id)
     {

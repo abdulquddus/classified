@@ -989,7 +989,24 @@ function link(item) {
     window.location.href = "<?php echo Yii::$app->getUrlManager()->createUrl('site/searchad')?>&id=" + cat_id;
 }
 
+function mark_sold(id) {
 
+
+    $.ajax({
+        type: "GET",
+        url: "<?php  echo Yii::$app->getUrlManager()->createUrl('user/marksold'); ?>",
+        data: {
+            id: id
+        },
+
+        success: function(data) {
+            //       alert(data);
+            document.getElementById("makas" + id).innerHTML = data;
+            $("#makas" + id).addClass( "btn btn-primary disabled" );
+            location.reload();
+        }
+    });
+}
 
 
 </script>
