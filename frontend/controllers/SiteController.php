@@ -1280,6 +1280,15 @@ class SiteController extends Controller
     }
     
 
+    
+    public function actionDeleteImage($id)
+    {
+    // $id =  $tmpuser->id;
+            \backend\models\Images::findOne($id)->delete(); 
+            return true;
+    }
+    
+    
     }
     
             

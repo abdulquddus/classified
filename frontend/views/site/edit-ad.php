@@ -22,7 +22,7 @@ use yii\helpers\Html;
               {input}<div style="text-align:right">{error}</div>
             </div>'])->textInput(['data-target'=>'#category', 'data-toggle'=>'modal', 'id'=>'showcat']); ?> 
              <div class="hiddene" >
-                 <input id="advertisement-category_id" class="form-control" name="Advertisements[category_id]">
+                 <input id="advertisement-category_id" class="form-control abc" name="Advertisements[category_id]">
                  
              </div>
              
@@ -33,7 +33,7 @@ use yii\helpers\Html;
             <?= $form->field($model, 'description', ['template' => '  <div class="input-group custom-field-wrap">
               <label>Beskrivelse<b class="asterisk">*</b></label>
             {input}<div style="text-align:right">{error}</div>
-            </div>'])->textarea(array('rows'=>3, 'class'=>'form-control')); ?>  
+            </div>'])->textarea(array('rows'=>3, 'class'=>'form-control abc')); ?>  
                  
         <?= $form->field($model, 'price', ['template' => '<div class="input-group custom-field-wrap">
               <label>Pris<b class="asterisk">*</b></label>
@@ -48,7 +48,10 @@ use yii\helpers\Html;
                                     <div>
                                         
                                         <img width="180" u="thumb" src="<?php echo Yii::getAlias('@web') ?>/uploads/<?= $img->advertise_id?>/<?= $img->image?>" />
-                                        <?= Html::submitButton('Update Picture',['class'=>'btn btn-primary','id'=>'uploadButton']) ?>
+                                        <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?><input type="button" onclick="delete_image('<?php echo $img->id; ?>')" value="delete" class="btn btn-danger" />
+
+                                       <?php // $form->field($model, 'imageFiles[]', ['template'=>'{input}'])->fileInput(['multiple' => true, 'type'=>'file', 'accept' => 'image/*', 'class'=>'custom-file-input']) ?>
+                                        <?php // Html::submitButton('Update Picture',['class'=>'btn btn-primary','id'=>'uploadButton']) ?>
                                     </div><br/>
                                     <?php }?>                     
                   
@@ -78,24 +81,24 @@ use yii\helpers\Html;
               <?= $form->field($model, 'contact_name', ['template' => ' <div class="input-group contact-field-wrap">
               <label>Name<b class="asterisk">*</b></label>
               {input}<div style="text-align:right">{error}</div>
-            </div>'])->textInput(['value'=>$user->name]); ?> 
+            </div>'])->textInput(['value'=>$user->name,'class'=>'form-control abc']); ?> 
 
             
              <?= $form->field($model, 'mobile_number', ['template' => '<div class="input-group contact-field-wrap">
               <label>Phone<b class="asterisk">*</b></label>
               {input}<div style="text-align:right">{error}</div>
-            </div>'])->textInput(['value'=>$user->mobile]); ?> 
+            </div>'])->textInput(['value'=>$user->mobile,'class'=>'form-control abc']); ?> 
          
 
              <?= $form->field($model, 'state_id', ['template'=>'<div class="input-group contact-field-wrap">
               <label>State<b class="asterisk">*</b></label>
               {input}<div style="text-align:right">{error}</div>
-            </div>'])->dropDownList($region, ['prompt'=>'Select...', 'onChange'=>'select_city(this)']); ?>
+            </div>'])->dropDownList($region, ['prompt'=>'Select...', 'onChange'=>'select_city(this)','class'=>'form-control abc']); ?>
              
             
              <div class="input-group contact-field-wrap" id="city">
               <label>City<b class="asterisk">*</b></label>
-              <select class="form-control">
+              <select class="form-control abc">
                 <option>Choose</option>
                 
               </select>
@@ -105,7 +108,7 @@ use yii\helpers\Html;
              <?= $form->field($model, 'address', ['template' => '<div class="input-group contact-field-wrap">
               <label>Address</label>
               {input}<div style="text-align:right">{error}</div>
-            </div>'])->textarea(array('rows'=>3, 'class'=>'form-control')); ?>  
+            </div>'])->textarea(array('rows'=>3, 'class'=>'form-control abc')); ?>  
 
                <?php if (isset($_GET['new']))
                { ?>
@@ -330,5 +333,22 @@ success: function(data){
       }
     });
     }
+    
+    function delete_image(id)
+{
+$.ajax({
+            
+         
+      type: "GET",
+  url: "<?php echo Yii::$app->getUrlManager()->createUrl('site/delete-image'); ?>",
+  data: { id: id },
+                          
+success: function(data){
+//  alert(data);
+
+// document.getElementById("city").innerHTML = data;
+      }
+    });
+}
 </script>
  

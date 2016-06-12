@@ -164,7 +164,7 @@ class UserController extends Controller
                 orderBy(['id' => SORT_DESC]);
         
         $count_add = $advert_counter_active->count();
-        $pagination_advert_active = new Pagination(['pageParam' => 'active-page','totalCount'=>$count_add, 'pageSize'=>4]);
+        $pagination_advert_active = new Pagination(['pageParam' => 'active-page','totalCount'=>$count_add, 'pageSize'=>20]);
         $advert_active = $advert_counter_active->offset($pagination_advert_active->offset)->limit($pagination_advert_active->limit)->all();
 
         //ad_status =0 ,un active 
@@ -175,7 +175,7 @@ class UserController extends Controller
                 orderBy(['id' => SORT_DESC]);
         
         $count_add = $advert_counter_unactive->count();
-        $pagination_advert_unactive = new Pagination(['pageParam' => 'unactive-page','totalCount'=>$count_add, 'pageSize'=>4]);
+        $pagination_advert_unactive = new Pagination(['pageParam' => 'unactive-page','totalCount'=>$count_add, 'pageSize'=>20]);
         $advert_data_unactive = $advert_counter_unactive->offset($pagination_advert_unactive->offset)->limit($pagination_advert_unactive->limit)->all();
 
 
@@ -187,7 +187,7 @@ class UserController extends Controller
                 orderBy(['id' => SORT_DESC]);
         
         $count_add = $advert_counter_moderate->count();
-        $pagination_advert_moderate = new Pagination(['pageParam' => 'moderate-page','totalCount'=>$count_add, 'pageSize'=>4]);
+        $pagination_advert_moderate = new Pagination(['pageParam' => 'moderate-page','totalCount'=>$count_add, 'pageSize'=>20]);
         $advert_data_moderate = $advert_counter_moderate->offset($pagination_advert_moderate->offset)->limit($pagination_advert_moderate->limit)->all();
 
          $advert_counter_pending = \backend\models\Advertisement::find()
@@ -197,7 +197,7 @@ class UserController extends Controller
                 orderBy(['id' => SORT_DESC]);
         
         $count_add = $advert_counter_pending->count();
-        $pagination_advert_pending = new Pagination(['pageParam' => 'moderate-page','totalCount'=>$count_add, 'pageSize'=>4]);
+        $pagination_advert_pending = new Pagination(['pageParam' => 'moderate-page','totalCount'=>$count_add, 'pageSize'=>20]);
         $advert_data_pending = $advert_counter_pending->offset($pagination_advert_moderate->offset)->limit($pagination_advert_moderate->limit)->all();
         $active_ads = \backend\models\Advertisement::find()->distinct()
             ->where("user_id = '$login_userID'")
