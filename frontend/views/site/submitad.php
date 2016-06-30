@@ -4,6 +4,7 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
+use kartik\widgets\FileInput;
 
 ?>
 <main>
@@ -79,14 +80,115 @@ use yii\helpers\ArrayHelper;
               <label>Last opp bilder</label>
               <div class="custom-file-input-wrap">
                   
-                <?= $form->field($model, 'imageFiles[]', ['template'=>'{input}'])->fileInput(['multiple' => true, 'type'=>'file', 'accept' => 'image/*', 'class'=>'custom-file-input']) ?>
-                <?= $form->field($model, 'imageFiles[]', ['template'=>'{input}'])->fileInput(['multiple' => true, 'type'=>'file', 'accept' => 'image/*', 'class'=>'custom-file-input']) ?>
-                <?= $form->field($model, 'imageFiles[]', ['template'=>'{input}'])->fileInput(['multiple' => true, 'type'=>'file', 'accept' => 'image/*', 'class'=>'custom-file-input']) ?>                         
-                <?= $form->field($model, 'imageFiles[]', ['template'=>'{input}'])->fileInput(['multiple' => true, 'type'=>'file', 'accept' => 'image/*', 'class'=>'custom-file-input']) ?>                         
-                <?= $form->field($model, 'imageFiles[]', ['template'=>'{input}'])->fileInput(['multiple' => true, 'type'=>'file', 'accept' => 'image/*', 'class'=>'custom-file-input']) ?>                         
-                <?= $form->field($model, 'imageFiles[]', ['template'=>'{input}'])->fileInput(['multiple' => true, 'type'=>'file', 'accept' => 'image/*', 'class'=>'custom-file-input']) ?>                         
-                <?= $form->field($model, 'imageFiles[]', ['template'=>'{input}'])->fileInput(['multiple' => true, 'type'=>'file', 'accept' => 'image/*', 'class'=>'custom-file-input']) ?>                         
-                <?= $form->field($model, 'imageFiles[]', ['template'=>'{input}'])->fileInput(['multiple' => true, 'type'=>'file', 'accept' => 'image/*', 'class'=>'custom-file-input']) ?>                         
+                <?php 
+                echo FileInput::widget([
+                    'name' => 'Advertisements[imageFiles][]',
+                    'pluginOptions' => [
+                        'id'=>'advertisements-imagefiles',
+                        'showCaption' => false,
+                        'showRemove' => false,
+                        'showUpload' => false,
+                        'browseClass' => 'btn btn-primary btn-block',
+                        'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+                        'browseLabel' =>  'Select Photo'
+                    ],
+                    'options' => ['accept' => 'image/*']
+                ]);
+
+                ?>
+                  <br>
+                <?php 
+
+                echo FileInput::widget([
+                    'name' => 'Advertisements[imageFiles][]',
+                    'pluginOptions' => [
+                        'id'=>'advertisements-imagefiles',
+                        'showCaption' => false,
+                        'showRemove' => false,
+                        'showUpload' => false,
+                        'browseClass' => 'btn btn-primary btn-block',
+                        'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+                        'browseLabel' =>  'Select Photo'
+                    ],
+                    'options' => ['accept' => 'image/*']
+                ]);
+
+                ?> 
+                   <br>
+                <?php 
+
+                echo FileInput::widget([
+                    'name' => 'Advertisements[imageFiles][]',
+                    'pluginOptions' => [
+                        'id'=>'advertisements-imagefiles',
+                        'showCaption' => false,
+                        'showRemove' => false,
+                        'showUpload' => false,
+                        'browseClass' => 'btn btn-primary btn-block',
+                        'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+                        'browseLabel' =>  'Select Photo'
+                    ],
+                    'options' => ['accept' => 'image/*']
+                ]);
+
+                ?>
+                  <br>
+                <?php 
+
+                echo FileInput::widget([
+                    'name' => 'Advertisements[imageFiles][]',
+                    'pluginOptions' => [
+                        'id'=>'advertisements-imagefiles',
+                        'showCaption' => false,
+                        'showRemove' => false,
+                        'showUpload' => false,
+                        'browseClass' => 'btn btn-primary btn-block',
+                        'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+                        'browseLabel' =>  'Select Photo'
+                    ],
+                    'options' => ['accept' => 'image/*']
+                ]);
+
+                ?>
+                  
+                  <br>
+                <?php 
+
+                echo FileInput::widget([
+                    'name' => 'Advertisements[imageFiles][]',
+                    'pluginOptions' => [
+                        'id'=>'advertisements-imagefiles',
+                        'showCaption' => false,
+                        'showRemove' => false,
+                        'showUpload' => false,
+                        'browseClass' => 'btn btn-primary btn-block',
+                        'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+                        'browseLabel' =>  'Select Photo'
+                    ],
+                    'options' => ['accept' => 'image/*']
+                ]);
+
+                ?>
+                  
+                  <br>  
+
+                <?php 
+
+                echo FileInput::widget([
+                    'name' => 'Advertisements[imageFiles][]',
+                    'pluginOptions' => [
+                        'id'=>'advertisements-imagefiles',
+                        'showCaption' => false,
+                        'showRemove' => false,
+                        'showUpload' => false,
+                        'browseClass' => 'btn btn-primary btn-block',
+                        'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+                        'browseLabel' =>  'Select Photo'
+                    ],
+                    'options' => ['accept' => 'image/*']
+                ]);
+
+                ?>
                   
               </div>
              

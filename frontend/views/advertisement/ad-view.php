@@ -10,7 +10,6 @@ use yii\helpers\Html;
 ?>
 
     <!-- Custom Stylesheet -->
-    <link href="http://localhost/classified/frontend/web/design/css/custom.css" rel="stylesheet">
 <main>
 	 <section class="col-lg-12 col-md-12 col-sm-12 col-xs-12 adview-wrap">
 			<div class="container">
@@ -155,7 +154,9 @@ use yii\helpers\Html;
 
 					</div>
 				</div><!--/adview-right-->
-				<div class="col-lg-8">
+				
+                                <br clear="all">
+                                <div class="col-lg-8">
 					<div class="col-lg-12 offercontent">
 						<div class="row">
 							<h2 class="useradttl">Similar Ads</h2>

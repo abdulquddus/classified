@@ -35,7 +35,7 @@ $this->title = 'Classified';
         <div id="" class="changeloc-box">
           <div class="changeloc-box-inr"><i class="fa fa-map-marker"></i><a href="">All Norge<span>(Velg byen din for å se lokale annonser)</span></a> </div>
         </div>
-        <div id="" class="selectedcat-box">
+        <div id="" class="selectedcat-box inner_bx">
         <?php
           
           $category_id = $id;

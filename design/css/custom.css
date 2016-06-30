@@ -304,6 +304,7 @@ z-index: 99;
     height: 50px;
     width: 50px;
     overflow: hidden;
+    cursor: pointer; cursor: hand;
 }
 .cat-img-box2 {
     height: 100px;
@@ -765,6 +766,7 @@ a.btn-login-fb {
     display: block;
     color: #2965be;
     padding: 9px 0px;
+    font-size:13px;
 }
 .category-left-list ul li a:hover {
     color: #a4b502;
@@ -850,6 +852,8 @@ a.btn-login-fb {
 .selectedcat-box:hover {
    background:#ddd;
 }
+.inner_bx{background:white;}
+.inner_bx:hover{background:none !important;}
 .image-box {
     position: relative;
     float: left;
@@ -1733,6 +1737,18 @@ ul.conversationnew > li.my .cloud {
 .search-left-inr-box h3 {
     margin-bottom: 10px;
 }
+.search-left-inr-box select{width:100%;float:left;padding:5px;border:1px solid #ccc;}
+.btn_styl{border: 1px solid #ddd;
+    color: green;
+    padding: 3px;
+    margin-top: 5px;
+}
+.btn_stylrd{border: 1px solid #ddd;
+    color: red;
+    padding: 3px;
+    margin-top: 5px;
+}
+.msg_detil{font-size:13px;color:#2e2e2e;float: left;}
 /*======= /Footer==========*/
 
 footer {
@@ -2949,8 +2965,9 @@ margin:0 0 10px 0;
     width: 100% !important;
 }
 .rdio_btn{width:100%;float:left;list-style: none;margin: 0;padding: 0;}
-.rdio_btn li{margin: 10px 0 0 0;float:left;width: 100%;border-bottom:1px dashed #ddd;font-size:16px;padding:10px;}
+.rdio_btn li{margin: 5px 0 0 0;float:left;width: 100%;border-bottom:1px dashed #ddd;font-size:14px;padding:0px 10px;}
 .rdio_btn li:hover{background:#ccc;}
+.rdio_btn li:last-child{border-bottom:none;}
 .rdio_btn li .rdo_main{float:left;margin-right:10px !important;}
 
 /*.............picture zoom..........*/
@@ -2971,4 +2988,12 @@ input[type=button] {
     cursor:pointer;
     -webkit-border-radius: 5px;
     border-radius: 5px; 
+}
+
+.text1 {
+  display: block;
+  width: 100px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

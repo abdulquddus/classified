@@ -633,12 +633,17 @@ class SiteController extends Controller
         $id = Yii::$app->user->id;
         $user = User::findOne(['id'=>$id]);
         $model =  \frontend\models\Advertisements::findOne(['id'=>$pid]); 
-       
+       $model->category_id;
+      $cat = \frontend\models\Category::findOne(['id'=>$model->category_id]);
+      $cat_name = $cat->title;
+       $cat_id = $cat->id;
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
        $model->user_id = Yii::$app->user->id;
        $model->created_date = date("Y-m-d H:i:s");
-        $model->v_code = rand(1000, 9999);
-      $model->email = $user->email;
+       $model->v_code = rand(1000, 9999);
+       $model->email = $user->email;
+        $model->status = 0;
+        $model->ad_status = 0;
         
         
            if($model->save()){
@@ -682,6 +687,9 @@ class SiteController extends Controller
                                         'main_cat'=>$main_cat,
                                         'sub_cat'=> $sub_cat,
                                         'imgs'=>$imgs,
+                                        'cat_name'=>$cat_name,
+                                        'cat_id'=>$cat_id,
+                                        'cat'=>$cat
                                           ]);
     }
     

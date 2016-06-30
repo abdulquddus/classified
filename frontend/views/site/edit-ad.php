@@ -17,12 +17,21 @@ use yii\helpers\Html;
               {input}<div style="text-align:right">{error}</div>
             </div>']) ?>
              
-            <?= $form->field($model, 'category_id', ['template' => ' <div class="input-group custom-field-wrap" id="cate">
-              <label>Kategori<b class="asterisk">*</b></label>
-              {input}<div style="text-align:right">{error}</div>
-            </div>'])->textInput(['data-target'=>'#category', 'data-toggle'=>'modal', 'id'=>'showcat']); ?> 
-             <div class="hiddene" >
-                 <input id="advertisement-category_id" class="form-control abc" name="Advertisements[category_id]">
+           <div class="form-group field-showcat required has-error validating">
+<div id="cate" class="input-group hvr_div custom-field-wrap">
+<label>
+Category
+<b class="asterisk">*</b>
+</label>
+<span id="cat_image">
+<img width="60px" height="65px" src="/classified/admin/uploads/<?= $cat->image?>" style="padding-top:4px">
+</span>
+<a class="cat_image_name"> <?= $cat->title?> </a>
+<a class="btn btn-primary tog" href="#" data-toggle="modal" data-target="#category">Change</a>
+</div>
+</div>
+              <div class="hiddene" >
+                 <input value="<?=$cat_id?>" id="advertisement-category_id" class="form-control" name="Advertisements[category_id]">
                  
              </div>
              

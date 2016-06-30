@@ -203,7 +203,7 @@ use yii\helpers\Url;
                                                     </div>
                                                     </div>
                               </div>          -->
-                    <div class="search-left-inr-box">
+                    <div class="search-left-inr-box hidden-sm hidden-xs">
                         <h3>Published</h3>
                         <ul class="rdio_btn">
                             <li><input type="radio" class="rdo_main" onclick="submit_frm()" value="0" name="published" checked/>All</li>
@@ -211,6 +211,17 @@ use yii\helpers\Url;
                             <li><input type="radio" class="rdo_main" onclick="submit_frm()" value="2" name="published" <?php if(isset($_GET['published']) && $_GET['published']==2 ) { echo "checked"; } ?> />Last 72 hours</li>
 
                         </ul>
+
+                    </div>
+                     <div class="search-left-inr-box visible-sm  visible-xs ">
+                        <h3>Published</h3>
+                        <select class="col-md-12 ">
+                            <option>All</option>
+                            <option>Last 24 hours</option>
+                            <option>Last 72 hours</option>
+                            
+                        </select>
+                      
 
                     </div>
 <!--                    <div class="search-left-inr-box">
@@ -224,7 +235,7 @@ use yii\helpers\Url;
                         </ul>
                                     <a href="" class="pull-right">see more</a>
                     </div>-->
-                    <div class="search-left-inr-box">
+                    <div class="search-left-inr-box hidden-sm hidden-xs">
                         <h3>Conditions</h3>
                         <ul class="rdio_btn">
                             <li><input type="radio" class="rdo_main" onclick="submit_frm()" value="all" name="condition" checked/> All</li>
@@ -234,7 +245,18 @@ use yii\helpers\Url;
                         </ul>
 
                     </div>
-                    <div class="search-left-inr-box">
+ <div class="search-left-inr-box visible-sm  visible-xs ">
+                        <h3>Conditions</h3>
+                        <select class="col-md-12 ">
+                            <option>All</option>
+                            <option>used</option>
+                            <option>New</option>
+                            
+                        </select>
+                      
+
+                    </div>
+                    <div class="search-left-inr-box hidden-sm hidden-xs">
                         <h3>Type</h3>
                         <ul class="rdio_btn">
                             <li><input class="rdo_main" type="radio" onclick="submit_frm()" value="" name="type" checked/> All</li>
@@ -242,6 +264,17 @@ use yii\helpers\Url;
                             <li><input class="rdo_main" type="radio" onclick="submit_frm()" value="2" name="type" <?php if(isset($_GET['type']) && $_GET['type']==2 ) { echo "checked"; } ?> /> Private</li>
 
                         </ul>
+
+                    </div>
+ <div class="search-left-inr-box visible-sm  visible-xs ">
+                        <h3>Type</h3>
+                        <select class="col-md-12 ">
+                            <option>All</option>
+                            <option>Company</option>
+                            <option>Private</option>
+                            
+                        </select>
+                      
 
                     </div>
                     <div class="search-left-inr-box">
@@ -293,11 +326,13 @@ use yii\helpers\Url;
                                 ?>
                                 <div id="" class="selectedcat-box">
                                     <div class="image-box">
+                                       <a href="<?= Yii::$app->urlManager->createUrl(['advertisement/ad-view', 'id' => $cate->id]) ?>">
                                         <img class="img-responsive" src="<?= Yii::getAlias('@web') . "/uploads/" . $cate->id . "/" . $img['image'] ?>" alt="" />
+                                       </a>
                                     </div>
                                     <div class="caption">
                                         <a href="<?= Yii::$app->urlManager->createUrl(['advertisement/ad-view', 'id' => $cate->id]) ?>">
-                                            <h3><?= $cate->advertise_title ?></h3>
+                                            <h3 ><?= $cate->advertise_title ?></h3>
                                             <!--<b>1,33,256 Ads</b>-->
 
                                         </a>

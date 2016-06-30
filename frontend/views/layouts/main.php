@@ -269,7 +269,7 @@ $id=0;
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav navbar-right">
-         <li><a href="<?= Url::toRoute(['/site/login'])?>"><i class="fa fa-user"></i>Min konto</a></li>
+         <li class="sub"><a href="<?= Url::toRoute(['/site/login'])?>"><i class="fa fa-user"></i>Min konto</a></li>
          <li class="sub"><a class="btn-submit-ad" href="<?= Url::toRoute(['/site/submitad'])?>">Legg ut annonse</a></li>
 
       </ul>
