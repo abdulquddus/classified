@@ -170,7 +170,7 @@ use yii\helpers\Url;
                 <!--search-left-->
                     
                     
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 search-left">
+                <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 search-left bgcolr">
 
 <!--                    <div class="breadcrums">
                         <a href="">Home</a><i class="fa fa-angle-double-right"></i>
@@ -296,7 +296,7 @@ use yii\helpers\Url;
                 <!--/search-left-->
                 <!--search-wide-->
                 <div id="ads">
-                    <div  class="col-lg-8 col-md-8 col-sm-8 col-xs-12 search-wide">
+                    <div  class="col-lg-9 col-md-9 col-sm-9 col-xs-12 search-wide padng_zero">
                         <?php
                         if (!empty($result)) {
                           
@@ -305,17 +305,21 @@ use yii\helpers\Url;
 //break;
 //                                $img = \frontend\models\Images::findOne(['advertise_id' => $cate->id]);
                                 ?>
-                                <div id="" class="selectedcat-box">
-                                    <div class="image-box">
+                                <div id="" class="selectedcat-box ">
+                                    <div class="col-md-5 mrgn_zero padng_zero extracls">
+                                    <div class=" image-box">
                                         <img class="img-responsive" src="<?= Yii::$app->urlManager->createUrl('/site/loadimage'); ?>" alt="" />
                                     </div>
-                                    <div class="caption">
-                                        <a href="<?= $cate['url']; ?>">
-                                            <h3><?= $cate['title']; ?></h3>
-                                            <!--<b>1,33,256 Ads</b>-->
-
-                                        </a>
                                     </div>
+                                    <div class="col-md-7 product_detail">
+                                        <a href="<?= $cate['url']; ?>" class="title_head"><?= $cate['title']; ?> (Commercial Ads)</a>
+                                        <span>Honda Civic » Parado Foxy </span>
+                                        <h1>NOK: 150,0000</h1>
+                                        <p>Lorem Ipsum is simply dummy text of the printing and type setting industry.</p>
+                                        <span>Karachi, Pakistan </span>
+                                        <a href="#" class="verifyadd"></a>
+                                    
+                                </div>
                                 </div>
                             <?php
                             }
@@ -324,18 +328,23 @@ use yii\helpers\Url;
 
                                 $img = \frontend\models\Images::findOne(['advertise_id' => $cate->id]);
                                 ?>
-                                <div id="" class="selectedcat-box">
-                                    <div class="image-box">
+                                <div id="" class="selectedcat-box ">
+                                    <div class="col-md-5 mrgn_zero padng_zero extracls">
+                                    <div class=" image-box">
                                        <a href="<?= Yii::$app->urlManager->createUrl(['advertisement/ad-view', 'id' => $cate->id]) ?>">
                                         <img class="img-responsive" src="<?= Yii::getAlias('@web') . "/uploads/" . $cate->id . "/" . $img['image'] ?>" alt="" />
                                        </a>
                                     </div>
-                                    <div class="caption">
-                                        <a href="<?= Yii::$app->urlManager->createUrl(['advertisement/ad-view', 'id' => $cate->id]) ?>">
-                                            <h3 ><?= $cate->advertise_title ?></h3>
-                                            <!--<b>1,33,256 Ads</b>-->
-
+				    </div>
+                                    <div class="col-md-7 product_detail">
+                                        <a href="<?= Yii::$app->urlManager->createUrl(['advertisement/ad-view', 'id' => $cate->id]) ?>" class="title_head">
+                                            <?= $cate->advertise_title ?>
                                         </a>
+                                        <span>Honda Civic » Parado Foxy </span>
+                                        <h1>NOK: 150,0000</h1>
+                                        <p>Lorem Ipsum is simply dummy text of the printing and type setting industry.</p>
+                                        <span>Karachi, Pakistan </span>
+                                        <a href="#" class="verifyadd"></a>
                                     </div>
                                 </div>
                             <?php

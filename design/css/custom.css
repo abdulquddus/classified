@@ -1,8 +1,29 @@
-@charset "utf-8";
+product_detail@charset "utf-8";
 /* CSS Document */
 
 /* ==================================== GENERAL CSS STYLES ==================================== */
 
+@font-face {
+	font-family: 'Roboto-Regular';
+	src: url('fonts/Roboto-Regular.eot');
+	src: url('fonts/Roboto-Regular.eot?#iefix') format('embedded-opentype'), url('fonts/Roboto-Regular.woff') format('woff'), url('fonts/Roboto-Regular.ttf')    format('truetype'), url('fonts/Roboto-Regular.svg#aachen_btroman') format('svg');
+	font-weight: light;
+	font-style: light;
+}
+@font-face {
+	font-family: 'Roboto-Light';
+	src: url('fonts/Roboto-Light.eot');
+	src: url('fonts/Roboto-Light.eot?#iefix') format('embedded-opentype'), url('fonts/Roboto-Light.woff') format('woff'), url('fonts/Roboto-Light.ttf')    format('truetype'), url('fonts/Roboto-Light.svg#aachen_btroman') format('svg');
+	font-weight: light;
+	font-style: light;
+}
+@font-face {
+	font-family: 'Calibri-Light';
+	src: url('fonts/Calibri-Light.eot');
+	src: url('fonts/Calibri-Light.eot?#iefix') format('embedded-opentype'), url('fonts/Calibri-Light.woff') format('woff'), url('fonts/Calibri-Light.ttf')    format('truetype'), url('fonts/Calibri-Light.svg#aachen_btroman') format('svg');
+	font-weight: light;
+	font-style: light;
+}
 html,
 body {
     overflow-x: hidden;
@@ -10,7 +31,7 @@ body {
 body {
     margin: 0px;
     background: #ffffff;
-    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+    font-family: 'Roboto-Regular';
     color: #414141;
 }
 body,
@@ -841,13 +862,11 @@ a.btn-login-fb {
     background-color: #fff;
 }
 .selectedcat-box {
-    float: left;
-    width: 98%;
-    padding: 15px 0;
-    margin: 0 10px;
     border-bottom: 1px solid #d5d5d5;
-    margin-bottom: 15px;
+    float: left;
+    margin: 0 10px 15px;
     padding:10px;
+    width: 98%;
 }
 .selectedcat-box:hover {
    background:#ddd;
@@ -857,13 +876,39 @@ a.btn-login-fb {
 .image-box {
     position: relative;
     float: left;
-    width: 120px;
+    width: 100%;
     margin-right: 25px;
     /*background-color: #f0f0f0;border: 1px solid #828282;*/
     
     overflow: hidden;
     text-align: center;
 }
+.product_detail{float:left;position:relative;}
+
+.verifyadd{background: rgba(0, 0, 0, 0) url("../img/sprite-img.png") no-repeat scroll -390px -112px;
+    height: 40px;
+    width: 85px;
+    position:absolute;
+    bottom:0;
+    right:0;
+}
+.product_detail a.title_head{color: #2e2e2e;
+    float: left;
+    font: 20px 'Roboto-Regular';
+    margin: 10px 0;
+    width: 100%;}
+.product_detail span{color: #b4b4b4;
+    float: left;
+    font: 13px 'Roboto-Regular';
+    width: 100%;}
+.product_detail h1{color: #2e2e2e;
+    float: left;
+    font: 18px 'Roboto-Regular';
+    margin: 10px 0;
+    width: 100%;}
+
+.product_detail p{font:14px 'Calibri-Light';color:#2e2e2e;float:left;width:100%;font-weighgt:normal;}
+
 .selectedcat-box h3 {
     font-size: 20px;
     font-weight: 400;
@@ -1730,7 +1775,6 @@ ul.conversationnew > li.my .cloud {
 .search-left-inr-box {
     float: left;
     width: 100%;
-    border-bottom: 1px solid #e9e9e9;
     padding: 12px 0px;
     margin-bottom: 10px;
 }
@@ -2327,7 +2371,7 @@ footer {
     display: inline-block;
     height: 19px;
     width: 12px;
-    background: url(http://localhost/classified/design/img/sprite-img.png) no-repeat -430px -28px;
+    background: url(../img/sprite-img.png) no-repeat -430px -28px;
     position: relative;
     top: 5px;
 }
@@ -2403,7 +2447,7 @@ footer {
 .pricelabel:before {
     width: 30px;
     height: 75px;
-    background: url(http://localhost/classified/design/img/sprite-img.png) no-repeat -268px -67px;
+    background: url(../img/sprite-img.png) no-repeat -268px -67px;
     top: 0px;
     left: -30px;
     position: absolute;
@@ -2424,7 +2468,7 @@ footer {
 }
 .icon-user {
 	float: left;
-    background: url(http://localhost/classified/design/img/sprite-img.png) no-repeat;
+    background: url(../img/sprite-img.png) no-repeat;
     width: 28px;
     height: 28px;
     background-position: -56px -268px;
@@ -2454,7 +2498,7 @@ footer {
 
 .icon-verify{
 	float: left;
-    background: url(http://localhost/classified/design/img/sprite-img.png) no-repeat;
+    background: url(../img/sprite-img.png) no-repeat;
     background-position: -390px -112px;
     width: 85px;
     height: 40px;
@@ -2851,13 +2895,14 @@ margin:0 0 10px 0;
     right: -9px;    
 }
 .item .thumb {
-	width: 25%;
-	cursor: pointer;
-	float: left;
+	 cursor: pointer;
+    float: left;
+    height: 109px;
+    width: 25%;
 }
 .item .thumb img {
-	width: 100%;
-	margin: 2px;
+    margin: 2px;
+    width: 100%;
 }
 .item img {
 	width: 100%;	
@@ -2965,7 +3010,7 @@ margin:0 0 10px 0;
     width: 100% !important;
 }
 .rdio_btn{width:100%;float:left;list-style: none;margin: 0;padding: 0;}
-.rdio_btn li{margin: 5px 0 0 0;float:left;width: 100%;border-bottom:1px dashed #ddd;font-size:14px;padding:0px 10px;}
+.rdio_btn li{margin: 5px 0 0 0;float:left;width: 100%;font-size:14px;padding:0px 10px;}
 .rdio_btn li:hover{background:#ccc;}
 .rdio_btn li:last-child{border-bottom:none;}
 .rdio_btn li .rdo_main{float:left;margin-right:10px !important;}
@@ -2997,3 +3042,9 @@ input[type=button] {
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.bgcolr{background:#f5f5f5;}
+
+.mrgn_zero{margin:0 !important}
+
+.padng_zero{padding:0 !important}

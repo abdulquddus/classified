@@ -866,12 +866,39 @@ $('.detail').click(function(){
 $('.small-icon').click(function() {
     $('.selectedcat-box').animate({
         width: '28%',
-        height:'170px'
+        height:'400px'
     }, 500);
+    $('.extracls').animate({
+        width: '100%',
+        margin:'0',
+    }, 500);
+    $('.product_detail').animate({
+        width: '100%',
+        margin:'0',
+        padding:'0',
+    }, 500);
+    $('.product_detail a.title_head').animate({
+        width: '100%',
+    }, 500);
+    $('.verifyadd').animate({
+        top: '-30px',
+    }, 500);
+    
+    
+    
+    
     $('.image-box').animate({
         width: '100%',
         height:'120px'
     }, 500);
+    $('.product_detail').animate({
+        width: '100%',
+        margin:'0'
+    }, 500);
+    
+    
+    
+    
 });
 $('.compact').click(function() {
     $('.selectedcat-box').animate({
@@ -882,6 +909,7 @@ $('.compact').click(function() {
         width: '100%',
         height:'100%'
     }, 500);
+    
 
 });
 <!---------this script use in model popup---->
