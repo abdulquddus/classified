@@ -6,30 +6,7 @@ use yii\bootstrap\Nav;
 
     <section class="sidebar">
 
-        <!-- Sidebar user panel -->
-        <!-- <div class="user-panel">
-            <div class="pull-left image">
-                <img src="<?= $directoryAsset ?>/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
-            </div>
-            <div class="pull-left info">
-                <p>Administrator</p>
-
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-            </div>
-        </div>-->
-
-        <!-- search form 
-        <form action="#" method="get" class="sidebar-form">
-            <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search..."/>
-              <span class="input-group-btn">
-                <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-            </div>
-        </form>-->
-        <!-- /.search form -->
-
+        
         <?=
         Nav::widget(
             [
@@ -52,6 +29,7 @@ use yii\bootstrap\Nav;
                     ['label' => '<i class="glyphicon glyphicon-lock"></i><span>Country</span>', 'url' => ['/country/index']],
                     ['label' => '<i class="glyphicon glyphicon-lock"></i><span>Region</span>', 'url' => ['/region/index']],
                     ['label' => '<i class="glyphicon glyphicon-lock"></i><span>City</span>', 'url' => ['/city/index']],
+                    ['label' => '<i class="glyphicon glyphicon-lock"></i><span>Post Code</span>', 'url' => ['/postcode/index']],
                     ['label' => '<i class="glyphicon glyphicon-lock"></i><span>Email</span>', 'url' => ['/email/index']],
                     ['label' => '<i class="glyphicon glyphicon-lock"></i><span>PromotionDeals</span>', 'url' => ['/promotion-deals/index']],
                     ['label' => '<i class="glyphicon glyphicon-lock"></i><span>Content Configuration</span>', 'url' => ['/website-content/index']],

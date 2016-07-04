@@ -110,7 +110,7 @@ use yii\helpers\Html;
 						$imgs=  \backend\models\Images::find()->where(['advertise_id'=>$random_ad->id])->one();
 							?>
 									<td>
-										<p><?= Yii::$app->formatter->asDate($random_ad->created_date)?></p>01:41
+										<p><?= Yii::$app->formatter->asDate($random_ad->created_date, 'php:d-M')?></p>
 									</td>
 									<td class="td-img">
 										<a href="<?= Yii::$app->urlManager->createUrl(['advertisement/ad-view', 'id' => $random_ad->id]) ?>" title="QMobile Noir i9">

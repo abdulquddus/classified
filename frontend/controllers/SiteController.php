@@ -606,8 +606,15 @@ class SiteController extends Controller
 
         $counter=ArrayHelper::map($regions,'id','name');
         
+        $po = \backend\models\Postcode::find()->all();
+
+        $pocounter=ArrayHelper::map($po,'id','code');
+
+        
+        
        return $this->render('submitad',['model'=>$model,
                                         'user'=>$user, 
+                                        'po'=>$po,
                                         'region'=>$counter,
                                         'main_cat'=>$main_cat,
                                         'sub_cat'=> $sub_cat  
@@ -677,14 +684,15 @@ class SiteController extends Controller
         $regions =  \frontend\models\Region::find()->all();
 
         $counter=ArrayHelper::map($regions,'id','name');
-
+        
+        
 
         $imgs=  \backend\models\Images::find()->where(['advertise_id'=>$pid])->all();
         
        return $this->render('edit-ad',['model'=>$model,
                                         'user'=>$user, 
                                         'region'=>$counter,
-                                        'main_cat'=>$main_cat,
+                                       'main_cat'=>$main_cat,
                                         'sub_cat'=> $sub_cat,
                                         'imgs'=>$imgs,
                                         'cat_name'=>$cat_name,

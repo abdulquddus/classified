@@ -54,7 +54,7 @@ class Advertisement extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'category_id', 'advertise_title', 'description', 'price', 'contact_name', 'email', 'mobile_number', 'state_id', 'city_id', 'address', 'status'], 'required'],
-            [['user_id', 'category_id', 'price', 'mobile_number', 'state_id', 'city_id', 'status'], 'integer'],
+            [['user_id', 'category_id', 'price', 'mobile_number', 'state_id', 'city_id', 'status','po_id'], 'integer'],
             [['description', 'address'], 'string'],
             [['views'], 'trim'],
             [['advertise_title', 'photo_name', 'contact_name', 'email'], 'string', 'max' => 45],
@@ -117,6 +117,7 @@ class Advertisement extends \yii\db\ActiveRecord
             'state_id' => Yii::t('app', 'State ID'),
             'city_id' => Yii::t('app', 'City ID'),
             'address' => Yii::t('app', 'Address'),
+            'po_id' => Yii::t('app', 'Post Code'),
             'status' => Yii::t('app', 'Status'),
             'views' => Yii::t('app', 'Views'),
         ];

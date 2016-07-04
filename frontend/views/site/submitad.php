@@ -276,6 +276,15 @@ use kartik\widgets\FileInput;
             </div>'])->textinput(array('rows'=>3, 'class'=>'form-control abc')); ?>  
 
 
+
+               
+             <?= $form->field($model, 'po_id', ['template'=>'<div id="po_id" class="input-group hvr_div contact-field-wrap">
+              <label>Post Code<b class="asterisk">*</b></label>
+              {input}<div class="error-placement">{error}</div>
+            </div>'])->dropDownList($po,['class'=>'form-control abc']); ?>
+             
+
+
             <div class="submit-ad-button-box">
               <!--<a class="btn-submit-ad" href="#">Submit an Ad</a>-->              
               <?= Html::submitButton('Submit', ['class'=> 'btn-submit-ad']) ;?>
