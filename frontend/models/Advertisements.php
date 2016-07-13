@@ -59,7 +59,7 @@ class Advertisements extends \yii\db\ActiveRecord
             [['category_id', 'advertise_title', 'description', 'price', 'mobile_number', 'state_id', 'contact_name',], 'required'],
             [['category_id', 'price', 'state_id', 'mobile_number', 'state_id', 'city_id'], 'integer'],
             [['description'], 'string'],
-            [['additional_field'], 'safe'],
+            [['additional_field', 'sold_status'], 'safe'],
             [['user_id', 'category_id', 'advertise_title', 'photo_name', 'description', 'price', 'mobile_number', 'state_id', 'city_id', 'address', 'v_code', 'condition'], 'safe'],
 //          [['advertise_title', 'photo_name', 'contact_name', 'email'], 'string', 'max' => 45],
             [['imageFiles'], 'file', 'extensions' => 'png, jpg', 'maxFiles' => 8]
@@ -98,6 +98,14 @@ class Advertisements extends \yii\db\ActiveRecord
            
             BaseFileHelper::createDirectory('uploads/'.$this->id);
             
+            if(empty($this->imageFiles))
+            {
+                copy("D:/xampp/htdocs/". Yii::getAlias('@web') . "/design/img/no-image-available_thumb.jpg", "D:/xampp/htdocs/". Yii::getAlias('@web') . '/uploads/'.$this->id . '/no-image-available_thumb.jpg');
+                $image = new Images();
+                $image->advertise_id = $this->id;
+                $image->image = 'no-image-available_thumb.jpg' ;
+                $image->save();
+            }
           
              foreach ($this->imageFiles as $file) {
                 $file->saveAs('uploads/' .$this->id.'/'.$file->baseName.'.' . $file->extension);

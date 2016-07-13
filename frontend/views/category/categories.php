@@ -146,6 +146,7 @@ jQuery(document).ready(function($) {
             data: "id="+id,
             dataType: "JSON",   //expect html to be returned                
             success: function(response){
+                
             var category =''
             for (i = 0; i < response.length; i++) {
                 category +='<li data-toggle="modal" data-target="#myModal" onclick="modal_cat(this)" value="' + response[i]["id"] +'" title="' + response[i]["title"] +'" id="' + response[i]["id"] +'"><a id="category_names" href="#"><div class="cat-img-box"><img class="img-responsive"  src="<?= Yii::$app->request->baseUrl?>/admin/uploads/'   +response[i]["image"]+'"> </div><span> '+response[i]["title"]+'</span></a></li>';
@@ -161,6 +162,8 @@ jQuery(document).ready(function($) {
             data: "id="+id,
             dataType: "JSON",   //expect html to be returned                
             success: function(response){
+              title = response[0]['title'];
+              console.log(title);
             var category =''
             var cat_image =''
             var  m_link = ''
@@ -183,6 +186,7 @@ jQuery(document).ready(function($) {
             dataType: "JSON",   //expect html to be returned                
             success: function(response){
             $('#total_ads').html(response + ' Ads');
+            $('#maintitle').html(title+'<span>(Velg byen din for å se lokale annonser)</span>')
             }
             });
         

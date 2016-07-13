@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 use yii\helpers\html;
 use yii\widgets\LinkPager;
@@ -16,7 +16,7 @@ use yii\helpers\Url;
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 header-search-main">
         
                     <div class="form-group">
-                        <input type="text" name="category"  class="form-control custom-sel-form-control"  value="<?php if(isset( $_GET['category'])) {echo $_GET['category'];  } ?>"  id="category" placeholder="Category">
+                        <input type="text" onchange="submit_frm()" name="category"  class="form-control custom-sel-form-control"  value="<?php if(isset( $_GET['category'])) {echo $_GET['category'];  } ?>"  id="category" placeholder="Category">
                         <input type="text" name="city"  class="hidden" id="region" value="<?php if(isset( $_GET['city'])) { echo $_GET['city']; } ?>">
                         <input type="text" name="location" class="form-control" value="<?php if(isset( $_GET['location'])) { echo $_GET['location']; } ?>" id="location" placeholder="Location" data-toggle="modal" data-target="#myModal"  />
                     <!--<input id="sel1" class="form-control custom-sel-form-control" type="text" placeholder="Category">-->
@@ -30,13 +30,13 @@ use yii\helpers\Url;
                                     <ul class="nav nav-pills nav-main" id="mainMenu">
 <?php foreach ($category as $categ) { ?>
                                             <li class="dropdown">
-                                                <a class="myCategory" href="#">
-    <?= $categ->title ?>
+                                                <a onClick="submit_frm()"  class="myCategory" href="#">
+                                                    <?= $categ->title ?>
                                                     <i class="fa fa-angle-right pull-right bold"></i>
                                                 </a>
 
                                                 <ul class='dropdown-menu'>
-    <?php $submenu->getsubcate($categ->id); ?>
+                                               <?php $submenu->getsubcate($categ->id); ?>
                                                 </ul>
                                             </li>
 <?php } ?>
@@ -121,7 +121,6 @@ use yii\helpers\Url;
             </div><!-- /Modal -->
          
         </section>
-        <!-- /header-search-main -->
         <div class="container">
             <!--search-main-->
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 search-main">
@@ -525,7 +524,13 @@ $(".myCategory").click(function(){
 <script src="template/js/custom-script.js"></script>
 <script>
     function submit_frm()
-    {
+    {         
+          var str
+       
+         setTimeout(function(){  str =  document.getElementById('category').value;  
+        str = str.trim(); console.log(str);document.getElementById('category').value = str; }, 100);
+     
+        setTimeout(function(){
             $.ajax({
         type: "GET",
         url: "<?php  echo Yii::$app->getUrlManager()->createUrl('site/searchad'); ?>",
@@ -536,16 +541,11 @@ $(".myCategory").click(function(){
             //       alert(data);
             document.getElementById("ads").innerHTML = data;
         }
-    });
+    });}, 1000);
 //        alert('dddd');
 //          $(form).submit();
         //  $( ".navbar-form" ).submit();
     }
-
-
-//$('#menucontainer').click(function(event){
-//    event.stopPropagation();
-//});
 
 </script>
 

@@ -1,10 +1,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->   
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+  <script>tinymce.init({ selector:'atextarea' });</script>
 <?php
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use kartik\widgets\FileInput;
+use dosamigos\ckeditor\CKEditor;
+use dosamigos\ckeditor\CKEditorInline;
 
 ?>
 <main>
@@ -45,7 +49,12 @@ use kartik\widgets\FileInput;
              <div id="optional">
                
              </div>
+            
+             <div class="input-group hvr_div custom-field-wrap description-popover">
+                    
+            </div> 
              
+           
             <?= $form->field($model, 'description', ['template' => '  <div class="input-group hvr_div custom-field-wrap description-popover">
               <label>Beskrivelse<b class="asterisk">*</b></label>
               <a href="#" data-html="true" href = "#" title = "<b>Items with good description sell faster!</b>" data-container = "body" 
@@ -57,7 +66,7 @@ use kartik\widgets\FileInput;
                     </ul>">
             {input}</a><div class="error-placement">{error}<span id="textarea_description"></span></div>
             </div>'])->textarea(array('rows'=>5, 'class'=>'form-control abc', 'placeholder'=>"Include the brand, model, age, and any included accessories.")); ?>  
-                 
+                
         <?= $form->field($model, 'price', ['template' => '<div class="input-group hvr_div custom-field-wrap">
               <label>Pris<b class="asterisk">*</b></label>
               <a href="#!" data-placement="right" data-html="true" href = "#" title = "<b>Buyers prefer ads with realistic prices!</b>" data-container = "body" 
@@ -193,9 +202,15 @@ use kartik\widgets\FileInput;
               </div>
              
             </div><!-- /custom-field-wrap-->
+             <div class="row">
+               
+                 <div class="col-md-9 col-sm-9 pull-right ">
+            
+           <atextarea name="Advertisements[description]" id="advertisements-description" class="form-control abc">Description.</atextarea>
+            </div>
+            </div>
+            </div><!-- /submitad-main-->
            
-         </div><!-- /submitad-main-->
-        
 <!--        <div class="col-md-3 col-sm-3 hidden-xs adpost-offer">
           <div class="adpost-offer-inr">
             <h4>Ad Posting Offers:</h4>

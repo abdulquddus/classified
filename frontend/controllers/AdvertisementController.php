@@ -135,17 +135,17 @@ class AdvertisementController extends Controller
 //      exit();
       $additional = \frontend\models\FormAdditionalValues::find()->where(['ad_id'=>$ads->id])->all();
         $imgs=  \backend\models\Images::find()->where(['advertise_id'=>$id])->all();
-        $state= \backend\models\Region::find()->where(['id'=>$ads->state_id])->one();
        
+        $state= \backend\models\Region::find()->where(['id'=>$ads->state_id])->one();
         $city= \backend\models\City::find()->where(['id'=>$ads->city_id])->one();
          
-		return $this->render('ad-view',['ads'=>$ads,
+                                               return $this->render(    'ad-view',['ads'=>$ads,
 									'id'=>$id,
 									'imgs'=>$imgs,
 									'state'=>$state,
 									'city'=>$city,
 									'additional'=>$additional,
-                                                                         'random_ads'=>$random_ads
+                                                                        'random_ads'=>$random_ads
                         ]);
     }
     

@@ -47,6 +47,18 @@ use yii\helpers\Html;
             <?php 
     
     $k=0;
+    
+    if(empty($imgs)){
+        ?>
+            
+            <div class="item active">
+                <img class="fancybox" src="./design/img/no-image-available.jpg">
+            </div>
+              <?php
+              
+              
+    }
+    else {
     foreach($imgs as $img){?>
             
             <div class="item <?php if ($k==0) { ?> active <?php } ?>">
@@ -55,7 +67,7 @@ use yii\helpers\Html;
               <?php
               
               $k=$k+1;
-            } ?>
+    } }?>
         </div>
     </div> 
     <div class="clearfix">
@@ -74,26 +86,29 @@ use yii\helpers\Html;
               $t=$t+1;
             } 
             
-            ?>
+          ?>
             </div><!-- /carousel-inner -->
+          <?php if(!empty($imgs)) { ?>
             <a class="left carousel-control" href="#thumbcarousel" role="button" data-slide="prev">
                 <span class="glyphicon glyphicon-chevron-left"></span>
             </a>
             <a class="right carousel-control" href="#thumbcarousel" role="button" data-slide="next">
                 <span class="glyphicon glyphicon-chevron-right"></span>
             </a>
+            
+          <?php } ?>
         </div> <!-- /thumbcarousel -->
     </div><!-- /clearfix -->
 </div> <!-- /col-xs-12 -->
 
 			<div class="addescriptionwraptxt">
 									<div class="addescriptiontoptxt">
-										<h4>Brand</h4>
-										<p>Nokia</p>
+<!--										<h4>Brand</h4>
+										<p>Nokia</p>-->
 									</div>
 									<p><?= $ads->description ?></p>
 									<div class="adnote">
-											When you call, don't forget to mention that you found this ad on OLX.com.pk
+											When you call, don't forget to mention that you found this ad on Adpost.no
 											I do not wish to be contacted by telemarketers or representatives of any other website. 
 									</div>
 									<div class="adview">
@@ -112,11 +127,20 @@ use yii\helpers\Html;
 									<td>
 										<p><?= Yii::$app->formatter->asDate($random_ad->created_date, 'php:d-M')?></p>
 									</td>
+                                                                        
+                                                                        <?php if(!empty($imgs)){?>
 									<td class="td-img">
 										<a href="<?= Yii::$app->urlManager->createUrl(['advertisement/ad-view', 'id' => $random_ad->id]) ?>" title="QMobile Noir i9">
 										<img class="img-responsive" src="<?php echo Yii::getAlias('@web') ?>/uploads/<?= $random_ad['id']?>/<?= $imgs['image']?>">
 										</a>
 									</td>
+                                                                        <?php } else {?>
+                                                                        <td class="td-img">
+										<a href="<?= Yii::$app->urlManager->createUrl(['advertisement/ad-view', 'id' => $random_ad->id]) ?>" title="QMobile Noir i9">
+										<img class="img-responsive" src="./design/img/no-image-available_thumb.jpg">
+										</a>
+									</td>
+                                                                        <?php }?>
 									<td>
 										<a href=""><p><?= $random_ad->advertise_title?></p></a>
 										<!-- <p>Qmobile</p> -->
@@ -153,7 +177,7 @@ use yii\helpers\Html;
 						</div><!--/userdatabox-->
 						<div class="verifiednumberbox">
 							<span class="icon-verify"></span>
-							<b>+<?= $ads->mobile_number ?></b>
+							<b><?= $ads->mobile_number ?></b>
 						</div><!--/verifiednumberbox-->
 						<div class="safetyTipsBox">
 						   <h4 class="text-center">Safety Tips for Buyers</h4>
