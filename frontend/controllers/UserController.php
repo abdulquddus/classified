@@ -25,7 +25,8 @@ use yii\web\Session;
 use mPDF;
 use frontend\models\ConvStatus;
 use yii\data\Pagination;
-
+use app\models\UploadForm;
+use yii\web\UploadedFile;
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -46,7 +47,69 @@ class UserController extends Controller
             Yii::$app->session->setFlash('success', 'User not Deleted.');
       }
     }
-     public function actionSetting()
+    
+    
+    public function actionUpload()
+    {
+        $model = new UploadForm();
+
+        if (Yii::$app->request->isPost) {
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            if ($model->upload()) {
+                // file is uploaded successfully
+                return;
+            }
+        }
+
+        return $this->render('upload', ['model' => $model]);
+    }
+    
+    
+   public function actionCopyad($id){
+         if (\Yii::$app->user->isGuest) {
+            return $this->goHome();
+           }
+          Yii::$app->session->setFlash('success', 'Creaeted new copy and pending form admin to approve ad');
+        $request = Yii::$app->request;
+//        if ($request->isAjax) {
+       
+            $model = \frontend\models\Advertisements::find()->where(['id'=>$id])->one();
+            $clone = new \frontend\models\Advertisements();
+            $clone->attributes = $model->attributes;
+//            $clone->save();
+            
+            print_r($clone);
+            if(  $clone->save()){
+            echo $clone->id; }else{
+                echo "not saved";
+            }
+           $modelimg = \frontend\models\Images::find()->where(['advertise_id'=>$id])->all();
+//           echo "<pre>";
+//           print_r($modelimg);
+//           echo "</pre>";
+//           if(!empty($model)){
+               \yii\helpers\BaseFileHelper::copyDirectory('uploads/'.$model->id, 'uploads/'.$clone->id);
+//               \yii\helpers\BaseFileHelper::copyDirectory($src, $dst)
+           foreach($modelimg as $img){
+                echo "<pre>";
+                print_r($img->image);
+                echo "</pre>";
+            $clone2 = new \frontend\models\Images();
+            $clone2->image = $img->image;
+             $clone2->advertise_id = $clone->id;
+//            $clone->save();
+            if($clone2->save()){
+                echo "img saved $clone2->image";
+                
+            }
+           }
+           
+//           }
+//        }
+        
+    }
+
+    public function actionSetting()
     {
          if (\Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -485,6 +548,25 @@ class UserController extends Controller
         }
     }
 
+     public function actionMarksold($id)
+    {
+        $request = Yii::$app->request;
+//        if ($request->isAjax) {
+            $model= \frontend\models\Advertisements::find()->where(['id'=>$id])->one();
+//            $model= \frontend\models\Advertisements::findOne($id);
+//            echo "<pre>";
+//            print_r($model);
+//            echo "</pre>";
+//            exit();
+            if ($model->sold_status== 0){
+                $model->sold_status= 1; $model->save();
+            echo 'sold';
+            
+            }
+             
+//        }
+    }
+    
      public function actionChangestatus($id)
     {
         $request = Yii::$app->request;
@@ -502,6 +584,7 @@ class UserController extends Controller
              }
         }
     }
+    
     
     public function actionGet_search_ad($search_value){
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -686,24 +769,6 @@ class UserController extends Controller
   $mpdf->Output('MyPDF.pdf', 'D');
   exit;
  }
-    
- public function actionMarksold($id)
-    {
-        $request = Yii::$app->request;
-//        if ($request->isAjax) {
-            $model= \frontend\models\Advertisements::find()->where(['id'=>$id])->one();
-//            $model= \frontend\models\Advertisements::findOne($id);
-//            echo "<pre>";
-//            print_r($model);
-//            echo "</pre>";
-//            exit();
-            if ($model->sold_status== 0){
-                $model->sold_status= 1; $model->save();
-            echo 'sold';
-            
-            }
-             
-//        }
-    }
+ 
  
 }

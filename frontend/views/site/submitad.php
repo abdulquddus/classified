@@ -288,7 +288,7 @@ use dosamigos\ckeditor\CKEditorInline;
              <?= $form->field($model, 'address', ['template' => '<div class="input-group hvr_div contact-field-wrap">
               <label>Address</label>
               {input}<div class="error-placement">{error}</div>
-            </div>'])->textinput(array('rows'=>3, 'class'=>'form-control abc')); ?>  
+            </div>'])->textinput(array('value'=>$user->address, 'rows'=>3, 'class'=>'form-control abc')); ?>  
 
 
 
