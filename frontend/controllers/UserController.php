@@ -65,7 +65,7 @@ class UserController extends Controller
     }
     
     
-   public function actionCopyad($id){
+    public function actionCopyad($id){
          if (\Yii::$app->user->isGuest) {
             return $this->goHome();
            }
@@ -109,6 +109,8 @@ class UserController extends Controller
         
     }
 
+    
+
     public function actionSetting()
     {
          if (\Yii::$app->user->isGuest) {
@@ -120,21 +122,43 @@ class UserController extends Controller
           
           $id = Yii::$app->user->getId();
           $pass_model = new Password();
-          $detail_model = new Details();
+//          $detail_model = new Details();
+          $detail_model = Details::findOne($id);
           $adscredit = new \frontend\models\CreditsDetails();
-          if ($detail_model->load(Yii::$app->request->post())) {
+          if ($detail_model->load(Yii::$app->request->post()) && $detail_model->validate()) {
        
-         $detail_model->state = $_POST['state'];
-         $user_city = $_POST['city'];
-         $id = Yii::$app->user->getId();
+               $detail_model->imgu = UploadedFile::getInstances($detail_model, 'img');
+//               echo "<pre>";
+////               print_r($detail_model->imgu);
+//               echo "</pre>";
+//               foreach($detail_model->imgu as $test){
+//                   print_r($test->name);
+//               }
+               $detail_model->upload();
+//            if ($detail_model->upload()) {
+//                // file is uploaded successfully
+//                return;
+//            }
+//              echo $detail_model->name;
               
-             $sql="UPDATE `user` SET `name`='$detail_model->name', `mobile`='$detail_model->mobile', `city`='$user_city' ,`state`='$detail_model->state',`address`='$detail_model->address' WHERE `id`='$id'";
-          $sql = \Yii::$app->db->createCommand($sql)->execute();
-      if($sql){
-           Yii::$app->session->setFlash('success', 'User settings saved successfully.');
-          }else{
-            Yii::$app->session->setFlash('success', 'User settings not saved successfully.');
-      }
+//              echo $detail_model->
+               
+                       if(isset($_POST['state'])){ $detail_model->state = $_POST['state']; }
+                        if(isset($_POST['city'])){  $detail_model->city = $_POST['city'];}
+                       
+                       
+                      
+                        
+//                        $user_city = $_POST['city'];
+//                        $id = Yii::$app->user->getId();
+
+//                        $sql="UPDATE `user` SET `name`='$detail_model->name', `mobile`='$detail_model->mobile', `city`='$user_city' ,`state`='$detail_model->state',`address`='$detail_model->address' WHERE `id`='$id'";
+//                        $sql = \Yii::$app->db->createCommand($sql)->execute();
+                         if( $detail_model->save()){
+                          Yii::$app->session->setFlash('success', 'User settings saved successfully.');
+                         }else{
+                           Yii::$app->session->setFlash('success', 'User settings not saved successfully.');
+                         }
            
          
          }

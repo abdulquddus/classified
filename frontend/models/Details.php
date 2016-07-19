@@ -20,7 +20,9 @@ use Yii;
 class Details extends \yii\db\ActiveRecord
 {
     public $name;
-    /**
+	public $imgu;
+
+   /**
      * @inheritdoc
      */
     public static function tableName()
@@ -36,6 +38,7 @@ class Details extends \yii\db\ActiveRecord
         return [
             [['mobile'], 'integer'],
             [['name','address'], 'string'],
+			[['img'], 'file'],
             [['state', 'city'], 'integer']
             
 //            [['created_at', 'updated_at'], 'safe'],
@@ -64,5 +67,19 @@ class Details extends \yii\db\ActiveRecord
 //            'created_at' => 'Created At',
 //            'updated_at' => 'Updated At',
         ];
+    }
+	
+	public function upload()
+    {
+        if ($this->validate()) { 
+            
+//                $this->imgu->saveAs('uploads/' . $this->imgu->baseName . '.' . $this->imgu->extension);
+           foreach($this->imgu as $test){
+//                   print_r($test->name);
+                    $test->saveAs('user/'. $this->id . '.' . $test->extension);
+                  $this->img = $test->extension;
+               }
+            return true;
+        }
     }
 }

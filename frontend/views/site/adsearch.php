@@ -28,7 +28,7 @@ use yii\helpers\Url;
                             <div class="container-tag" >   
                                 <nav>
                                     <ul class="nav nav-pills nav-main" id="mainMenu">
-<?php foreach ($category as $categ) { ?>
+                        <?php foreach ($category as $categ) { ?>
                                             <li class="dropdown">
                                                 <a onClick="submit_frm()"  class="myCategory" href="#">
                                                     <?= $categ->title ?>
@@ -39,7 +39,7 @@ use yii\helpers\Url;
                                                <?php $submenu->getsubcate($categ->id); ?>
                                                 </ul>
                                             </li>
-<?php } ?>
+                                <?php } ?>
 
                                     </ul>
                                 </nav>
@@ -89,8 +89,8 @@ use yii\helpers\Url;
                                     $main_regions = [];
                                     foreach ($regions as $region) {
                                         array_push($main_regions, $region->id);
-                                        echo "<li id='azad' onclick='city($region->id, this)'><a href='#'>$region->name "
-                                                . "<i class='fa fa-angle-right pull-right bold'></i></a></li>";
+                                        echo "<li id='azad' onclick='city($region->id, this)'><a class='myLi' href='#'>$region->name</a> "
+                                                . "<a href='#'><i class='fa fa-angle-right pull-right bold'></i></a></li>";
                                     }
                                     ?>
                                 </ul>
@@ -327,24 +327,44 @@ use yii\helpers\Url;
 
                                 $img = \frontend\models\Images::findOne(['advertise_id' => $cate->id]);
                                 ?>
-                                <div id="" class="selectedcat-box ">
-                                    <div class="col-md-5 mrgn_zero padng_zero extracls">
+                                
+                        <div id="" class="selectedcat-box ">
+                                    <div class="col-md-4 col-sm-12 col-xs-12 mrgn_zero padng_zero extracls">
                                     <div class=" image-box">
                                        <a href="<?= Yii::$app->urlManager->createUrl(['advertisement/ad-view', 'id' => $cate->id]) ?>">
                                         <img class="img-responsive" src="<?= Yii::getAlias('@web') . "/uploads/" . $cate->id . "/" . $img['image'] ?>" alt="" />
                                        </a>
                                     </div>
 				    </div>
-                                    <div class="col-md-7 product_detail">
+                                    <div class="col-md-8 col-sm-12 col-xs-12 product_detail">
+                                        <div class="top-detail">
+                                            <span>Detail</span> 8000KM
+                                        </div>
+                                        <div class="top-detail">
+                                            <span>Detail</span> Detail 2016 model
+                                        </div>
                                         <a href="<?= Yii::$app->urlManager->createUrl(['advertisement/ad-view', 'id' => $cate->id]) ?>" class="title_head">
                                             <?= $cate->advertise_title ?>
                                         </a>
-                                        <span>Honda Civic » Parado Foxy </span>
+                                        <div class="top-detail">
+                                            <span>Detail</span> Deisel  
+                                        </div>
+                                        <div class="top-detail">
+                                            <span>Detail</span> Automatic
+                                        </div>
+                                        <div class="address-detail">
+                                            Adress  12 p 1271 Oslo
+  
+                                        </div>
+<!--                                        <span>Honda Civic » Parado Foxy </span>
                                         <h1>NOK: 150,0000</h1>
                                         <p>Lorem Ipsum is simply dummy text of the printing and type setting industry.</p>
-                                        <span>Karachi, Pakistan </span>
-                                        <a href="#" class="verifyadd"></a>
+                                        <span>Karachi, Pakistan </span>-->
+                                       
                                     </div>
+                                    <div class="productprice">
+                                        Kr. 5000</div>
+                                     <a href="#" class="verifyadd"></a>
                                 </div>
                             <?php
                             }

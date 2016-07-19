@@ -116,49 +116,12 @@ use yii\helpers\Html;
 									</div>
 								</div>
 						</div>
-                                    <div class="col-md-12 offercontent">
-						<div class="row">
-							<h2 class="useradttl">Similar Ads</h2>
-							<table class="table userotherads">
-								<tr>
-								<?php foreach($random_ads as $random_ad){ 
-						$imgs=  \backend\models\Images::find()->where(['advertise_id'=>$random_ad->id])->one();
-							?>
-									<td>
-										<p><?= Yii::$app->formatter->asDate($random_ad->created_date, 'php:d-M')?></p>
-									</td>
-                                                                        
-                                                                        <?php if(!empty($imgs)){?>
-									<td class="td-img">
-										<a href="<?= Yii::$app->urlManager->createUrl(['advertisement/ad-view', 'id' => $random_ad->id]) ?>" title="QMobile Noir i9">
-										<img class="img-responsive" src="<?php echo Yii::getAlias('@web') ?>/uploads/<?= $random_ad['id']?>/<?= $imgs['image']?>">
-										</a>
-									</td>
-                                                                        <?php } else {?>
-                                                                        <td class="td-img">
-										<a href="<?= Yii::$app->urlManager->createUrl(['advertisement/ad-view', 'id' => $random_ad->id]) ?>" title="QMobile Noir i9">
-										<img class="img-responsive" src="./design/img/no-image-available_thumb.jpg">
-										</a>
-									</td>
-                                                                        <?php }?>
-									<td>
-										<a href=""><p><?= $random_ad->advertise_title?></p></a>
-										<!-- <p>Qmobile</p> -->
-									</td>
-									<td class="td-price">
-										<p>NOK <?= $random_ad->price?></p>
-									</td>
-								</tr>
-								<?php     } ?>
-							</table>
-							<div class="google-ads-container"></div>
-						</div>
-					</div><!-- /offercontent-->
+                                   
 				</div><!--/.adview-content-->
-				<div class="col-md-3 adview-right">
+                                <div class="col-md-3 adview-right">
 					<div class="row">
 						<div class="pricelabel text-center">
-					NOK <?= $ads->price ?>
+					Kr. <?= $ads->price ?>
 						</div>
 						<div class="userdatabox">
 						   <div class="userbox">
@@ -207,6 +170,46 @@ use yii\helpers\Html;
 
 					</div>
 				</div><!--/adview-right-->
+                                <br clear="all">
+                                 <div class="col-md-12">
+						<div class="offercontent">
+							<h2 class="useradttl">Similar Ads</h2>
+							<table class="table userotherads">
+								<tr>
+								<?php foreach($random_ads as $random_ad){ 
+						$imgs=  \backend\models\Images::find()->where(['advertise_id'=>$random_ad->id])->one();
+							?>
+									<td>
+										<p><?= Yii::$app->formatter->asDate($random_ad->created_date, 'php:d-M')?></p>
+									</td>
+                                                                        
+                                                                        <?php if(!empty($imgs)){?>
+									<td class="td-img">
+										<a href="<?= Yii::$app->urlManager->createUrl(['advertisement/ad-view', 'id' => $random_ad->id]) ?>" title="QMobile Noir i9">
+										<img class="img-responsive" src="<?php echo Yii::getAlias('@web') ?>/uploads/<?= $random_ad['id']?>/<?= $imgs['image']?>">
+										</a>
+									</td>
+                                                                        <?php } else {?>
+                                                                        <td class="td-img">
+										<a href="<?= Yii::$app->urlManager->createUrl(['advertisement/ad-view', 'id' => $random_ad->id]) ?>" title="QMobile Noir i9">
+										<img class="img-responsive" src="./design/img/no-image-available_thumb.jpg">
+										</a>
+									</td>
+                                                                        <?php }?>
+									<td>
+										<a href=""><p><?= $random_ad->advertise_title?></p></a>
+										<!-- <p>Qmobile</p> -->
+									</td>
+									<td class="td-price">
+										<p>Kr. <?= $random_ad->price?></p>
+									</td>
+								</tr>
+								<?php     } ?>
+							</table>
+							<div class="google-ads-container"></div>
+						</div>
+					</div><!-- /offercontent-->
+				
 				
                                 <br clear="all">
                                 

@@ -24,7 +24,9 @@ use common\components\paypal;
 use yii\web\Session;
 use mPDF;
 use frontend\models\ConvStatus;
-
+use yii\data\Pagination;
+use app\models\UploadForm;
+use yii\web\UploadedFile;
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -45,7 +47,69 @@ class UserController extends Controller
             Yii::$app->session->setFlash('success', 'User not Deleted.');
       }
     }
-     public function actionSetting()
+    
+    
+    public function actionUpload()
+    {
+        $model = new UploadForm();
+
+        if (Yii::$app->request->isPost) {
+            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
+            if ($model->upload()) {
+                // file is uploaded successfully
+                return;
+            }
+        }
+
+        return $this->render('upload', ['model' => $model]);
+    }
+    
+    
+   public function actionCopyad($id){
+         if (\Yii::$app->user->isGuest) {
+            return $this->goHome();
+           }
+          Yii::$app->session->setFlash('success', 'Creaeted new copy and pending form admin to approve ad');
+        $request = Yii::$app->request;
+//        if ($request->isAjax) {
+       
+            $model = \frontend\models\Advertisements::find()->where(['id'=>$id])->one();
+            $clone = new \frontend\models\Advertisements();
+            $clone->attributes = $model->attributes;
+//            $clone->save();
+            
+            print_r($clone);
+            if(  $clone->save()){
+            echo $clone->id; }else{
+                echo "not saved";
+            }
+           $modelimg = \frontend\models\Images::find()->where(['advertise_id'=>$id])->all();
+//           echo "<pre>";
+//           print_r($modelimg);
+//           echo "</pre>";
+//           if(!empty($model)){
+               \yii\helpers\BaseFileHelper::copyDirectory('uploads/'.$model->id, 'uploads/'.$clone->id);
+//               \yii\helpers\BaseFileHelper::copyDirectory($src, $dst)
+           foreach($modelimg as $img){
+                echo "<pre>";
+                print_r($img->image);
+                echo "</pre>";
+            $clone2 = new \frontend\models\Images();
+            $clone2->image = $img->image;
+             $clone2->advertise_id = $clone->id;
+//            $clone->save();
+            if($clone2->save()){
+                echo "img saved $clone2->image";
+                
+            }
+           }
+           
+//           }
+//        }
+        
+    }
+
+    public function actionSetting()
     {
          if (\Yii::$app->user->isGuest) {
             return $this->goHome();
@@ -56,20 +120,23 @@ class UserController extends Controller
           
           $id = Yii::$app->user->getId();
           $pass_model = new Password();
-          $detail_model = new Details();
+          $detail_model = Details::findOne($id);
           $adscredit = new \frontend\models\CreditsDetails();
           if ($detail_model->load(Yii::$app->request->post())) {
        
-         $detail_model->state = $_POST['state'];
-         $user_city = $_POST['city'];
-         $id = Yii::$app->user->getId();
-              
-             $sql="UPDATE `user` SET `name`='$detail_model->name', `mobile`='$detail_model->mobile', `city`='$user_city' ,`state`='$detail_model->state' WHERE `id`='$id'";
-          $sql = \Yii::$app->db->createCommand($sql)->execute();
-      if($sql){
-           Yii::$app->session->setFlash('success', 'User settings saved successfully.');
-          }else{
-            Yii::$app->session->setFlash('success', 'User settings not saved successfully.');
+        $detail_model->imgu = UploadedFile::getInstances($detail_model, 'img');
+
+               $detail_model->upload();
+
+               
+                       if(isset($_POST['state'])){ $detail_model->state = $_POST['state']; }
+                        if(isset($_POST['city'])){  $detail_model->city = $_POST['city'];}
+                     
+                         if( $detail_model->save()){
+                          Yii::$app->session->setFlash('success', 'User settings saved successfully.');
+                         }else{
+                           Yii::$app->session->setFlash('success', 'User settings not saved successfully.');
+                         }
       }
            
          
@@ -104,7 +171,27 @@ class UserController extends Controller
          $array_region = \frontend\models\Region::find()->all();
          $state = ArrayHelper::map($array_region, 'id', 'name');
          $conversation = new Conversation();
-          $conversation_ids = Conversation::find()->where(['from'=>yii::$app->user->id])->orWhere(['to'=>yii::$app->user->id])->orderBy(['id' => SORT_ASC])->all();
+          $conversation_data = Conversation::find()->where(['from'=>yii::$app->user->id])->
+                  orWhere(['to'=>yii::$app->user->id])->orderBy(['id' => SORT_ASC]);
+          
+//              $search = \backend\models\Advertisement::find()->
+//              where(['status'=>1])->
+//              andWhere($category)->
+//              andWhere($category_filters)->
+//              andWhere($max_price)->
+//              andWhere($min_price)->
+//              andWhere($created)->
+//              andWhere($condition)->
+//              andWhere($type)->
+//              andWhere($city)->
+//              andWhere($key)->
+//              orderBy($order_by);
+//    
+          $count = $conversation_data->count();
+          $pagination = new Pagination(['totalCount'=>$count, 'pageSize'=>20]);
+          $conversation_ids=$conversation_data->offset($pagination->offset)->limit($pagination->limit)->all();
+  
+          
           if(empty($conversation_ids)){
 //           $conversation_ids = Conversation::find()->where(['to'=>yii::$app->user->id])->all();
           }
@@ -135,36 +222,73 @@ class UserController extends Controller
          
         //Getting the login UserID
         $login_userID = Yii::$app->user->id;        
-
-        $advert_data = \backend\models\Advertisement::find()
-            ->where("user_id = '$login_userID'")
-            ->orderBy(['id' => SORT_DESC,])
-            ->all();
+//$ad_data->ad_status==1 && $ad_data->status==1   Active add
+        $advert_counter_active = \backend\models\Advertisement::find()
+            ->where("user_id = '$login_userID'")->
+                andWhere(['ad_status'=>1])->
+                andWhere(['status'=>1])->
+                orderBy(['id' => SORT_DESC]);
         
+        $count_add = $advert_counter_active->count();
+        $pagination_advert_active = new Pagination(['pageParam' => 'active-page','totalCount'=>$count_add, 'pageSize'=>20]);
+        $advert_active = $advert_counter_active->offset($pagination_advert_active->offset)->limit($pagination_advert_active->limit)->all();
+
+        //ad_status =0 ,un active 
+        $advert_counter_unactive = \backend\models\Advertisement::find()
+            ->where("user_id = '$login_userID'")->
+                //andWhere(['ad_status'=>1])->
+                andWhere(['ad_status'=>0])->
+                orderBy(['id' => SORT_DESC]);
+        
+        $count_add = $advert_counter_unactive->count();
+        $pagination_advert_unactive = new Pagination(['pageParam' => 'unactive-page','totalCount'=>$count_add, 'pageSize'=>20]);
+        $advert_data_unactive = $advert_counter_unactive->offset($pagination_advert_unactive->offset)->limit($pagination_advert_unactive->limit)->all();
+
+
+                //status =2 ,Moderate 
+        $advert_counter_moderate = \backend\models\Advertisement::find()
+            ->where("user_id = '$login_userID'")->
+                //andWhere(['ad_status'=>1])->
+                andWhere(['status'=>2])->
+                orderBy(['id' => SORT_DESC]);
+        
+        $count_add = $advert_counter_moderate->count();
+        $pagination_advert_moderate = new Pagination(['pageParam' => 'moderate-page','totalCount'=>$count_add, 'pageSize'=>20]);
+        $advert_data_moderate = $advert_counter_moderate->offset($pagination_advert_moderate->offset)->limit($pagination_advert_moderate->limit)->all();
+
+         $advert_counter_pending = \backend\models\Advertisement::find()
+            ->where("user_id = '$login_userID'")->
+                //andWhere(['ad_status'=>1])->
+                andWhere(['status'=>0])->
+                orderBy(['id' => SORT_DESC]);
+        
+        $count_add = $advert_counter_pending->count();
+        $pagination_advert_pending = new Pagination(['pageParam' => 'moderate-page','totalCount'=>$count_add, 'pageSize'=>20]);
+        $advert_data_pending = $advert_counter_pending->offset($pagination_advert_moderate->offset)->limit($pagination_advert_moderate->limit)->all();
         $active_ads = \backend\models\Advertisement::find()->distinct()
             ->where("user_id = '$login_userID'")
             ->andWhere(['status' => 1])
             ->andWhere(['ad_status' => 1])
-            ->orderBy(['id' => SORT_DESC])
-            //->limit(10)
-            ->all();
+            ->count();
         
-        
-        //echo "USERID" .$login_userID;
-//            ->andWhere(['status' => 1])
-//            ->andWhere(['ad_status' => 1])
-//            ->orderBy(['id' => SORT_DESC,])
-//            ->all();
-//            echo count($active_ads);
-//            echo "<pre>";    
-//            print_r($active_ads);
-//            echo "</pre>";
-//            exit();
+        $inactive_ads = \backend\models\Advertisement::find()->distinct()
+            ->where("user_id = '$login_userID'")
+            ->andWhere(['status' => 1])
+            ->andWhere(['ad_status' => 0])
+            ->count();
+        $rejected_ads = \backend\models\Advertisement::find()->distinct()
+            ->where("user_id = '$login_userID'")
+            ->andWhere(['status' => 2])
+            ->count();
+        $pending_ads = \backend\models\Advertisement::find()->distinct()
+            ->where("user_id = '$login_userID'")
+            ->andWhere(['status' => 0])
+            ->count();
         
         
    if(isset($_GET['success'])){
            
-            echo "I am here";
+            
            $modelcd = new \frontend\models\CreditsDetails();
            $session = Yii::$app->session;
            $uid= $session['user_id'];
@@ -209,7 +333,7 @@ class UserController extends Controller
                                          'title'=>$title,
                                          'company_user'=>$company_user,
                                          'adscredit'=>$adscredit,
-                                         'advert_data' => $advert_data,
+                                         //'advert_data' => $advert_data,
                                          'addin'=>$addin,
                                          'addse'=>$addse,
                                          'senderi' =>$senderi,
@@ -218,10 +342,21 @@ class UserController extends Controller
                                          'receivero' =>$receivero,
                                          'conversation_ids'=>$conversation_ids,
                                          'conversation'=>$conversation,
+                                         'pagination_advert_active'=>$pagination_advert_active,
                                          'active_ads'=> $active_ads,
+                                         'inactive_ads'=>$inactive_ads,
+                                         'rejected_ads'=>$rejected_ads,
                                          'credits_details'=>$credits_details,
                                          'credits_expense'=>$credits_expense,
-                                         'ad_info'=>$ad_info
+                                         'ad_info'=>$ad_info,
+                                         'advert_active'=>$advert_active,
+                                         'advert_data_moderate'=>$advert_data_moderate,
+                                         'advert_data_unactive'=>$advert_data_unactive,
+                                         'pagination_advert_unactive'=>$pagination_advert_unactive,
+                                         'pagination_advert_moderate'=>$pagination_advert_moderate,
+                                         'pagination'=>$pagination,
+                                         'advert_data_pending'=>$advert_data_pending,
+                                         'pending_ads'=>$pending_ads
                  ]);
          
     }
@@ -233,14 +368,24 @@ class UserController extends Controller
      Messages::updateAll(['to_viewed' => 1], ['to'=>$user, 'conv_id'=>$conv_id]);
      }
      public function actionArchive($id){
-         $con = Conversation::findOne($id);
-         $con->status=2;
-         $con->save();
+//         $con = Conversation::findOne($id);
+//         $con->status=2;
+//         $con->save();
+         
+        $user = \Yii::$app->user->identity->id;
+        $conv = ConvStatus::find()->where(['conv_id'=>$id, 'user_id'=>$user])->one();
+        $conv->status=2;
+        $conv->save();
      }
       public function actionArest($id){
-         $con = Conversation::findOne($id);
-         $con->status=1;
-         $con->save();
+//         $con = Conversation::findOne($id);
+//         $con->status=1;
+//         $con->save();
+          
+          $user = \Yii::$app->user->identity->id;
+          $conv = ConvStatus::find()->where(['conv_id'=>$id, 'user_id'=>$user])->one();
+          $conv->status=1;
+          $conv->save();
      }
     
     public function actionMessagesDetail(){
@@ -406,6 +551,25 @@ class UserController extends Controller
         }
     }
 
+     public function actionMarksold($id)
+    {
+        $request = Yii::$app->request;
+//        if ($request->isAjax) {
+            $model= \frontend\models\Advertisements::find()->where(['id'=>$id])->one();
+//            $model= \frontend\models\Advertisements::findOne($id);
+//            echo "<pre>";
+//            print_r($model);
+//            echo "</pre>";
+//            exit();
+            if ($model->sold_status== 0){
+                $model->sold_status= 1; $model->save();
+            echo 'sold';
+            
+            }
+             
+//        }
+    }
+    
      public function actionChangestatus($id)
     {
         $request = Yii::$app->request;
@@ -423,6 +587,7 @@ class UserController extends Controller
              }
         }
     }
+    
     
     public function actionGet_search_ad($search_value){
         Yii::$app->response->format = Response::FORMAT_JSON;
@@ -607,5 +772,6 @@ class UserController extends Controller
   $mpdf->Output('MyPDF.pdf', 'D');
   exit;
  }
-    
+ 
+ 
 }
