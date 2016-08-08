@@ -184,7 +184,7 @@ $id=0;
              <a target="_blank" href="<?= $imgsrc->top_ad_url ?>">
              <img class="img-responsive" src="<?= Yii::$app->request->baseUrl ?>/admin/uploads/<?= $imgsrc->top_ad ?>"></a>
           <?php } else{ ?>
-              <img class="img-responsive" src="<?= Yii::$app->request->baseUrl?>/admin/uploads/Desert.jpg">
+              <img class="img-responsive" src="<?= Yii::$app->request->baseUrl?>/admin/uploads/top-banner.jpg">
          <?php }
           ?>
               
@@ -338,16 +338,16 @@ $id=0;
       <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 ftr-menu">
         <h3>Quick Links</h3>
         <ul>
-          <li><a href="#">How it Works</a></li>
-          <li><a href="#">Terms of Use</a></li>
-          <li><a href="#">Safety Tips</a></li>
-          <li><a href="#">Help & Contact</a></li>
-          <li><a href="#">Who We Are</a></li>
-          <li><a href="#">How it Works</a></li>
-          <li><a href="#">Terms of Use</a></li>
-          <li><a href="#">Safety Tips</a></li>
-          <li><a href="#">Help & Contact</a></li>
-          <li><a href="#">Who We Are</a></li>
+          <li><a href="<?php echo Url::to(['site/whoweare']);?>">Who We Are</a></li>
+          <li><a href="<?php echo Url::to(['site/terms-of-use']);?>">Terms of Use</a></li>
+          <li><a href="<?php echo Url::to(['site/safety-tips']);?>">Safety Tips</a></li>
+          <li><a href="<?php echo Url::to(['site/help-and-contact']);?>">Help & Contact</a></li>
+          <li><a href="<?php echo Url::to(['site/faqs']);?>">FAQS</a></li>
+          <li><a href="<?php echo Url::to(['site/mission']);?>">Our Mission</a></li>
+          <li><a href="<?php echo Url::to(['site/howitworks']);?>">How It Works</a></li>
+          <li><a href="<?php echo Url::to(['site/using-application']);?>">Application Explained</a></li>
+          <li><a href="<?php echo Url::to(['user/user-registration']);?>">Register</a></li>
+          <li><a href="#"></a></li>
         </ul>
       </div>
 
@@ -859,8 +859,48 @@ jQuery(function($) {
 });
 <!---------this script use in list gallary---->
 $('.detail').click(function(){
-		$('.selectedcat-box').animate({width:'100%'},500);
-		$('.image-box').animate({width:'28%'},500);
+		$('.selectedcat-box').animate({
+                    float: 'left',
+                    width:'98%',
+                    margin: '0 0px 0 12px',
+                    padding:'10px',
+                    position:'relative',
+                    transition: 'background-color 0.5s ease',
+                    //margin-bottom: '20px',
+                    
+                },500);
+	
+    $('.product_detail').animate({
+        float:'left'
+    }, 500);
+    $('.product_detail a.title_head').animate({
+        float: 'left',
+        margin: '10px 0',
+        width: '100%'
+    }, 500);
+    $('.verifyadd').animate({
+        height: '40px',
+    width: '85px',
+    position:'absolute',
+    bottom:'15px',
+    right:'10px'
+    }, 500);
+    $('.productprice').animate({
+       // width:'auto',
+    position:'absolute',
+    top:'3px',
+    right:'4px',
+    color:'#2965be',
+    background: '#f3f3f3',
+    padding: '4px',
+  
+    }, 500);
+    
+    $('.image-box').animate({
+        width: '200px',
+        height:'200px'
+    }, 500);
+       
 	});
 
 $('.small-icon').click(function() {
@@ -881,7 +921,10 @@ $('.small-icon').click(function() {
         width: '100%',
     }, 500);
     $('.verifyadd').animate({
-        top: '-30px',
+        top: '90px',
+    }, 500);
+    $('.productprice').animate({
+        color: '#fff'
     }, 500);
     
     
@@ -909,6 +952,7 @@ $('.compact').click(function() {
         width: '100%',
         height:'100%'
     }, 500);
+   
     
 
 });

@@ -33,7 +33,9 @@
         "repox/quickpay": "@dev",
         "clubmaster/quickpay": "^1.3",
         "conquer/i18n": "*",
-        "lajax/yii2-language-picker": "1.*"
+        "lajax/yii2-language-picker": "1.*",
+        "2amigos/yii2-chartjs-widget": "~2.0"
+     
     },
     "require-dev": {
         "yiisoft/yii2-debug": "*",

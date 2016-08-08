@@ -27,6 +27,7 @@ use frontend\models\ConvStatus;
 use yii\data\Pagination;
 use app\models\UploadForm;
 use yii\web\UploadedFile;
+use backend\models\CreditPackages;
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -187,7 +188,9 @@ class UserController extends Controller
          
          
          $array = \frontend\models\City::find()->all();
-         $city = ArrayHelper::map($array, 'id', 'name');        
+         $city = ArrayHelper::map($array, 'id', 'name'); 
+         
+         $packages = CreditPackages::find()->all();
          
          $array_region = \frontend\models\Region::find()->all();
          $state = ArrayHelper::map($array_region, 'id', 'name');
@@ -377,7 +380,8 @@ class UserController extends Controller
                                          'pagination_advert_moderate'=>$pagination_advert_moderate,
                                          'pagination'=>$pagination,
                                          'advert_data_pending'=>$advert_data_pending,
-                                         'pending_ads'=>$pending_ads
+                                         'pending_ads'=>$pending_ads,
+                                         'packages'=>$packages
                  ]);
          
     }

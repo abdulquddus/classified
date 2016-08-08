@@ -21,9 +21,9 @@ $this->title = 'My Yii Application';
           'action' => Yii::$app->getUrlManager()->createUrl('site/searchad'),
       ]); ?>
         <div class="form-group">
-            <input type="text" name="location" id="location" class="form-control" placeholder="Norge" data-toggle="modal" data-target="#myModal">
+            <input type="text" name="location" id="location" class="form-control" placeholder="Norge" data-toggle="modal" data-target="#myModal" autocomplete="off">
             <input type="text" name="region"  class="hidden" id="region">
-            <input type="text" name="skey" class="form-control search-box" placeholder="Søk" onclick="search()">
+            <input type="text" name="skey" class="form-control search-box" placeholder="Søk" onclick="search()" autocomplete="off">
             <!--<input type="text" id="key" class="form-control cat-sel-form-control" onclick="search()" placeholder="Search">-->
           <!-- <button type="submit" class="btn-hdr-search"><i class="fa fa-search"></i>Search</button> -->
           <button type="submit" class="btn btn-default btn-hdr-search"><i class="fa fa-search"></i>Søk</button>

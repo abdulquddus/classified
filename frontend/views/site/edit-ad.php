@@ -24,7 +24,7 @@ Category
 <b class="asterisk">*</b>
 </label>
 <span id="cat_image">
-<img width="60px" height="65px" src="/classified/admin/uploads/<?= $cat->image?>" style="padding-top:4px">
+<img width="60px" height="65px" src="admin/uploads/<?= $cat->image?>" style="padding-top:4px">
 </span>
 <a class="cat_image_name"> <?= $cat->title?> </a>
 <a class="btn btn-primary tog" href="#" data-toggle="modal" data-target="#category">Change</a>
@@ -38,7 +38,7 @@ Category
              <div id="optional">
                
              </div>
-             
+             <input type="hidden" name="perview_true" value="0" id="new_record" />
             <?= $form->field($model, 'description', ['template' => '  <div class="input-group custom-field-wrap">
               <label>Beskrivelse<b class="asterisk">*</b></label>
             {input}<div style="text-align:right">{error}</div>
@@ -90,13 +90,13 @@ Category
               <?= $form->field($model, 'contact_name', ['template' => ' <div class="input-group contact-field-wrap">
               <label>Name<b class="asterisk">*</b></label>
               {input}<div style="text-align:right">{error}</div>
-            </div>'])->textInput(['value'=>$user->name,'class'=>'form-control abc']); ?> 
+            </div>'])->textInput(['class'=>'form-control abc']); ?> 
 
             
              <?= $form->field($model, 'mobile_number', ['template' => '<div class="input-group contact-field-wrap">
               <label>Phone<b class="asterisk">*</b></label>
               {input}<div style="text-align:right">{error}</div>
-            </div>'])->textInput(['value'=>$user->mobile,'class'=>'form-control abc']); ?> 
+            </div>'])->textInput(['class'=>'form-control abc']); ?> 
          
 
              <?= $form->field($model, 'state_id', ['template'=>'<div class="input-group contact-field-wrap">
@@ -137,6 +137,7 @@ Category
             <div class="submit-ad-button-box">
               <!--<a class="btn-submit-ad" href="#">Submit an Ad</a>-->
               <?= Html::submitButton('Submit', ['class'=> 'btn-submit-ad']) ;?>
+              <?= Html::submitButton('Preview', ['class'=> 'btn-submit-ad','onclick'=>'make_perview()' ,'name'=>'preview', 'id'=>'btn_preview']) ;?>
               <div class="tos-box">
                  By clicking "Submit", you accept our <a href="#">Terms of Use and conditions</a>
               </div>
@@ -323,7 +324,10 @@ Category
 </main>
 <script>
     var csrfToken = $('meta[name="csrf-token"]').attr("content");
-                
+             function make_perview()
+    {
+        $('#new_record').val('1');
+    }   
             function select_city(item)
             { 
                 
@@ -354,7 +358,7 @@ $.ajax({
                           
 success: function(data){
 //  alert(data);
-
+       location.reload();
 // document.getElementById("city").innerHTML = data;
       }
     });

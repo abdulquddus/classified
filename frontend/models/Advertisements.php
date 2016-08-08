@@ -98,15 +98,6 @@ class Advertisements extends \yii\db\ActiveRecord
            
             BaseFileHelper::createDirectory('uploads/'.$this->id);
             
-            if(empty($this->imageFiles))
-            {
-                copy("D:/xampp/htdocs/". Yii::getAlias('@web') . "/design/img/no-image-available_thumb.jpg", "D:/xampp/htdocs/". Yii::getAlias('@web') . '/uploads/'.$this->id . '/no-image-available_thumb.jpg');
-                $image = new Images();
-                $image->advertise_id = $this->id;
-                $image->image = 'no-image-available_thumb.jpg' ;
-                $image->save();
-            }
-          
              foreach ($this->imageFiles as $file) {
                 $file->saveAs('uploads/' .$this->id.'/'.$file->baseName.'.' . $file->extension);
                 $image = new Images();

@@ -21,6 +21,9 @@ use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 use yii\data\Pagination;
 use backend\models\NotificationAdmin;
+use backend\models\OptionalfieldBridgeTable;
+use backend\models\FilterName;
+use yii\web\Response;
 /**
  * Site controller
  */
@@ -553,23 +556,33 @@ class SiteController extends Controller
       }
        $model->type = $type;
         
-        
            if($model->save()){
-              //  print_r($model);
-               if(isset($model->additional_field)){
-                  // echo 'in condition';
-             foreach($model->additional_field as $op_field){
+            
+               if(isset($_POST['Advertisements']['additional_optional'])){
+
+             foreach($_POST['Advertisements']['additional_optional'] as $op_field => $value){
+
                   $ad_f = new \frontend\models\FormAdditionalValues();
-                 $ad_f->ad_id = $model->id;
-                 $ad_f->field_id = $op_field;
-                 $ad_f->values = $_POST['Advertisements'][$op_field];
+                  $ad_f->ad_id = $model->id;
+                  $ad_f->field_id = $op_field;
+
+                  $val_string = "";
+                  if(gettype($value) == 'array'){
+                  foreach ($value as $val) {
+                    $val_string.='|'.$val;
+                    
+                  }
+                }
+                else{
+                  $val_string = $value;
+                }
+
+                  $ad_f->values = $val_string;
                  
-                // echo $ad_f->save();
-               //exit;  
+                 $ad_f->save();
                }
                
              }
-            // exit();
            }
            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');
           
@@ -588,7 +601,7 @@ class SiteController extends Controller
                 else
                 {
                 $this->Sentsms($model->mobile_number, $model->v_code);
-                Yii::$app->session->setFlash('success', 'Enter your confirmation code.');
+               Yii::$app->session->setFlash('success', 'Enter your  confirmation code sent you on your mobile.');
                 return $this->redirect(\Yii::$app->urlManager->createUrl("site/verifysms_ad")); 
                 }
             }
@@ -644,18 +657,18 @@ class SiteController extends Controller
       $cat = \frontend\models\Category::findOne(['id'=>$model->category_id]);
       $cat_name = $cat->title;
        $cat_id = $cat->id;
+       
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
        $model->user_id = Yii::$app->user->id;
        $model->created_date = date("Y-m-d H:i:s");
        $model->v_code = rand(1000, 9999);
        $model->email = $user->email;
-        $model->status = 0;
-        $model->ad_status = 0;
+       $model->status = 0;
+       $model->ad_status = 0;
         
         
            if($model->save()){
-               
-               if(isset($model->additional_field)){
+            if(isset($model->additional_field)){
              foreach($model->additional_field as $op_field){
                   $ad_f = new \frontend\models\FormAdditionalValues;
                  $ad_f->ad_id = $model->id;
@@ -672,11 +685,21 @@ class SiteController extends Controller
            
             if ($model->upload()) {
                 // file is uploaded successfully
-//                $this->Sentsms($model->mobile_number, $model->v_code);
+                if(isset($_POST['perview_true'])){
+                    $preview = $_POST['perview_true'];
+                }else{
+                     $preview = 0;
+                }
+               if ( $preview==1){
+                //  return $this->redirect(\Yii::$app->urlManager->createUrl("site/edit-ad",['id'=>$model->id,"new"=>1])); 
+                Yii::$app->response->redirect(['advertisement/ad-view','id'=>$model->id,"new"=>1]);
+                    
+                }else{
                 $this->Sentsms($model->mobile_number, $model->v_code);
-                 Yii::$app->session->setFlash('success', 'Enter your confirmation code.');
-                  return $this->redirect(\Yii::$app->urlManager->createUrl("site/verifysms_ad")); 
-                
+                $this->Sentsms($model->mobile_number, $model->v_code);
+                Yii::$app->session->setFlash('success', 'Enter your confirmation code.');
+                return $this->redirect(\Yii::$app->urlManager->createUrl("site/verifysms_ad")); 
+                }
             }
         }
         $main_cat = \frontend\models\Category::find()->where(['parent_id'=>0])->all();
@@ -1132,28 +1155,73 @@ class SiteController extends Controller
      */
     public function actionOptionalfields($id)
     {
-       $cat_op_fld = \backend\models\CategoryAdditionalFields::find()->where(['category_id'=>$id])->all();
-      foreach($cat_op_fld as $optionals){
-//       echo $optionals->optional_field_id."<br />"; 
-       $field = \frontend\models\OptionalFields::find()->where(['id'=>$optionals->optional_field_id])->one();
-//      print_r($field);
-        echo "<div class='input-group custom-field-wrap hidden'>
-              <label>$field->titles <b class='asterisk'>*</b></label>
-              <input type='text' id='advertisements-advertise_title' class='form-control' name='Advertisements[additional_field][]' value='$field->id'><div style='text-align:right'><div class='help-block'></div></div>
-            </div>
-            </div>" ;
-        
-        
-        echo "<div class='input-group custom-field-wrap'>
-              <label>$field->titles <b class='asterisk'>*</b></label>
-              <input type='text' id='advertisements-advertise_title' class='form-control' name='Advertisements[$field->id]' ><div style='text-align:right'><div class='help-block'></div></div>
-            </div>
-            </div>" ;
-     
+        $cat_op_fld = \backend\models\CategoryAdditionalFields::find()->where(['category_id'=>$id])->all();
+        //$cat_op_fld_id = $cat_op_fld[0]['optional_field_id']; //This variable contains the OptionalFieldID against the selected category
+
+        //$cat_op_fld = \backend\models\OptionalfieldBridgeTable::find()->where(['optional_field_key'=>$cat_op_fld_id])->all();
+
+    foreach($cat_op_fld as $optionals){
+    $field = \frontend\models\OptionalFields::find()->where(['id'=>$optionals->optional_field_id, 'status'=>1])->one();
+
+    $dd_option_id =   \backend\models\OptionalfieldBridgeTable::find()->where(['optional_field_key'=>$field->id])->all();
+
+       if($field->display_for_adpost_page == 1) //Dropdown
+       {
+           echo "<div class='input-group contact-field-wrap'>
+                     <label>" . $field['titles'] . "</label>
+                     <select name='Advertisements[additional_optional][". $field['id'] ."][]' id='advertisements-advertise_title' onchange='subDropdown(this)' name='' class='form-control'>
+                     </div>";
+           
+           foreach ($dd_option_id as $a_value) 
+           {
+                //print_r($a_value->id);
+                $dd_option_main = \backend\models\FilterName::find()->where(['id'=>$a_value->filter_field_key])->all();
+                echo '<option value="'. $dd_option_main[0]['id']  .'">'. $dd_option_main[0]['filter_name'] .'</option>';         
+           }
+           echo "</select>";
        }
        
-    }
-    
+       if($field->display_for_adpost_page == 2) //CheckBox
+       {
+           echo "<div class='input-group contact-field-wrap'>
+                     <label>" . $field['titles'] . "</label></div>";
+           
+           foreach ($dd_option_id as $a_value) 
+           {
+               $dd_option_main = \backend\models\FilterName::find()->where(['id'=>$a_value->filter_field_key])->all();
+               //echo '<option value="'. $dd_option_main[0]['id']  .'">'. $dd_option_main[0]['filter_name'] .'</option>';         
+               echo "<input name=name='Advertisements[additional_optional][". $field['id'] ."][]' type='checkbox' class='checkbox'  value='" .$dd_option_main[0]['id']. "'>" . $dd_option_main[0]['filter_name'] ."<br>";
+           }
+       }
+       
+       if($field->display_for_adpost_page == 3) //TextBox Number
+       {
+            echo "<div class='input-group contact-field-wrap'>
+            <label>" . $field['titles'] . "</label>
+            <input class='form-control' type='number' name='Advertisements[additional_optional][". $field['id'] ."][]' value=''>
+            </div>";
+       }
+       
+       if($field->display_for_adpost_page == 4) //TextBox
+       {
+            echo "<div class='input-group contact-field-wrap'>
+            <label>" . $field['titles'] . "</label>
+            <input class='form-control' type='text' name='Advertisements[additional_optional][". $field['id'] ."][]' value=''>
+            </div>";
+       }
+       
+       if($field->display_for_adpost_page == 5) //Range
+       {
+            echo "<div class='input-group contact-field-wrap'>
+            <label>" . $field['titles'] . "</label>
+            <input type='number' style='width: 300px;' name='Advertisements[additional_optional][". $field['id'] ."][]' value=''>";
+            echo "<input class='form-control' type='number' name='Advertisements[additional_optional][". $field['id'] ."][]'
+              value=''></div>-";
+            
+            echo "<input class='form-control' type='hidden' name='Advertisements[additional_optional][id]' value='" . $field['id'] . "'></div>";
+       }       
+       }       
+    }    
     public function actionGetimg($id)
     {
        $cateimg = \frontend\models\Category::find()->where(['id'=>$id])->one();
@@ -1304,6 +1372,75 @@ class SiteController extends Controller
             return true;
     }
     
+    public function actionSub_dd_options($id){
+        Yii::$app->response->format = Response::FORMAT_JSON;    
+        $results = \backend\models\FilterName::find()->where(['parent_filter'=>$id, 'status'=>1])->all();
+        return $results;
+        //echo "test";
+    }        
+    
+  public function actionHowitworks()
+    {
+        
+        $content=  \backend\models\Content::find()->where(['status'=>1])->andWhere(['id'=>7])->one();
+        
+        return $this->render('howitworks',['content'=>$content]);
+    }
+    
+    public function actionWhoweare()
+    {
+        
+        $content=  \backend\models\Content::find()->where(['status'=>1])->andWhere(['id'=>1])->one();
+        
+        return $this->render('whoweare',['content'=>$content]);
+    }
+    
+    public function actionSafetyTips()
+    {
+        
+        $content=  \backend\models\Content::find()->where(['status'=>1])->andWhere(['id'=>2])->one();
+        
+        return $this->render('safety-tips',['content'=>$content]);
+    }
+    
+    public function actionTermsOfUse()
+    {
+        
+        $content=  \backend\models\Content::find()->where(['status'=>1])->andWhere(['id'=>3])->one();
+        
+        return $this->render('terms-of-use',['content'=>$content]);
+    }
+    
+    public function actionHelpAndContact()
+    {
+        
+        $content=  \backend\models\Content::find()->where(['status'=>1])->andWhere(['id'=>4])->one();
+        
+        return $this->render('help-and-contact',['content'=>$content]);
+    }
+    
+    
+    public function actionFaqs()
+    {
+        
+        $content=  \backend\models\Content::find()->where(['status'=>1])->andWhere(['id'=>5])->one();
+        
+        return $this->render('faqs',['content'=>$content]);
+    }
+    
+    public function actionMission()
+    {
+        
+        $content=  \backend\models\Content::find()->where(['status'=>1])->andWhere(['id'=>6])->one();
+        
+        return $this->render('mission',['content'=>$content]);
+    }
+    public function actionUsingApplication()
+    {
+       $content=  \backend\models\Content::find()->where(['status'=>1])->andWhere(['id'=>8])->one();
+        
+        return $this->render('using-application',['content'=>$content]);
+    }
     
     }
     

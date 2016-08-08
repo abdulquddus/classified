@@ -9,6 +9,7 @@ use yii\helpers\ArrayHelper;
 use kartik\widgets\FileInput;
 use dosamigos\ckeditor\CKEditor;
 use dosamigos\ckeditor\CKEditorInline;
+use backend\models\FilterName;
 
 ?>
 <main>
@@ -22,12 +23,7 @@ use dosamigos\ckeditor\CKEditorInline;
          <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 submitad-main">
            <?= $form->field($model, 'advertise_title', ['template' => ' <div class="input-group hvr_div active custom-field-wrap">
               <label>Tittel<b class="asterisk">*</b></label>
-              <a href="#" class="title-popover" data-html="true" title="<b>Want to get you ad noticed?</b>" data-toggle="popover" data-placement="right" data-content="                    <ul>
-			<li>1. Give your ad an attractive title.</li>
-			<li>2. Think of words that people would use to search for you ad.</li>
-			<li>3. Check the spellings & do not use CAPITAL LETTERS or symbols.</li>
-                    </ul>">
-                {input}</a>
+              {input}
               <div class="error-placement">{error}<span id="textarea_feedback"></span></div>
                     </div>']) ?>
               
@@ -49,6 +45,10 @@ use dosamigos\ckeditor\CKEditorInline;
              <div id="optional">
                
              </div>
+             
+             <div id="additional_optional">
+               
+             </div>
             
              <div class="input-group hvr_div custom-field-wrap description-popover">
                     
@@ -57,27 +57,12 @@ use dosamigos\ckeditor\CKEditorInline;
            
             <?= $form->field($model, 'description', ['template' => '  <div class="input-group hvr_div custom-field-wrap description-popover">
               <label>Beskrivelse<b class="asterisk">*</b></label>
-              <a href="#" data-html="true" href = "#" title = "<b>Items with good description sell faster!</b>" data-container = "body" 
-                data-toggle = "popover" data-content = "<ul>
-			<li>1. Include the brand, model, age, and any included accessories..</li>
-			<li>2. Mention the condition, features and reason for selling..</li>
-			<li>3. If the item is under warrantly, mention it!</li>
-			<li>4. Remember, a good description needs at least 2-3 sentences.</li>
-                    </ul>">
-            {input}</a><div class="error-placement">{error}<span id="textarea_description"></span></div>
+            {input}<div class="error-placement">{error}<span id="textarea_description"></span></div>
             </div>'])->textarea(array('rows'=>5, 'class'=>'form-control abc', 'placeholder'=>"Include the brand, model, age, and any included accessories.")); ?>  
                 
         <?= $form->field($model, 'price', ['template' => '<div class="input-group hvr_div custom-field-wrap">
               <label>Pris<b class="asterisk">*</b></label>
-              <a href="#!" data-placement="right" data-html="true" href = "#" title = "<b>Buyers prefer ads with realistic prices!</b>" data-container = "body" 
-                data-toggle = "popover" data-content = "
-                    <ul>
-			<li>1. Consider age & condition of the item.</li>
-			<li>2. When in doubt, check prices of similar items on Classified.</li>
-                    </ul> ">
-
-
-              {input}</a><div class="error-placement">{error}</div>
+              {input}<div class="error-placement">{error}</div>
             </div>']); ?> 
         <?= $form->field($model, 'condition', ['template'=>'<div class="input-group hvr_div contact-field-wrap">
               <label>Condition<b class="asterisk">*</b></label>
@@ -92,112 +77,19 @@ use dosamigos\ckeditor\CKEditorInline;
                 <?php 
                 echo FileInput::widget([
                     'name' => 'Advertisements[imageFiles][]',
-                    'pluginOptions' => [
+                     'pluginOptions' => [
                         'id'=>'advertisements-imagefiles',
                         'showCaption' => false,
-                        'showRemove' => false,
+                        'showRemove' => true,
                         'showUpload' => false,
                         'browseClass' => 'btn btn-primary btn-block',
-                        'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
+                        'browseIcon' => '<i class="glyphicon glyphicon-camera"> Select Multiplae images(max-20)</i> ',
                         'browseLabel' =>  'Select Photo'
                     ],
-                    'options' => ['accept' => 'image/*']
-                ]);
-
-                ?>
-                  <br>
-                <?php 
-
-                echo FileInput::widget([
-                    'name' => 'Advertisements[imageFiles][]',
-                    'pluginOptions' => [
-                        'id'=>'advertisements-imagefiles',
-                        'showCaption' => false,
-                        'showRemove' => false,
-                        'showUpload' => false,
-                        'browseClass' => 'btn btn-primary btn-block',
-                        'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
-                        'browseLabel' =>  'Select Photo'
-                    ],
-                    'options' => ['accept' => 'image/*']
-                ]);
-
-                ?> 
-                   <br>
-                <?php 
-
-                echo FileInput::widget([
-                    'name' => 'Advertisements[imageFiles][]',
-                    'pluginOptions' => [
-                        'id'=>'advertisements-imagefiles',
-                        'showCaption' => false,
-                        'showRemove' => false,
-                        'showUpload' => false,
-                        'browseClass' => 'btn btn-primary btn-block',
-                        'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
-                        'browseLabel' =>  'Select Photo'
-                    ],
-                    'options' => ['accept' => 'image/*']
-                ]);
-
-                ?>
-                  <br>
-                <?php 
-
-                echo FileInput::widget([
-                    'name' => 'Advertisements[imageFiles][]',
-                    'pluginOptions' => [
-                        'id'=>'advertisements-imagefiles',
-                        'showCaption' => false,
-                        'showRemove' => false,
-                        'showUpload' => false,
-                        'browseClass' => 'btn btn-primary btn-block',
-                        'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
-                        'browseLabel' =>  'Select Photo'
-                    ],
-                    'options' => ['accept' => 'image/*']
-                ]);
-
+                    'options' => ['accept' => 'image/*', 'multiple' => true, 'fileCount'=>20]
+                        ]);
                 ?>
                   
-                  <br>
-                <?php 
-
-                echo FileInput::widget([
-                    'name' => 'Advertisements[imageFiles][]',
-                    'pluginOptions' => [
-                        'id'=>'advertisements-imagefiles',
-                        'showCaption' => false,
-                        'showRemove' => false,
-                        'showUpload' => false,
-                        'browseClass' => 'btn btn-primary btn-block',
-                        'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
-                        'browseLabel' =>  'Select Photo'
-                    ],
-                    'options' => ['accept' => 'image/*']
-                ]);
-
-                ?>
-                  
-                  <br>  
-
-                <?php 
-
-                echo FileInput::widget([
-                    'name' => 'Advertisements[imageFiles][]',
-                    'pluginOptions' => [
-                        'id'=>'advertisements-imagefiles',
-                        'showCaption' => false,
-                        'showRemove' => false,
-                        'showUpload' => false,
-                        'browseClass' => 'btn btn-primary btn-block',
-                        'browseIcon' => '<i class="glyphicon glyphicon-camera"></i> ',
-                        'browseLabel' =>  'Select Photo'
-                    ],
-                    'options' => ['accept' => 'image/*']
-                ]);
-
-                ?>
                   
               </div>
              
@@ -229,30 +121,15 @@ use dosamigos\ckeditor\CKEditorInline;
          <div class="col-md-9 col-md-offset-1 col-sm-8 col-sm-offset-2 contact-dtl-main">
 
               <?= $form->field($model, 'contact_name', ['template' => ' <div class="input-group hvr_div contact-field-wrap">
-<div class="popup_shw"></div>              
-<label>Name<b class="asterisk">*</b></label>
-              <a href="#!" data-placement="right" data-html="true" href = "#" data-container = "body" data-toggle = "popover" data-content = "
-                    <ul>
-                        <li>1. Use your real name to build trust.</li>
-                        <li>2. Do not use symbols and numbers in your name.</li>
-                    </ul> ">
-
-              {input}</a><div class="error-placement">{error}</div>
+                <div class="popup_shw"></div>              
+                <label>Name<b class="asterisk">*</b></label>
+              {input}<div class="error-placement">{error}</div>
             </div>'])->textInput(['value'=>$user->name, 'class'=>'form-control abc']); ?> 
             
             
              <?= $form->field($model, 'mobile_number', ['template' => '<div class="input-group  hvr_div contact-field-wrap">
               <label>Phone<b class="asterisk">*</b></label>
-              <a href="#!" data-placement="right" data-html="true" href = "#" data-container = "body" data-toggle = "popover" data-content = "
-                    <ul>
-                        <li>1. Enter your MOBILE number.</li>
-                        <li>2. Do not add +92 or 0 before the number.</li>
-                        <li>3. A verification code will be sent to this MOBILE number.</li>
-                        <li>4. Verification is mandatory to post the Ad.</li>
-                        <li>5. Verification helps you sell faster and build trust with buyers!</li>
-                    </ul> ">
-
-              {input}</a><div class="error-placement">{error}</div>
+              {input}<div class="error-placement">{error}</div>
             </div>'])->textInput(['value'=>$user->mobile,'class'=>'form-control abc']); ?> 
     <?php
          $city_name = \frontend\models\City::findOne($user->city);
@@ -263,11 +140,21 @@ use dosamigos\ckeditor\CKEditorInline;
         $state = \frontend\models\Region::findOne($user->state);
         $selected_city = \frontend\models\City::findOne($user->city);//         $state = ArrayHelper::map($array_region, 'id', 'name'); ?>
 
+             <?php if($state['id']==0){ ?>
+              <?= $form->field($model, 'state_id', ['template'=>'<div class="input-group hvr_div contact-field-wrap">
+              <label>State<b class="asterisk">*</b></label>
+              {input}<div class="error-placement">{error}</div>
+            </div>'])->dropDownList($region ,['options' => ['class'=>'form-control abc'], 'onChange'=>'select_city(this)']); ?>
+             <?php }else{ ?>
+                
              <?= $form->field($model, 'state_id', ['template'=>'<div class="input-group hvr_div contact-field-wrap">
               <label>State<b class="asterisk">*</b></label>
               {input}<div class="error-placement">{error}</div>
-            </div>'])->dropDownList($region ,['options' => [$state->id => ['Selected'=>'Selected']],'class'=>'form-control abc']); ?>
+            </div>'])->dropDownList($region ,['options' => [$state->id => ['Selected'=>'Selected']],'class'=>'form-control abc', 'onChange'=>'select_city(this)']); ?>
+              
+           <?php  }
              
+             ?>
              
             
               <?= $form->field($model, 'city_id', ['template'=>'<div id="city" class="input-group hvr_div contact-field-wrap">
@@ -318,6 +205,10 @@ use dosamigos\ckeditor\CKEditorInline;
           </div><!-- /contact-dtl-right-->
           
         <!--/form-->
+        <div class="col-md-2 contact-dtl-right">
+            <br /><br />
+<img class="img-responsive" src="<?=Yii::$app->request->baseUrl?>/user/<?= $user->id?>.<?= $user->img?>">
+</div>
      </section>
 
       </div>
@@ -504,6 +395,58 @@ use dosamigos\ckeditor\CKEditorInline;
                 document.getElementById("city").innerHTML = data;
             }
         });
+    }
+    
+    function subDropdown(id)
+    {
+        var dd_id = id.value; //this variable contains the ID of dropdown's options
+        
+        /*-----------------------------(FIRST AJAX CALL)-----------------------------*/
+        //AJAX request to get the filter label from database
+        $.ajax({
+        type: "GET",
+        dataType : "json",
+        url: "<?php echo Yii::$app->getUrlManager()->createUrl('site/sub_dd_options'); ?>",
+        data: 
+		{
+            id: dd_id
+		},
+
+        success: function(response) {
+            
+            var dropdown_label = '';
+            var dropdown_option = '';
+            var response_id = '';
+            var dropdown_option_sub = '';
+            
+            for (i = 0; i < response.length; i++) {
+                dropdown_label +='<div class="input-group contact-field-wrap"><label>' + response[i]["filter_name"] + '</label><select name="Advertisements[additional_optional][]" class="form-control"></div>';
+                response_id = response[i]["id"];            
+            }
+            
+            document.getElementById("additional_optional").innerHTML = dropdown_label;            
+            /*-----------------------------(SECOND AJAX CALL)-----------------------------*/
+            $.ajax({
+                    type: "GET",
+                	dataType : "json",
+                	url: "<?php echo Yii::$app->getUrlManager()->createUrl('site/sub_dd_options'); ?>",
+                	data: 
+                	{
+                		id: response_id
+                	},
+                
+                    success: function(data) {
+                    document.getElementById("additional_optional").innerHTML = dropdown_label;
+                	for (j = 0; j < data.length; j++) {
+                		dropdown_option +='<option value="' + data[j]["id"] + '">' + data[j]["filter_name"] + '</option>';                        		
+                	}
+                    
+                    document.getElementById("additional_optional").innerHTML = dropdown_label + dropdown_option + "</select></div>";
+                    
+                    
+                }});
+            //---------------------------------------------------------------------------------------------------            
+        }});
     }
     
     

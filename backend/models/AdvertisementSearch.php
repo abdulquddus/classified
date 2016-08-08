@@ -51,6 +51,7 @@ class AdvertisementSearch extends Advertisement
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['id' => SORT_DESC]]
         ]);
         
          $dataProvider->sort->attributes['user'] = [

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace backend\models;
 
 use Yii;
 
@@ -29,6 +29,7 @@ class CreditPackages extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'crdit', 'price'], 'required'],
+            [['id'], 'integer'],
             [['crdit', 'price'], 'number'],
             [['name'], 'string', 'max' => 100],
         ];
@@ -40,10 +41,10 @@ class CreditPackages extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('app', 'ID'),
-            'name' => Yii::t('app', 'Name'),
-            'crdit' => Yii::t('app', 'Crdit'),
-            'price' => Yii::t('app', 'Price'),
+            'id' => 'ID',
+            'name' => 'Name',
+            'crdit' => 'Crdit',
+            'price' => 'Price',
         ];
     }
 }

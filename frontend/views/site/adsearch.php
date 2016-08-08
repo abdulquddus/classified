@@ -16,11 +16,11 @@ use yii\helpers\Url;
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 header-search-main">
         
                     <div class="form-group">
-                        <input type="text" onchange="submit_frm()" name="category"  class="form-control custom-sel-form-control"  value="<?php if(isset( $_GET['category'])) {echo $_GET['category'];  } ?>"  id="category" placeholder="Category">
+                        <input type="text" onchange="submit_frm()" name="category"  class="form-control custom-sel-form-control"  value="<?php if(isset( $_GET['category'])) {echo $_GET['category'];  } ?>"  id="category" placeholder="Category" autocomplete="off">
                         <input type="text" name="city"  class="hidden" id="region" value="<?php if(isset( $_GET['city'])) { echo $_GET['city']; } ?>">
-                        <input type="text" name="location" class="form-control" value="<?php if(isset( $_GET['location'])) { echo $_GET['location']; } ?>" id="location" placeholder="Location" data-toggle="modal" data-target="#myModal"  />
+                        <input type="text" name="location" class="form-control" value="<?php if(isset( $_GET['location'])) { echo $_GET['location']; } ?>" id="location" placeholder="Location" data-toggle="modal" data-target="#myModal"  autocomplete="off"/>
                     <!--<input id="sel1" class="form-control custom-sel-form-control" type="text" placeholder="Category">-->
-                        <input type="text" class="form-control search-box-ad-screen"  placeholder="e.g Samsung, swift, shirts etc" name="skey" value="<?php if(isset( $_GET['skey'])) { echo $_GET['skey']; } ?>" />
+                        <input type="text" class="form-control search-box-ad-screen"  placeholder="e.g Samsung, swift, shirts etc" name="skey" value="<?php if(isset( $_GET['skey'])) { echo $_GET['skey']; } ?>" autocomplete="off"/>
                        
                         <button type="submit" id="key" class="btn btn-default btn-hdr-search" onclick="search__()"><i class="fa fa-search"></i>Søk</button>    
  <!--             <button onclick="search(); return false" class="btn btn-default btn-hdr-search"><i class="fa fa-search"></i>Søk</button> -->
@@ -304,21 +304,39 @@ use yii\helpers\Url;
 //break;
 //                                $img = \frontend\models\Images::findOne(['advertise_id' => $cate->id]);
                                 ?>
-                                <div id="" class="selectedcat-box ">
-                                    <div class="col-md-5 mrgn_zero padng_zero extracls">
+                               <div id="" class="selectedcat-box ">
+                                   <div class="col-md-4 col-sm-12 col-xs-12 mrgn_zero padng_zero extracls">
                                     <div class=" image-box">
                                         <img class="img-responsive" src="<?= Yii::$app->urlManager->createUrl('/site/loadimage'); ?>" alt="" />
                                     </div>
                                     </div>
-                                    <div class="col-md-7 product_detail">
+                                    <div class="col-md-8 col-sm-12 col-xs-12 product_detail">
+                                        <div class="top-detail">
+                                            <span>Detail</span> 8000KM
+                                        </div>
+                                        <div class="top-detail pull-right">
+                                            <span>Detail</span> Detail 2016 model
+                                        </div>
                                         <a href="<?= $cate['url']; ?>" class="title_head"><?= $cate['title']; ?> (Commercial Ads)</a>
-                                        <span>Honda Civic » Parado Foxy </span>
+                                        <div class="top-detail">
+                                            <span>Detail</span> Deisel  
+                                        </div>
+                                        <div class="top-detail">
+                                            <span>Detail</span> Automatic
+                                        </div>
+                                        <div class="address-detail">
+                                            Adress  12 p 1271 Oslo
+  
+                                        </div>
+<!--                                        <span>Honda Civic » Parado Foxy </span>
                                         <h1>NOK: 150,0000</h1>
                                         <p>Lorem Ipsum is simply dummy text of the printing and type setting industry.</p>
-                                        <span>Karachi, Pakistan </span>
-                                        <a href="#" class="verifyadd"></a>
-                                    
-                                </div>
+                                        <span>Karachi, Pakistan </span>-->
+                                       
+                                    </div>
+                                    <div class="productprice">
+                                        Kr. 5000</div>
+                                     <a href="#" class="verifyadd"></a>
                                 </div>
                             <?php
                             }
@@ -340,7 +358,7 @@ use yii\helpers\Url;
                                         <div class="top-detail">
                                             <span>Detail</span> 8000KM
                                         </div>
-                                        <div class="top-detail">
+                                        <div class="top-detail pull-right">
                                             <span>Detail</span> Detail 2016 model
                                         </div>
                                         <a href="<?= Yii::$app->urlManager->createUrl(['advertisement/ad-view', 'id' => $cate->id]) ?>" class="title_head">

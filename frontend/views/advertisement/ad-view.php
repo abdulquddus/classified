@@ -1,4 +1,10 @@
-<?php
+
+<!-- Demo CSS -->
+	<link rel="stylesheet" href="<?php echo Yii::getAlias('@web') ?>/design/slider/css/demo.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="<?php echo Yii::getAlias('@web') ?>/design/slider/css/flexslider.css" type="text/css" media="screen" />
+
+	<!-- Modernizr -->
+  <script src="<?php echo Yii::getAlias('@web') ?>/design/slider/js/modernizr.js"></script><?php
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -17,6 +23,14 @@ use yii\helpers\Html;
 						<div class="offercontent">
 								<div class="offerheadinner">
 										<h1><?= $ads->advertise_title ?></h1>
+                                                                     <?php   
+                                                                      $preview =0;
+                                                                     if(isset($_GET['new'])){
+                                                                                          $preview = $_GET['new'];
+                                                                                        }
+                                                                                       if ( $preview==1){
+                                                                             echo Html::a('Go Back', ['site/edit-ad', 'id' => $_GET['id']], ['class' => 'btn btn-danger']);
+                                                                                        } ?>
 										<p>
 												<span class="offerheadleft">
 														<span class="markerloc"></span>
@@ -39,12 +53,38 @@ use yii\helpers\Html;
 								
 								
 								
-								
-<div class="col-xs-12">
-    <div id="carousel" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
+	<div style="width:600px;">							
+    <section class="slider">
+        <div id="slider" class="flexslider ">
+          <ul class="slides">
+              <?php 
+    
+    $k=0;
+    if(empty($imgs)){
+        ?>
             
-            <?php 
+            <div class="item active">
+                <img class="fancybox" src="./design/img/no-image-available.jpg">
+            </div>
+              <?php
+              
+    }
+    else {
+    foreach($imgs as $img){?>
+            <li>
+  	    	    <img  src="<?php echo Yii::getAlias('@web') ?>/uploads/<?= $img->advertise_id?>/<?= $img->image?>" />
+  	    		</li>
+           
+              <?php
+              
+              $k=$k+1;
+    } }?>
+            
+          </ul>
+        </div>
+        <div id="carousel" class="flexslider">
+          <ul class="slides">
+               <?php 
     
     $k=0;
     
@@ -60,46 +100,24 @@ use yii\helpers\Html;
     }
     else {
     foreach($imgs as $img){?>
-            
-            <div class="item <?php if ($k==0) { ?> active <?php } ?>">
-                <img class="fancybox" src="<?php echo Yii::getAlias('@web') ?>/uploads/<?= $img->advertise_id?>/<?= $img->image?>">
-            </div>
+            <li>
+  	    	    <img src="<?php echo Yii::getAlias('@web') ?>/uploads/<?= $img->advertise_id?>/<?= $img->image?>" />
+  	    		</li>
+          
               <?php
               
               $k=$k+1;
     } }?>
+            
+          </ul>
         </div>
-    </div> 
-    <div class="clearfix">
-        <div id="thumbcarousel" class="carousel slide" data-interval="false">
-            <div class="carousel-inner">
-                <?php 
-        $t=0;
-    foreach($imgs as $img){?>
-                <div class="item active">
-                    <div data-target="#carousel" data-slide-to="<?php echo $t; ?>" class="thumb">
-                        <img src="<?php echo Yii::getAlias('@web') ?>/uploads/<?= $img->advertise_id?>/<?= $img->image?>"></div>
-                   
-                </div><!-- /item -->
-                <?php
-              
-              $t=$t+1;
-            } 
-            
-          ?>
-            </div><!-- /carousel-inner -->
-          <?php if(!empty($imgs)) { ?>
-            <a class="left carousel-control" href="#thumbcarousel" role="button" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-            </a>
-            <a class="right carousel-control" href="#thumbcarousel" role="button" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-            </a>
-            
-          <?php } ?>
-        </div> <!-- /thumbcarousel -->
-    </div><!-- /clearfix -->
-</div> <!-- /col-xs-12 -->
+      </section>
+        </div>
+    
+    
+    
+   
+
 
 			<div class="addescriptionwraptxt">
 									<div class="addescriptiontoptxt">
@@ -174,7 +192,7 @@ use yii\helpers\Html;
                                  <div class="col-md-12">
 						<div class="offercontent">
 							<h2 class="useradttl">Similar Ads</h2>
-							<table class="table userotherads">
+							<table class="table table-condensed">
 								<tr>
 								<?php foreach($random_ads as $random_ad){ 
 						$imgs=  \backend\models\Images::find()->where(['advertise_id'=>$random_ad->id])->one();
@@ -186,7 +204,7 @@ use yii\helpers\Html;
                                                                         <?php if(!empty($imgs)){?>
 									<td class="td-img">
 										<a href="<?= Yii::$app->urlManager->createUrl(['advertisement/ad-view', 'id' => $random_ad->id]) ?>" title="QMobile Noir i9">
-										<img class="img-responsive" src="<?php echo Yii::getAlias('@web') ?>/uploads/<?= $random_ad['id']?>/<?= $imgs['image']?>">
+										<img class="cirle-pic" src="<?php echo Yii::getAlias('@web') ?>/uploads/<?= $random_ad['id']?>/<?= $imgs['image']?>">
 										</a>
 									</td>
                                                                         <?php } else {?>
@@ -247,3 +265,37 @@ use yii\helpers\Html;
     });
     $.noConflict();
 </script>
+
+
+<!-- jQuery -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="js/libs/jquery-1.7.min.js">\x3C/script>')</script>
+
+  <!-- FlexSlider -->
+  <script defer src="<?php echo Yii::getAlias('@web') ?>/design/slider/js/jquery.flexslider.js"></script>
+
+  <script type="text/javascript">
+    
+    $(window).load(function(){
+      $('#carousel').flexslider({
+        animation: "slide",
+        controlNav: false,
+        animationLoop: false,
+        slideshow: false,
+        itemWidth: 210,
+        itemMargin: 5,
+        asNavFor: '#slider'
+      });
+
+      $('#slider').flexslider({
+        animation: "slide",
+        controlNav: false,
+        animationLoop: false,
+        slideshow: false,
+        sync: "#carousel",
+        start: function(slider){
+          $('body').removeClass('loading');
+        }
+      });
+    });
+  </script>

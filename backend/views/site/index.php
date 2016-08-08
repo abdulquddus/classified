@@ -110,6 +110,7 @@ $this->registerJs(
                                     <p>
                                         <?php echo Yii::t('app', 'Active Advertisements') ?>
                                     </p>
+                                    
                                 </div>
                                 <div class="icon">
                                     <i class="fa fa-unlock-alt"></i>
@@ -125,7 +126,7 @@ $this->registerJs(
                                         <?= frontend\models\Advertisement::find()->where(['ad_status' => 0])->count(); ?>
                                     </h3>
                                     <p>
-                                        <?php echo Yii::t('app', 'Advertisement Pending for Approval') ?>
+                                        <?php echo Yii::t('app', 'Pending for Approval') ?>
                                     </p>
                                 </div>
                                 <div class="icon">
@@ -135,9 +136,101 @@ $this->registerJs(
                             </div>
                         </div><!-- ./col -->
                     </div><!-- /.row -->
-
+                       
                     <!-- Main row -->
-                   
-
+                   <div class="row">
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-aqua">
+                                <div class="inner">
+                                    <h4>
+                                      <?php echo Yii::t('app', 'Advertisment') ?>
+                                    </h4>
+                                    
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-american-sign-language-interpreting" aria-hidden="true"></i>
+                                </div>
+				<?= Html::a(Yii::t('app', 'Advertisment').' <i class="fa fa-arrow-circle-right"></i>', ['/advertisement/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+                                <?= Html::a(Yii::t('app', 'Ads on search').' <i class="fa fa-arrow-circle-right"></i>', ['/commercial-search-ads/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+                                <?= Html::a(Yii::t('app', 'Commercial Ads').' <i class="fa fa-arrow-circle-right"></i>', ['/commercial-ads/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+                            </div>
+                        </div><!-- ./col -->
+                        
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-green">
+                                <div class="inner">
+                                    <h4>
+                                      <?php echo Yii::t('app', 'Admin') ?>
+                                    </h4>
+                                    
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-american-sign-language-interpreting" aria-hidden="true"></i>
+                                </div>
+				<?= Html::a(Yii::t('app', 'Admins').' <i class="fa fa-arrow-circle-right"></i>', ['/admin/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+                                <?= Html::a(Yii::t('app', 'Users').' <i class="fa fa-arrow-circle-right"></i>', ['/user/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+                                <?= Html::a(Yii::t('app', 'Organizational info').' <i class="fa fa-arrow-circle-right"></i>', ['/organization/view', 'id'=>1], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+                            </div>
+                        </div><!-- ./col -->
+                        
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-yellow">
+                                <div class="inner">
+                                    <h4>
+                                      <?php echo Yii::t('app', 'Category') ?>
+                                    </h4>
+                                    
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-american-sign-language-interpreting" aria-hidden="true"></i>
+                                </div>
+				<?= Html::a(Yii::t('app', 'Category').' <i class="fa fa-arrow-circle-right"></i>', ['/category/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+                                <?= Html::a(Yii::t('app', 'optionals fields').' <i class="fa fa-arrow-circle-right"></i>', ['/optional-fields/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+                                <?= Html::a(Yii::t('app', 'Credit Packages').' <i class="fa fa-arrow-circle-right"></i>', ['/credit-packages/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+                            </div>
+                        </div><!-- ./col -->
+                        
+                        <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-red">
+                                <div class="inner">
+                                    <h4>
+                                      <?php echo Yii::t('app', 'Regions') ?>
+                                    </h4>
+                                    
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-american-sign-language-interpreting" aria-hidden="true"></i>
+                                </div>
+				<?= Html::a(Yii::t('app', 'Country').' <i class="fa fa-arrow-circle-right"></i>', ['/country/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+                                <?= Html::a(Yii::t('app', 'Regions').' <i class="fa fa-arrow-circle-right"></i>', ['/region/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+                                <?= Html::a(Yii::t('app', 'City').' <i class="fa fa-arrow-circle-right"></i>', ['/city/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+                               <?= Html::a(Yii::t('app', 'Postcods').' <i class="fa fa-arrow-circle-right"></i>', ['/postcode/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+                            </div>
+                        </div><!-- ./col -->
+                   </div>
+                    
+                    <div class="row">
+                         <div class="col-lg-3 col-xs-6">
+                            <!-- small box -->
+                            <div class="small-box bg-aqua">
+                                <div class="inner">
+                                    <h4>
+                                      <?php echo Yii::t('app', 'Content') ?>
+                                    </h4>
+                                    
+                                </div>
+                                <div class="icon">
+                                    <i class="fa fa-american-sign-language-interpreting" aria-hidden="true"></i>
+                                </div>
+				<?= Html::a(Yii::t('app', 'Pages and Content').' <i class="fa fa-arrow-circle-right"></i>', ['/content/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+                                <?= Html::a(Yii::t('app', 'Content in side page').' <i class="fa fa-arrow-circle-right"></i>', ['/content-inner/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+                                <?= Html::a(Yii::t('app', 'Promotion Deals').' <i class="fa fa-arrow-circle-right"></i>', ['/promotion-deals/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+                            </div>
+                        </div><!-- ./col -->
+                   </div>
                 </section><!-- /.content -->
 
