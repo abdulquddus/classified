@@ -105,11 +105,21 @@ class Category extends \yii\db\ActiveRecord
         $delete_additioanl_fields = "DELETE FROM `category_additional_fields` WHERE `category_id`=$id";
         \Yii::$app->db->createCommand($delete_additioanl_fields)->execute();
         
-        
+//        if(!empty($fields)){
+//        print_r($fields);
             foreach ($fields as $opfields)
             {
                 $sql="INSERT INTO `category_additional_fields` (`category_id`, `optional_field_id`)VALUES ($id, $opfields)";
                 \Yii::$app->db->createCommand($sql)->execute();
             }
+//        }
     }
+    
+    public function custom_update_delete($id){
+        $delete_additioanl_fields = "DELETE FROM `category_additional_fields` WHERE `category_id`=$id";
+        \Yii::$app->db->createCommand($delete_additioanl_fields)->execute();
+        
+    }
+    
+    
 }

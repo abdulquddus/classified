@@ -75,6 +75,9 @@ use backend\models\FilterName;
               <div class="custom-file-input-wrap">
                   
                 <?php 
+              
+ 
+
                 echo FileInput::widget([
                     'name' => 'Advertisements[imageFiles][]',
                      'pluginOptions' => [
@@ -86,8 +89,9 @@ use backend\models\FilterName;
                         'browseIcon' => '<i class="glyphicon glyphicon-camera"> Select Multiplae images(max-20)</i> ',
                         'browseLabel' =>  'Select Photo'
                     ],
-                    'options' => ['accept' => 'image/*', 'multiple' => true, 'fileCount'=>20]
-                        ]);
+                    'options' => ['accept' => 'image/*', 'multiple' => true]
+                ]);
+
                 ?>
                   
                   
@@ -98,7 +102,7 @@ use backend\models\FilterName;
                
                  <div class="col-md-9 col-sm-9 pull-right ">
             
-           <atextarea name="Advertisements[description]" id="advertisements-description" class="form-control abc">Description.</atextarea>
+           <atextarea name="Advertisements[description]" id="advertisements-description" class="form-control abc"></atextarea>
             </div>
             </div>
             </div><!-- /submitad-main-->
@@ -135,7 +139,8 @@ use backend\models\FilterName;
          $city_name = \frontend\models\City::findOne($user->city);
           
          $city_all = \frontend\models\City::find()->where(['region_id'=>$user->state])->all();
-         $city = ArrayHelper::map($city_all, 'id', 'name');        
+         $city = ArrayHelper::map($city_all, 'id', 'name');
+         $po_dropdown = ArrayHelper::map($po, 'id', 'code');        
           
         $state = \frontend\models\Region::findOne($user->state);
         $selected_city = \frontend\models\City::findOne($user->city);//         $state = ArrayHelper::map($array_region, 'id', 'name'); ?>
@@ -183,7 +188,7 @@ use backend\models\FilterName;
              <?= $form->field($model, 'po_id', ['template'=>'<div id="po_id" class="input-group hvr_div contact-field-wrap">
               <label>Post Code<b class="asterisk">*</b></label>
               {input}<div class="error-placement">{error}</div>
-            </div>'])->dropDownList($po,['class'=>'form-control abc']); ?>
+            </div>'])->dropDownList($po_dropdown,['class'=>'form-control abc', 'prompt' => ' -- Select Post Code --']); ?>
              
 
 
@@ -207,8 +212,12 @@ use backend\models\FilterName;
         <!--/form-->
         <div class="col-md-2 contact-dtl-right">
             <br /><br />
-<img class="img-responsive" src="<?=Yii::$app->request->baseUrl?>/user/<?= $user->id?>.<?= $user->img?>">
-</div>
+           <?php if(!empty($user->img)){?>
+            <img class="img-responsive" src="<?=Yii::$app->request->baseUrl?>/user/<?= $user->id?>.<?= $user->img?>">
+            <?php } else { ?>
+                <img alt="LOGO" class="img-responsive" src="<?=Yii::$app->request->baseUrl?>/uploads/noimg.png">
+                <?php } ?>
+        </div>
      </section>
 
       </div>
@@ -246,7 +255,7 @@ use backend\models\FilterName;
                             <?php foreach( $main_cat as $scat){ ?>
                           
             <!--------------------------2rd Step Start-------------------------------------------->
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 category-left-list example sub3 sub" id="s<?= $scat->id; ?>">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 category-left-list example sub3 subm" id="s<?= $scat->id; ?>">
               <ul> 
                 <?php
                
@@ -274,7 +283,7 @@ use backend\models\FilterName;
             <?php foreach( $main_cat as $scat){ ?>
                           
             <!--------------------------2rd Step Start-------------------------------------------->
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 category-left-list example sub3 sub sb ssb" id="sb<?= $scat->id; ?>">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 category-left-list example sub3 subm sb ssb" id="sb<?= $scat->id; ?>">
               <ul> 
                 <?php
                
@@ -314,7 +323,7 @@ use backend\models\FilterName;
 //               echo $child;
                 
                 ?>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 category-left-list example sub sb ssb" id="sb<?= $child ?>">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 category-left-list example subm sb ssb" id="sb<?= $child ?>">
                     <ul class="ssb">
             <?php
                 foreach($schilds as $schild ){
@@ -344,7 +353,7 @@ use backend\models\FilterName;
              foreach( $main_cat_lst as $scat){ ?>
                           
             <!--------------------------2rd Step Start-------------------------------------------->
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 category-left-list example sub3 sub sb ssb lst" id="lst<?= $scat->id; ?>">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 category-left-list example sub3 subm sb ssb lst" id="lst<?= $scat->id; ?>">
               <ul> 
                 <?php
                
@@ -399,54 +408,24 @@ use backend\models\FilterName;
     
     function subDropdown(id)
     {
-        var dd_id = id.value; //this variable contains the ID of dropdown's options
-        
-        /*-----------------------------(FIRST AJAX CALL)-----------------------------*/
-        //AJAX request to get the filter label from database
-        $.ajax({
-        type: "GET",
-        dataType : "json",
-        url: "<?php echo Yii::$app->getUrlManager()->createUrl('site/sub_dd_options'); ?>",
-        data: 
-		{
-            id: dd_id
-		},
-
-        success: function(response) {
-            
-            var dropdown_label = '';
-            var dropdown_option = '';
-            var response_id = '';
-            var dropdown_option_sub = '';
-            
-            for (i = 0; i < response.length; i++) {
-                dropdown_label +='<div class="input-group contact-field-wrap"><label>' + response[i]["filter_name"] + '</label><select name="Advertisements[additional_optional][]" class="form-control"></div>';
-                response_id = response[i]["id"];            
+        var dd_id = id.value;
+        dd_id = $(id).find(':selected').attr('data_value')  //this variable contains the ID of dropdown's options
+        alert(dd_id)
+          $.ajax({
+            type: "GET",
+            dataType: "html",
+            url: "<?php echo Yii::$app->getUrlManager()->createUrl('site/sub_dd_options'); ?>",
+            data: {
+                id: dd_id
+            },success: function(data) {
+              console.log(data)
+                document.getElementById("additional_optional").innerHTML = data;
+            },
+            error: function() {
+            console.log(arguments);
             }
-            
-            document.getElementById("additional_optional").innerHTML = dropdown_label;            
-            /*-----------------------------(SECOND AJAX CALL)-----------------------------*/
-            $.ajax({
-                    type: "GET",
-                	dataType : "json",
-                	url: "<?php echo Yii::$app->getUrlManager()->createUrl('site/sub_dd_options'); ?>",
-                	data: 
-                	{
-                		id: response_id
-                	},
-                
-                    success: function(data) {
-                    document.getElementById("additional_optional").innerHTML = dropdown_label;
-                	for (j = 0; j < data.length; j++) {
-                		dropdown_option +='<option value="' + data[j]["id"] + '">' + data[j]["filter_name"] + '</option>';                        		
-                	}
-                    
-                    document.getElementById("additional_optional").innerHTML = dropdown_label + dropdown_option + "</select></div>";
-                    
-                    
-                }});
-            //---------------------------------------------------------------------------------------------------            
-        }});
+
+            });
     }
     
     

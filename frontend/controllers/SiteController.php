@@ -262,22 +262,22 @@ class SiteController extends Controller
                $cat_ids = array() ;
               
            }
+////// search filter 
 
-           if(!empty($_GET['filters'])){
-            $filters_search =  $_GET['filters'];
-            $filters_categories = \backend\models\CategoryAdditionalFields::find()->
-                    where(['optional_field_id'=>$filters_search])->
-                    select(['category_id'])->all();
-            //print_r($filters_categories);
-           $filter_cates =array(); 
-              foreach ($filters_categories as $filters_category) {
-                array_push($filter_cates, $filters_category->optional_field_id);
-                }
-                $category_filters  = ['category_id'=>$filter_cates];
-            //$key = ['LIKE', 'advertise_title', $key];
-           }else{
-            $category_filters = array();
-           }
+           $mydata = array();
+          
+             if(isset($_GET['Advertisements']['additional_optional'])){
+             
+           foreach($_GET['Advertisements']['additional_optional'] as $op_field => $value){
+
+ $data = \frontend\models\FormAdditionalValues::find()->where(['LIKE', 'values', $value])->andWhere(['field_id'=>$op_field])->all();
+                  
+
+                    foreach($data as $data_item)
+                    {
+                     array_push($mydata, $data_item->ad_id);
+                    }
+                    
             if(!empty($_GET['skey'])){
             $key =  $_GET['skey'];
             $key = ['LIKE', 'advertise_title', $key];
@@ -356,11 +356,11 @@ class SiteController extends Controller
                $relcategory = array();
               
            }
-           
+//           print_r($mydata);
     $search = \backend\models\Advertisement::find()->
               where(['status'=>1])->
               andWhere($category)->
-              andWhere($category_filters)->
+              // andWhere($category_filters)->
               andWhere($max_price)->
               andWhere($min_price)->
               andWhere($created)->
@@ -369,6 +369,7 @@ class SiteController extends Controller
               andWhere($city)->
               andWhere(['sold_status'=>0])->
               andWhere($key)->
+              andWhere(['id'=>$mydata])->
               orderBy($order_by);
     
     $search_commer = \backend\models\CommercialSearchAds::find()->
@@ -407,13 +408,15 @@ class SiteController extends Controller
         }
     
           else{
+            //print_r($cat_ids); 
               $filtes_ids = \backend\models\CategoryAdditionalFields::find()->where([ 'category_id'=>$cat_ids])->
                       select(['optional_field_id'])->all();
+
               $f_ids =array(); 
               foreach ($filtes_ids as $filtes_id) {
                 array_push($f_ids, $filtes_id->optional_field_id);
                 }
-          $filerts=   \backend\models\OptionalFields::findAll(['status'=>1,'id'=>$f_ids]);      ;
+          $filerts=   \backend\models\FilterName::findAll(['status'=>1,'id'=>$f_ids, 'parent_filter'=>0]);      ;
         return $this->render('adsearch', ['regions'=>$regions,
                                           'category'=>$categories_list,
                                           'submenu'=>$submenu,
@@ -428,7 +431,7 @@ class SiteController extends Controller
               
           } 
    
-    }
+           }}}
     
     
     
@@ -1161,22 +1164,24 @@ class SiteController extends Controller
         //$cat_op_fld = \backend\models\OptionalfieldBridgeTable::find()->where(['optional_field_key'=>$cat_op_fld_id])->all();
 
     foreach($cat_op_fld as $optionals){
-    $field = \frontend\models\OptionalFields::find()->where(['id'=>$optionals->optional_field_id, 'status'=>1])->one();
+    $field = \backend\models\FilterName::find()->where(['id'=>$optionals->optional_field_id, 'status'=>1])->one();
 
-    $dd_option_id =   \backend\models\OptionalfieldBridgeTable::find()->where(['optional_field_key'=>$field->id])->all();
+     $dd_option_id =   \backend\models\FilterName::find()->where(['parent_filter'=>$field->id])->all();
+     //print_r(dd_option_id);
+     //exit();
 
        if($field->display_for_adpost_page == 1) //Dropdown
        {
            echo "<div class='input-group contact-field-wrap'>
-                     <label>" . $field['titles'] . "</label>
-                     <select name='Advertisements[additional_optional][". $field['id'] ."][]' id='advertisements-advertise_title' onchange='subDropdown(this)' name='' class='form-control'>
+                     <label>" . $field['filter_name'] . "</label>
+                     <select  name='Advertisements[additional_optional][". $field['id'] ."][]' id='advertisements-advertise_title' onchange='subdropdown(this)' name='' class='form-control'>
                      </div>";
            
            foreach ($dd_option_id as $a_value) 
            {
                 //print_r($a_value->id);
-                $dd_option_main = \backend\models\FilterName::find()->where(['id'=>$a_value->filter_field_key])->all();
-                echo '<option value="'. $dd_option_main[0]['id']  .'">'. $dd_option_main[0]['filter_name'] .'</option>';         
+               // $dd_option_main = \backend\models\FilterName::find()->where(['id'=>$a_value->filter_field_key])->all();
+                echo '<option data_value="'. $a_value['id']  .'" value="'. $a_value['filter_name']  .'">'. $a_value['filter_name'] .'</option>';         
            }
            echo "</select>";
        }
@@ -1184,20 +1189,20 @@ class SiteController extends Controller
        if($field->display_for_adpost_page == 2) //CheckBox
        {
            echo "<div class='input-group contact-field-wrap'>
-                     <label>" . $field['titles'] . "</label></div>";
+                     <label>" . $field['filter_name'] . "</label></div>";
            
            foreach ($dd_option_id as $a_value) 
            {
-               $dd_option_main = \backend\models\FilterName::find()->where(['id'=>$a_value->filter_field_key])->all();
+               //$dd_option_main = \backend\models\FilterName::find()->where(['id'=>$a_value->filter_field_key])->all();
                //echo '<option value="'. $dd_option_main[0]['id']  .'">'. $dd_option_main[0]['filter_name'] .'</option>';         
-               echo "<input name=name='Advertisements[additional_optional][". $field['id'] ."][]' type='checkbox' class='checkbox'  value='" .$dd_option_main[0]['id']. "'>" . $dd_option_main[0]['filter_name'] ."<br>";
+               echo "<input name='Advertisements[additional_optional][". $field['id'] ."][]' type='checkbox' class='checkbox'  value='" . $a_value['filter_name'] . "'>" . $a_value['filter_name'] ."<br>";
            }
        }
        
        if($field->display_for_adpost_page == 3) //TextBox Number
        {
             echo "<div class='input-group contact-field-wrap'>
-            <label>" . $field['titles'] . "</label>
+            <label>" . $field['filter_name'] . "</label>
             <input class='form-control' type='number' name='Advertisements[additional_optional][". $field['id'] ."][]' value=''>
             </div>";
        }
@@ -1205,19 +1210,24 @@ class SiteController extends Controller
        if($field->display_for_adpost_page == 4) //TextBox
        {
             echo "<div class='input-group contact-field-wrap'>
-            <label>" . $field['titles'] . "</label>
+            <label>" . $field['filter_name'] . "</label>
             <input class='form-control' type='text' name='Advertisements[additional_optional][". $field['id'] ."][]' value=''>
             </div>";
        }
        
        if($field->display_for_adpost_page == 5) //Range
        {
+           //First Range Textbox
             echo "<div class='input-group contact-field-wrap'>
-            <label>" . $field['titles'] . "</label>
-            <input type='number' style='width: 300px;' name='Advertisements[additional_optional][". $field['id'] ."][]' value=''>";
-            echo "<input class='form-control' type='number' name='Advertisements[additional_optional][". $field['id'] ."][]'
-              value=''></div>-";
+            <label>" . $field['filter_name'] . "</label>
+                  <input type='number' class='form-control' name='Advertisements[additional_optional][". $field['id'] ."][]' value=''></div>";
             
+            //Second Range Textbox
+            echo "<div class='input-group contact-field-wrap'>
+            <label>" .                         "</label>
+                  <input type='number' class='form-control'  name='Advertisements[additional_optional][". $field['id'] ."][]'
+              value=''></div>";
+
             echo "<input class='form-control' type='hidden' name='Advertisements[additional_optional][id]' value='" . $field['id'] . "'></div>";
        }       
        }       
@@ -1373,10 +1383,33 @@ class SiteController extends Controller
     }
     
     public function actionSub_dd_options($id){
-        Yii::$app->response->format = Response::FORMAT_JSON;    
-        $results = \backend\models\FilterName::find()->where(['parent_filter'=>$id, 'status'=>1])->all();
-        return $results;
-        //echo "test";
+		
+    		// if($id == null)
+    		// {
+    		// 	return 0;
+    		// }
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $filter_main =   \backend\models\FilterName::find()->where(['id'=>$id])->one();
+
+        $dd_option_id =   \backend\models\FilterName::find()->where(['parent_filter'=>$id])->all();
+     
+       if($filter_main->display_for_adpost_page == 1) //Dropdown
+       {
+           echo "<div class='input-group contact-field-wrap'>
+                     <label>" . $filter_main['filter_name'] . "</label>
+                     <select name='Advertisements[additional_optional][". $filter_main['id'] ."][]' id='advertisements-advertise_title' onchange='subDropdown(this)' name='' class='form-control'>
+                     </div>";
+           
+           foreach ($dd_option_id as $a_value) 
+           {
+                //print_r($a_value->id);
+               // $dd_option_main = \backend\models\FilterName::find()->where(['id'=>$a_value->filter_field_key])->all();
+                echo '<option value="'. $a_value['filter_name']  .'">'. $a_value['filter_name'] .'</option>';         
+           }
+           echo "</select>";
+       }
+      // return true ;
     }        
     
   public function actionHowitworks()
@@ -1441,7 +1474,34 @@ class SiteController extends Controller
         
         return $this->render('using-application',['content'=>$content]);
     }
+
+    public function Filter_options($category_id){
+      
+      $cat_op_fld = \backend\models\CategoryAdditionalFields::find()->where(['category_id'=>$category_id])->all();
+        
+        foreach($cat_op_fld as $optionals){
+    $field = \backend\models\FilterName::find()->where(['id'=>$optionals->optional_field_id, 'status'=>1])->one();
+
+     $dd_option_id =   \backend\models\FilterName::find()->where(['parent_filter'=>$field->id])->all();
+     
+       if($field->display_for_adpost_page == 1) //Dropdown
+       {
+           echo "<div class='input-group contact-field-wrap'>
+                     <label>" . $field['filter_name'] . "</label>
+                     <select name='Advertisements[additional_optional][". $field['id'] ."][]' id='advertisements-advertise_title' onchange='subDropdown(this)' name='' class='form-control'>
+                     </div>";
+           
+           foreach ($dd_option_id as $a_value) 
+           {
+                //print_r($a_value->id);
+               // $dd_option_main = \backend\models\FilterName::find()->where(['id'=>$a_value->filter_field_key])->all();
+                echo '<option value="'. $a_value['id']  .'">'. $a_value['filter_name'] .'</option>';         
+           }
+           echo "</select>";
+       }
+    }
     
     }
     
             
+}

@@ -32,9 +32,10 @@ class OptionalFields extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['opk'], 'safe'],
             [['display_for_adpost_page', 'display_for_screen_page', 'status'], 'integer'],
             [['titles'], 'required'],
-            [['titles', 'opk'], 'string', 'max' => 100],
+            [['titles'], 'string', 'max' => 100],
             [['desc'], 'string', 'max' => 500]
         ];
     }

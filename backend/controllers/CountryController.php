@@ -104,7 +104,8 @@ class CountryController extends Controller
         $model = new Country();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+//            return $this->redirect(['view', 'id' => $model->id]);
+             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,

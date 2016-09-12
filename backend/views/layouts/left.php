@@ -138,21 +138,25 @@ use yii\bootstrap\Nav;
                     </li>
                     <li><a href="<?= \yii\helpers\Url::to(['promotion-deals/index']) ?>"><span class="fa fa-dashboard"></span> Promotion Deals</a>
                     </li>
-<!--                    <li>
-                        <a href="#"><i class="fa fa-circle-o"></i> Level One <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-circle-o"></i> Level Two <i class="fa fa-angle-left pull-right"></i>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>-->
+
+                </ul>
+            </li>
+            
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-share"></i> <span>News-Letter</span> 
+                    <i class="fa fa-angle-left pull-right"></i>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="<?= \yii\helpers\Url::to(['/newsletter']) ?>"><span class="glyphicon glyphicon-lock"></span>Newsletter</a>
+                    </li>
+                    <li><a href="<?= \yii\helpers\Url::to(['newsletter/sendmail']) ?>"><span class="fa fa-dashboard"></span>Send Newsletter</a>
+                    </li>
+                    <li><a href="<?= \yii\helpers\Url::to(['newsletter/history']) ?>"><span class="fa fa-dashboard"></span>History</a>
+                    </li>
+                    <li><a href="<?= \yii\helpers\Url::to(['newsletter-subscription/index']) ?>"><span class="fa fa-dashboard"></span>Subscribers</a>
+                    </li>
+
                 </ul>
             </li>
         </ul>

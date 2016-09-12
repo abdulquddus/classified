@@ -28,6 +28,7 @@ use yii\data\Pagination;
 use app\models\UploadForm;
 use yii\web\UploadedFile;
 use backend\models\CreditPackages;
+use backend\models\NewsletterSubscription;
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -345,7 +346,9 @@ class UserController extends Controller
              $ad_info=0;
          }
       $title = new Conversation();
-        
+//news letter
+      $letter = NewsletterSubscription::find()->where(['email'=>\Yii::$app->user->identity->username])->one();
+      
         // $city = ['M'=>'Male', 'F'=>'Female'];
          return $this->render('setting',['pass_model'=>$pass_model, 
                                          'city'=>$city, 
@@ -381,7 +384,8 @@ class UserController extends Controller
                                          'pagination'=>$pagination,
                                          'advert_data_pending'=>$advert_data_pending,
                                          'pending_ads'=>$pending_ads,
-                                         'packages'=>$packages
+                                         'packages'=>$packages,
+                                         'letter'=>$letter
                  ]);
          
     }
@@ -797,6 +801,30 @@ class UserController extends Controller
   $mpdf->Output('MyPDF.pdf', 'D');
   exit;
  }
+ 
+ //news-letter
+ 
+ public function actionEmailnotification(){
+     echo $user = \Yii::$app->user->identity->id;
+     echo $useremail = \Yii::$app->user->identity->username;
+     NewsletterSubscription::deleteAll(['email'=>$useremail]);
+     $subsrip = new NewsletterSubscription();
+     $subsrip->email = $useremail;
+     $subsrip->status = 1;
+     $subsrip->save();
+    
+     }
+     
+        public function actionEmailnotificationun(){
+     echo $user = \Yii::$app->user->identity->id;
+     echo $useremail = \Yii::$app->user->identity->username;
+     $subsrip =  NewsletterSubscription::find()->andFilterWhere(['like','email', $useremail])->one();
+//     print_r($subsrip);
+     $subsrip->status = 0;
+     $subsrip->save();
+    
+     }
+ 
  
  
 }

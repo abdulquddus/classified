@@ -9,6 +9,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use common\components\AccessRule;
+use yii\filters\AccessControl;
+use common\models\Admin;
 
 /**
  * CommercialSearchAdsController implements the CRUD actions for CommercialSearchAds model.
@@ -18,15 +21,52 @@ class CommercialSearchAdsController extends Controller
     /**
      * @inheritdoc
      */
-    public function behaviors()
+     public function behaviors()
     {
         return [
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['post'],
                 ],
             ],
+            'access' => [
+    'class' => AccessControl::className(),
+    // We will override the default rule config with the new AccessRule class
+    'ruleConfig' => [
+    'class' => AccessRule::className(),
+                          ],
+    'only' => ['create', 'update', 'delete'],
+    'rules' => [
+        [
+            'actions' => ['create'],
+            'allow' => true,
+            // Allow users, moderators and admins to create
+            'roles' => [
+                Admin::ROLE_USER,
+                Admin::ROLE_MODERATOR,
+                Admin::ROLE_ADMIN
+            ],
+        ],
+        [
+            'actions' => ['update'],
+            'allow' => true,
+            // Allow moderators and admins to update
+            'roles' => [
+                Admin::ROLE_MODERATOR,
+                Admin::ROLE_ADMIN
+            ],
+        ],
+        [
+            'actions' => ['delete'],
+            'allow' => true,
+            // Allow admins to delete
+            'roles' => [
+                Admin::ROLE_ADMIN
+            ],
+        ],
+    ],
+],
         ];
     }
 
@@ -64,21 +104,22 @@ class CommercialSearchAdsController extends Controller
      */
    public function actionCreate()
     {
-        $chkOrg = CommercialSearchAds::find()->all();
-	if(!empty($chkOrg)) {
-		throw new NotFoundHttpException('The requested page does not exist.');
-	}
+       $model = new CommercialSearchAds();
+//        $chkOrg = CommercialSearchAds::find()->all();
+//	if(!empty($chkOrg)) {
+//		throw new NotFoundHttpException('The requested page does not exist.');
+//	}
 	
-        $model = new CommercialSearchAds();
-	if(isset($_POST['CommercialSearchAds']) && $model->load(Yii::$app->request->post()))
+       
+	if(isset($_POST['commercial-search-ads']) && $model->load(Yii::$app->request->post()))
 	{
-		$model->attributes=$_POST['CommercialSearchAds'];
-		$model->url = strtolower($_POST['CommercialSearchAds']['url']);
+		$model->attributes=$_POST['commercial-search-ads'];
+		$model->url = strtolower($_POST['commercial-search-ads']['url']);
 		$model->user_id = \yii::$app->user->id;
 
 		ob_start();
 
-		if(!empty($_FILES['CommercialSearchAds']['tmp_name']['image']))
+		if(!empty($_FILES['commercial-search-ads']['tmp_name']['image']))
 		{
 			$file = UploadedFile::getInstance($model,'image');
 			$model->image_type = $file->type;
@@ -133,12 +174,13 @@ class CommercialSearchAdsController extends Controller
 			$model->image = $image_string;
 		}
 		if($model->save())
-		return $this->redirect(['view', 'id' => $model->id]);
+//		return $this->redirect(['view', 'id' => $model->id]);
+                     return $this->redirect(['index']);
 	}
-
+else{
 		return $this->render('create', [
 					'model' => $model,
-				    ]);
+]);}
     }
 
     /**

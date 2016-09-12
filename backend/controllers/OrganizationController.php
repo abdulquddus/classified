@@ -128,7 +128,8 @@ class OrganizationController extends Controller
 			$model->logo = $image_string;
 		}
 		if($model->save())
-		return $this->redirect(['view', 'id' => $model->id]);
+//		return $this->redirect(['view', 'id' => $model->id]);
+                     return $this->redirect(['index']);
 	}
 
 		return $this->render('create', [

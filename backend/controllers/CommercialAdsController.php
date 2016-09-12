@@ -116,7 +116,8 @@ class CommercialAdsController extends Controller
 
             $model->save();
             $model->upload();
-            return $this->redirect(['view', 'id' => $model->id]);
+//            return $this->redirect(['view', 'id' => $model->id]);
+             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,

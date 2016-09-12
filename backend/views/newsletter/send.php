@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $searchModel backend\models\NewsletterSearch */
@@ -24,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="modal-dialog">
     
       <!-- Modal content-->
-      <form method="post" action="<?= Url::to(['newsletter/mail']); ?>">
+     <?php $form = ActiveForm::begin(['action'=>['newsletter/mail'],'method'=>'post']); ?>
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>

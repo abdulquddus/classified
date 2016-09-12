@@ -130,7 +130,7 @@ class NewsletterController extends Controller
     
     public function actionMail()
     {
-        if($_POST['letter']){
+        if(isset($_POST['letter'])){
        $id = $_POST['letter'];
        
        //-------------------
@@ -152,21 +152,22 @@ class NewsletterController extends Controller
             $headers .= "--\n";
             $headers .= "Content-type: text/html; charset=utf-8\n";
             $headers .= "Content-type: text/html; charset=iso-8859-1\n";
-            $headers .= "From: Devtesting<Info@devtesting.com >\n\n";
-            $headers = "From: Info@devtesting.com \r\n";
+            $headers .= "From: Devtesting<Info@virtual-developers.com >\n\n";
+            $headers = "From: Info@virtual-developers.com \r\n";
             $headers .= "Reply-To: info@virtual-developers.com \r\n";
             $headers .= "MIME-Version: 1.0\r\n";
             $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
                 
                 $too = \backend\models\NewsletterSubscription::find()->all();
                 foreach($too as $tooo){
-                   echo $to = $tooo->email;
+                   //echo $to = $tooo->email;
                      mail($to, $subject, $message, $headers);
                 }
 //               mail($to, $subject, $message, $headers);
+                 Yii::$app->session->setFlash('success', "Newsletters Sent!");
         }
         
-      Yii::$app->session->setFlash('success', "Newsletters Sended!");
+     
         
         return $this->redirect(['history']);
     }

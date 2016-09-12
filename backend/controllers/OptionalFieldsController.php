@@ -106,7 +106,27 @@ class OptionalFieldsController extends Controller
         $model = new OptionalFields();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+//            return $this->redirect(['view', 'id' => $model->id]);
+             $bridge =  OptionalfieldBridgeTable::findOne(['optional_field_key'=>$model->id]);
+        if(isset($bridge))
+        {
+            
+            $bridge->deleteAll();
+        }
+            $filtername = FilterName::find()->where(['id'=>$model->opk])->all();
+            foreach($filtername as $fl)
+            {
+                $bridge2 = new OptionalfieldBridgeTable();
+              echo  $bridge2->optional_field_key=$model->id;
+               echo  $bridge2->filter_field_key=$fl->id;
+                $bridge2->save();
+            }
+            if(!empty($_POST['additionalfields']))
+            {
+                $fields=$_POST['additionalfields'];
+ 
+            }           
+             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -122,27 +142,20 @@ class OptionalFieldsController extends Controller
      */
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+       
+         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) ) {
              $model->save();
              //echo $model->id;
            
         $bridge =  OptionalfieldBridgeTable::findOne(['optional_field_key'=>$model->id]);
-//        echo '<pre>';
-//        print_r($bridge);
-//        echo '</pre>';
-//        exit();
         if(isset($bridge))
         {
             
             $bridge->deleteAll();
         }
-//         if($bridge->deleteAll()){
-//            print_r($model->opk);
             $filtername = FilterName::find()->where(['id'=>$model->opk])->all();
-//                echo $model->id;
-//                print_r($filtername);
             foreach($filtername as $fl)
             {
                 $bridge2 = new OptionalfieldBridgeTable();
@@ -150,39 +163,27 @@ class OptionalFieldsController extends Controller
                echo  $bridge2->filter_field_key=$fl->id;
                 $bridge2->save();
             }
-//    exit();
             if(!empty($_POST['additionalfields']))
             {
                 $fields=$_POST['additionalfields'];
- //               echo  $model->opitional_field_key;
+ 
             }            
            return $this->redirect(['view', 'id' => $model->id]);
         }
         
         else {
-            //$query = "SELECT titles, optional_field_id FROM optional_fields, category_additional_fields where category_additional_fields.category_id = $model->id and category_additional_fields.optional_field_id = optional_fields.id";
-            
-            $query = "select id, filter_name from filter_name where id in (SELECT `filter_field_key` from `optionalfield_bridge_table` where `optional_field_key` = $model->id)";
+              $query = "select id, filter_name from filter_name where id in (SELECT `filter_field_key` from `optionalfield_bridge_table` where `optional_field_key` = $model->id)";
             
             $caf = \Yii::$app->db->createCommand($query)->queryAll();
             
-//            echo '<pre>';
-//            print_r($caf);
-//            echo '</pre>';
-//            exit();
-
             if($caf != ''){
                 return $this->render('update', [
                 'model' => $model,'caf'=>$caf,
             ]);
             }
 
-            if($additionalfields == Null)
-            {
-                return $this->render('update', [
-                'model' => $model, 'caf'=>'',
-            ]);
-        }}
+      
+            }
     }
 
     /**

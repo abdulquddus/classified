@@ -29,7 +29,7 @@ class NewsletterSubscription extends \yii\db\ActiveRecord
     {
         return [
             [['status'], 'integer'],
-            [['key'], 'required'],
+          //  [['key'], 'required'],
             [['email'], 'string', 'max' => 200],
             [['key'], 'string', 'max' => 500]
         ];

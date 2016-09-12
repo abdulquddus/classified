@@ -13,6 +13,7 @@ use common\components\AccessRule;
 use yii\filters\AccessControl;
 use common\models\Admin;
 use mPDF;
+use yii\web\Response;
 
 /**
  * CategoryController implements the CRUD actions for Category model.
@@ -127,7 +128,8 @@ class CategoryController extends Controller
                     
                 }
             }
-            return $this->redirect(['view', 'id' => $model->id]);
+//            return $this->redirect(['view', 'id' => $model->id]);
+             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -155,8 +157,12 @@ class CategoryController extends Controller
            
             if(!empty($_POST['additionalfields']))
             {
-                $fields=$_POST['additionalfields'];
+                $fields= array_merge($_POST['additionalfields']);
                 $model->custom_update($model->id, $fields);
+                
+            }  else {
+                $model->custom_update_delete($model->id);
+                
             }
                  
             return $this->redirect(['view', 'id' => $model->id]);
@@ -165,7 +171,7 @@ class CategoryController extends Controller
         else
         {
             
-            $query = "SELECT titles, optional_field_id FROM optional_fields, category_additional_fields where category_additional_fields.category_id = $model->id and category_additional_fields.optional_field_id = optional_fields.id";
+            $query = "SELECT filter_name, optional_field_id FROM filter_name, category_additional_fields where category_additional_fields.category_id = $model->id and category_additional_fields.optional_field_id = filter_name.id";
             
             $caf = \Yii::$app->db->createCommand($query)->queryAll();
            
@@ -222,4 +228,16 @@ class CategoryController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
+    
+    public function actionDd_options($id){
+		
+		if($id == null)
+		{
+			return 0;
+		}
+        Yii::$app->response->format = Response::FORMAT_JSON;    
+        $results = \backend\models\FilterName::find()->where(['parent_filter'=>$id, 'status'=>1])->all();
+        return $results;
+    }
+                
 }

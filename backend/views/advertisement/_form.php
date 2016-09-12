@@ -101,7 +101,7 @@ use dosamigos\ckeditor\CKEditor;
 
     <?php $region= \backend\models\Region::find()->all();
     $listData=ArrayHelper::map($region, 'id', 'name');
-    echo $form->field($model, 'id')->dropDownList(
+    echo $form->field($model, 'state_id')->dropDownList(
         $listData,
         ['prompt'=>'Select State'])->label('Select State');
 

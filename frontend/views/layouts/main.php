@@ -234,8 +234,7 @@ $id=0;
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><?= $user[0] ?> <span class="caret"></span></a>
           <ul class="dropdown-menu">
               <li class="sub"><a href="<?= Url::toRoute(['/user/setting', 'message'=>'1'])?>">Messages</a></li>
-            <li class="sub"><a href="#">Favourites</a></li>
-            <li id="" class="sub"><a href="<?= Url::toRoute(['/user/setting','ads'=>1])?>">Ads</a></li>
+             <li id="" class="sub"><a href="<?= Url::toRoute(['/user/setting','ads'=>1])?>">Ads</a></li>
             <li role="separator" class="divider sub"></li>
             <li class="sub"><a href="<?= Url::toRoute(['/user/setting', 'setting'=>1])?>">Account Settings</a></li>
              <li class="sub"><a href="<?= Url::toRoute(['/site/logout'])?>">logout</a></li>
@@ -580,12 +579,12 @@ $('.main li').click(function() {
     var sel = $(this).attr("id");
     text1 = $(this).text();
     //            alert(text);
-    $('.sub').hide();
+    $('.subm').hide();
     $('#s' + sel).fadeIn(100);
 });
 
 
-$('.sub:not(.ssb ) li').click(function() {
+$('.subm:not(.ssb ) li').click(function() {
     var sel2 = $(this).attr("target");
     text2 = $(this).text();
 

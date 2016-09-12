@@ -215,7 +215,7 @@ use yii\helpers\Html;
 									</td>
                                                                         <?php }?>
 									<td>
-										<a href=""><p><?= $random_ad->advertise_title?></p></a>
+										<a href="<?= Yii::$app->urlManager->createUrl(['advertisement/ad-view', 'id' => $random_ad->id]) ?>"><p><?= $random_ad->advertise_title?></p></a>
 										<!-- <p>Qmobile</p> -->
 									</td>
 									<td class="td-price">

@@ -30,9 +30,9 @@ use backend\models\FilterName;
     
     <?= $form->field($model, 'filter_value')->textInput(['maxlength' => true]) ?>
     
-    <?= $form->field($model, 'display_for_adpost_page')->dropDownList(['1' => 'Dropdown - ID1', '2' => 'Chcekbox - ID2', '3' => 'Textbox - Numbers- ID3', '4' => 'Textbox - Value - ID4'], ['onchange'=>'custom_validation()']);  ?>
+    <?= $form->field($model, 'display_for_adpost_page')->dropDownList(['1' => 'Dropdown - ID1', '2' => 'Chcekbox - ID2', '3' => 'Textbox - Numbers- ID3', '4' => 'Textbox - Value - ID4', '5' => 'Range - ID5'], ['onchange'=>'custom_validation()']);  ?>
     
-    <?= $form->field($model, 'display_for_screen_page')->dropDownList(['1' => 'Dropdown - ID1', '2' => 'Chcekbox - ID2', '3' => 'Textbox - Numbers- ID3', '4' => 'Textbox - Value - ID4'], ['onchange'=>'custom_validation()']);  ?>
+    <?= $form->field($model, 'display_for_screen_page')->dropDownList(['1' => 'Dropdown - ID1', '2' => 'Chcekbox - ID2', '3' => 'Textbox - Numbers- ID3', '4' => 'Textbox - Value - ID4', '5' => 'Range - ID5'], ['onchange'=>'custom_validation()']);  ?>
 
     <?php echo $form->field($model, 'status')->dropDownList(['1' => 'Activate', '0' => 'Deactivate']); ?>
 

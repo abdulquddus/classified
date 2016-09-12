@@ -22,22 +22,22 @@ use kartik\widgets\Select2;
 
     <?php
     $options=  array();
-    if (!empty($caf))
-    {
-        foreach($caf as $cafs){
-        $options[]=$cafs['filter_name'];
-        }
+//    if (!empty($caf))
+//    {
+//        foreach($caf as $cafs){
+//        $options[]=$cafs['filter_name'];
+//        }
 
     $FilterName= backend\models\FilterName::find()->where(["parent_filter" => 0, "status" => 1])->all();
     $listData=ArrayHelper::map($FilterName, 'id', 'filter_name');
     
-     $preselected = backend\models\OptionalfieldBridgeTable::find()->where(['optional_field_key'=>$model->id])->all();
+$preselected = backend\models\OptionalfieldBridgeTable::find()->where(['optional_field_key'=>$model->id])->all();
      $preData=ArrayHelper::getColumn($preselected,  'filter_field_key');
 //     echo "<pre>";
 //     print_r($preData);
 //     echo "</pre>";
 //    
-    
+    echo '<label class="control-label">Dropdown Fields</label>'; 
     echo Select2::widget([
         'name' => 'OptionalFields[opk]',
         'value' => $preData, // value to initialize
@@ -48,21 +48,21 @@ use kartik\widgets\Select2;
 //        'options'=>$options,
         ],
         ]);
-    }
-    else{//when record is inserted.
-        $FilterName= backend\models\FilterName::find()->where(["parent_filter" => 0, "status" => 1])->all();
-        $listData=ArrayHelper::map($FilterName, 'id', 'filter_name');
-        
-        echo '<label class="control-label">Dropdown Fields</label>'; 
-        echo Select2::widget([
-        'name' => 'OptionalFields[opk]',
-        'data' => $listData,
-        'options' => [ 
-            'placeholder' => 'Select dropdown options ...',
-          
-            'multiple' => true  ],
-        ]);
-    }
+//    }
+//    else{//when record is inserted.
+//        $FilterName= backend\models\FilterName::find()->where(["parent_filter" => 0, "status" => 1])->all();
+//        $listData=ArrayHelper::map($FilterName, 'id', 'filter_name');
+//        
+//        echo '<label class="control-label">Dropdown Fields</label>'; 
+//        echo Select2::widget([
+//        'name' => 'OptionalFields[opk]',
+//        'data' => $listData,
+//        'options' => [ 
+//            'placeholder' => 'Select dropdown options ...',
+//          
+//            'multiple' => true  ],
+//        ]);
+//    }
     ?>
 
     <?= $form->field($model, 'status')->dropDownList(['1' => 'Activate', '0' => 'Deactivate']); ?>

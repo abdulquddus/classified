@@ -57,7 +57,8 @@ class Advertisements extends \yii\db\ActiveRecord
     {
         return [
             [['category_id', 'advertise_title', 'description', 'price', 'mobile_number', 'state_id', 'contact_name',], 'required'],
-            [['category_id', 'price', 'state_id', 'mobile_number', 'state_id', 'city_id'], 'integer'],
+            [['category_id', 'state_id', 'mobile_number', 'state_id', 'city_id'], 'integer'],
+            [['price'],'number'],
             [['description'], 'string'],
             [['additional_field', 'sold_status'], 'safe'],
             [['user_id', 'category_id', 'advertise_title', 'photo_name', 'description', 'price', 'mobile_number', 'state_id', 'city_id', 'address', 'v_code', 'condition'], 'safe'],

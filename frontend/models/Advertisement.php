@@ -57,7 +57,7 @@ class Advertisement extends \yii\db\ActiveRecord
             [['user_id', 'category_id', 'price', 'mobile_number', 'state_id', 'city_id', 'status','po_id'], 'integer'],
             [['description', 'address'], 'string'],
             [['views'], 'trim'],
-            [['advertise_title', 'photo_name', 'contact_name', 'email'], 'string', 'max' => 45],
+            [['advertise_title', 'photo_name', 'contact_name', 'email'], 'string', 'max' => 120],
 //            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg'],
             
         ];

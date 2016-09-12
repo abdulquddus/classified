@@ -115,7 +115,8 @@ class AdvertisementController extends Controller
                     $model->save();
                     $photo_name =   $model->upload();        
                 }          
-            return $this->redirect(['view', 'id' => $model->id]);
+//            return $this->redirect(['view', 'id' => $model->id]);
+             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,

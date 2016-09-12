@@ -16,10 +16,9 @@ use yii\helpers\Url;
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 header-search-main">
         
                     <div class="form-group">
-                        <input type="text" onchange="submit_frm()" name="category"  class="form-control custom-sel-form-control"  value="<?php if(isset( $_GET['category'])) {echo $_GET['category'];  } ?>"  id="category" placeholder="Category" autocomplete="off">
-                        <input type="text" name="city"  class="hidden" id="region" value="<?php if(isset( $_GET['city'])) { echo $_GET['city']; } ?>">
-                        <input type="text" name="location" class="form-control" value="<?php if(isset( $_GET['location'])) { echo $_GET['location']; } ?>" id="location" placeholder="Location" data-toggle="modal" data-target="#myModal"  autocomplete="off"/>
-                    <!--<input id="sel1" class="form-control custom-sel-form-control" type="text" placeholder="Category">-->
+                        <input onkeydown="return false" type="text" onchange="submit_frm()" name="category"  class="form-control custom-sel-form-control"  value="<?php if(isset( $_GET['category'])) {echo $_GET['category'];  } ?>"  id="category" placeholder="Category" autocomplete="off">
+                        <input  type="text" name="city"  class="hidden" id="region" value="<?php if(isset( $_GET['city'])) { echo $_GET['city']; } ?>">
+                        <input onkeydown="return false" onchange="submit_frm()" type="text" name="location" class="form-control" value="<?php if(isset( $_GET['location'])) { echo $_GET['location']; } ?>" id="location" placeholder="Location" data-toggle="modal" data-target="#myModal"  autocomplete="off"/><!--<input id="sel1" class="form-control custom-sel-form-control" type="text" placeholder="Category">-->
                         <input type="text" class="form-control search-box-ad-screen"  placeholder="e.g Samsung, swift, shirts etc" name="skey" value="<?php if(isset( $_GET['skey'])) { echo $_GET['skey']; } ?>" autocomplete="off"/>
                        
                         <button type="submit" id="key" class="btn btn-default btn-hdr-search" onclick="search__()"><i class="fa fa-search"></i>Søk</button>    
@@ -157,10 +156,10 @@ use yii\helpers\Url;
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 sort-main">
                         <label>Sort By</label>
-                        <select name="sort_by" class="form-control custom-sel-form-control selct_fld" id="sel1">
+                        <select onchange="submit_frm()" name="sort_by" class="form-control custom-sel-form-control selct_fld" id="sel1">
                             <option value="most_recent" >Most Recent</option>
-                            <option value="low_price" >Low Price</option>
-                            <option value="high_price">High Price</option>
+                            <option value="low_price" >Price Low to High</option>
+                            <option value="high_price">Price High to Low</option>
                         </select>
                     </div>
 
@@ -281,8 +280,89 @@ use yii\helpers\Url;
                         <ul id="myList" class="rdio_btn" >
                             <?php   foreach ($filters as $filter) {
                                 ?>
+
+                                <?php 
+                                $dd_option_id =   \backend\models\FilterName::find()->where(['parent_filter'=>$filter->id])->all();
+
+                                if($filter->display_for_screen_page == 1) //Dropdown
+                                {
+                                   echo "<div class='input-group contact-field-wrap'>
+                                             <label>" . $filter['filter_name'] . "</label>
+                                             <select name='Advertisements[additional_optional][". $filter['id'] ."][]' id='advertisements-advertise_title' onchange='subdropdown(this)' name='' class='form-control'>
+                                             ";
+                                   
+                                   foreach ($dd_option_id as $a_value) 
+                                   {
+                                        //print_r($a_value->id);
+                                       // $dd_option_main = \backend\models\FilterName::find()->where(['id'=>$a_value->filter_field_key])->all();
+                                        echo '<option data_value="'. $a_value['id']  .'" value="'. $a_value['filter_name']  .'">'. $a_value['filter_name'] .'</option>';         
+                                   }
+                                   echo "</select></div><div id='additional_optional'></div>";
+                                }
+
+                                if($filter->display_for_screen_page == 2) //CheckBox
+                                {
+                                echo "<div class='input-group contact-field-wrap'>
+                                         <label>" . $filter['filter_name'] . "</label></div>";
+
+                                foreach ($dd_option_id as $a_value) 
+                                {
+                                   //$dd_option_main = \backend\models\FilterName::find()->where(['id'=>$a_value->filter_field_key])->all();
+                                   //echo '<option value="'. $dd_option_main[0]['id']  .'">'. $dd_option_main[0]['filter_name'] .'</option>';         
+                                   echo "<input name='Advertisements[additional_optional][". $filter['id'] ."][]' type='checkbox' class='checkbox'  value='" . $a_value['filter_name'] . "'>" . $a_value['filter_name'] ."<br>";
+                                }
+                                }
+                                if($filter->display_for_screen_page == 3) //TextBox Number
+                                {
+                                    echo "<div class='input-group contact-field-wrap'>
+                                    <label>" . $filter['filter_name'] . "</label>
+                                    <input class='form-control' type='number' name='Advertisements[additional_optional][". $filter['id'] ."][]' value=''>
+                                    </div>";
+                                }
+
+                                if($filter->display_for_screen_page == 4) //TextBox
+                                {
+                                    echo "<div class='input-group contact-field-wrap'>
+                                    <label>" . $filter['filter_name'] . "</label>
+                                    <input class='form-control' type='text' name='Advertisements[additional_optional][". $filter['id'] ."][]' value=''>
+                                    </div>";
+                                }
+
+                                //}
+
+                                if($filter->display_for_screen_page == 5) //Range
+                                {
+                                //First Range Textbox
+                                echo "<div class='input-group contact-field-wrap'>
+                                <label>" . $filter['filter_name'] . "</label>
+                                      <input type='number' class='form-control' name='Advertisements[additional_optional][". $filter['id'] ."][]' value=''></div>";
+
+                                //Second Range Textbox
+                                echo "<div class='input-group contact-field-wrap'>
+                                <label>" .                         "</label>
+                                      <input type='number' class='form-control'  name='Advertisements[additional_optional][". $filter['id'] ."][]'
+                                  value=''></div>";
+                                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                ?>
+
+
+
                             
-                                 <li><input type="checkbox" class="rdo_main" onclick="submit_frm()" value="<?php echo $filter->id ; ?>" name="filters[]" <?php if(isset($_GET['filters']) && $_GET['filters']==$filter->id ) { echo "checked"; } ?> /> <?php echo $filter->titles ; ?></li>
+                                 
                             <?php  } ?>
                         </ul>
 
@@ -381,7 +461,7 @@ use yii\helpers\Url;
                                        
                                     </div>
                                     <div class="productprice">
-                                        Kr. 5000</div>
+                                        Kr. <?= $cate->price ?></div>
                                      <a href="#" class="verifyadd"></a>
                                 </div>
                             <?php
@@ -563,7 +643,7 @@ $(".myCategory").click(function(){
 <script>
     function submit_frm()
     {         
-          var str
+          var str;
        
          setTimeout(function(){  str =  document.getElementById('category').value;  
         str = str.trim(); console.log(str);document.getElementById('category').value = str; }, 100);
@@ -580,6 +660,20 @@ $(".myCategory").click(function(){
             document.getElementById("ads").innerHTML = data;
         }
     });}, 1000);
+
+        setTimeout(function(){
+            $.ajax({
+        type: "GET",
+        url: "<?php  echo Yii::$app->getUrlManager()->createUrl('site/searchad'); ?>",
+
+        data: $("#search_add_frm").serialize(),
+        //       setTimeout(function(){ alert("No result found"); }, 3000);          
+        success: function(data) {
+            //       alert(data);
+            // document.getElementById("ads").innerHTML = data;
+        }
+    });}, 1000);
+        
 //        alert('dddd');
 //          $(form).submit();
         //  $( ".navbar-form" ).submit();
@@ -603,3 +697,30 @@ $(".header").css('display','none');
 });
 
 </script>
+
+
+ <script>
+     
+
+         function subdropdown(id)
+    {
+        var dd_id = id.value;
+        dd_id = $(id).find(':selected').attr('data_value')  //this variable contains the ID of dropdown's options
+        //alert(dd_id)
+          $.ajax({
+            type: "GET",
+            dataType: "html",
+            url: "<?php echo Yii::$app->getUrlManager()->createUrl('site/sub_dd_options'); ?>",
+            data: {
+                id: dd_id
+            },success: function(data) {
+              console.log(data)
+                document.getElementById("additional_optional").innerHTML = data;
+            },
+            error: function() {
+            console.log(arguments);
+            }
+
+            });
+    }
+ </script>
