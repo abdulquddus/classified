@@ -55,7 +55,7 @@ $this->title = 'My Yii Application';
 				<option value="C#">
 				<option value="C++">
 			  </datalist>	
-			  <p>Last visit</p>
+			  <p>Last visit: <span><a href="" id="lasetlocation">karachi</a></span></p>
 			</div>
           </div>
           <div class="modal-body pad150 display-block">

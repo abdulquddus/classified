@@ -124,26 +124,22 @@ class UserController extends Controller
           
           $id = Yii::$app->user->getId();
           $pass_model = new Password();
-//          $detail_model = new Details();
+
           $detail_model = Details::findOne($id);
           $adscredit = new \frontend\models\CreditsDetails();
+          $temp = $detail_model->img;
           if ($detail_model->load(Yii::$app->request->post()) && $detail_model->validate()) {
-       
+              $myimg = UploadedFile::getInstances($detail_model, 'img');
+
+                   if(isset($myimg[0]->name)){
                $detail_model->imgu = UploadedFile::getInstances($detail_model, 'img');
-//               echo "<pre>";
-////               print_r($detail_model->imgu);
-//               echo "</pre>";
-//               foreach($detail_model->imgu as $test){
-//                   print_r($test->name);
-//               }
+
                $detail_model->upload();
-//            if ($detail_model->upload()) {
-//                // file is uploaded successfully
-//                return;
-//            }
-//              echo $detail_model->name;
-              
-//              echo $detail_model->
+                   }else{
+                       $detail_model->img = $temp;
+                   }
+                   
+           
                
                        if(isset($_POST['state'])){ $detail_model->state = $_POST['state']; }
                         if(isset($_POST['city'])){  $detail_model->city = $_POST['city'];}
@@ -346,7 +342,6 @@ class UserController extends Controller
              $ad_info=0;
          }
       $title = new Conversation();
-//news letter
       $letter = NewsletterSubscription::find()->where(['email'=>\Yii::$app->user->identity->username])->one();
       
         // $city = ['M'=>'Male', 'F'=>'Female'];

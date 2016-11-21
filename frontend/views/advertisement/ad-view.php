@@ -72,7 +72,7 @@ use yii\helpers\Html;
     else {
     foreach($imgs as $img){?>
             <li>
-  	    	    <img  src="<?php echo Yii::getAlias('@web') ?>/uploads/<?= $img->advertise_id?>/<?= $img->image?>" />
+  	    	    <img class="fancybox" src="<?php echo Yii::getAlias('@web') ?>/uploads/<?= $img->advertise_id?>/<?= $img->image?>" />
   	    		</li>
            
               <?php
@@ -124,6 +124,17 @@ use yii\helpers\Html;
 <!--										<h4>Brand</h4>
 										<p>Nokia</p>-->
 									</div>
+                            
+                                                                        <?php $results = \frontend\models\FormAdditionalValues::find()->where(['ad_id'=>$adid])->all(); 
+                                                                                foreach ($results as $value) {
+                                                                                    $filter_names = \backend\models\FilterName::find()->where(['id'=>$value->field_id])->one();    
+                                                                                    echo '<div class="addescriptiontoptxt"><b>' . $filter_names->filter_name . '</b> : <span>' . ltrim(str_replace("|","-",$value->values), '-') .'</span></div>'; 
+                                                                                }
+                                                                        ?>
+                            
+                            
+                            
+                                                                        
 									<p><?= $ads->description ?></p>
 									<div class="adnote">
 											When you call, don't forget to mention that you found this ad on Adpost.no

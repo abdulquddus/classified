@@ -1,15 +1,27 @@
 <?php
 
+
+
 namespace frontend\models;
+
+
 
 use Yii;
 
+
+
 /**
+
  * This is the model class for table "tmp_user".
+
  *
+
  * @property integer $id
+
  * @property string $username
+
  * @property string $auth_key
+
  * @property string $password_hash
  * @property string $password
  * @property string $email
@@ -26,7 +38,8 @@ class TmpUser extends \yii\db\ActiveRecord
      public $password;
       public $confirmpassword;
       public $accept;
-     
+
+//     public $com_url; // for company url
 
     /**
      * @inheritdoc
@@ -70,6 +83,8 @@ class TmpUser extends \yii\db\ActiveRecord
             ['confirmpassword', 'compare','compareAttribute'=>'password_hash','operator'=>'==','message'=>'Password missmatche.'],
             ['accept', 'compare', 'compareValue'=> true, 'message' => 'You must agree to the terms and conditions'],
             
+            [['com_url'], 'safe'],    
+
         ];
     }
     
@@ -123,7 +138,10 @@ class TmpUser extends \yii\db\ActiveRecord
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
             'password' => 'password',
-            'accept' => 'Accept'
+
+            'accept' => 'Accept',
+             'com_url' => 'ompany URL'
+
         ];
     }
     /**

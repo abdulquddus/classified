@@ -898,8 +898,8 @@ transition: background-color 0.5s ease;
     
 }
 .image-box img {
-    width: 100% !important;
-    height:100%;
+    width: 70% !important;
+    height:70%;
     margin:0 auto;
 }
 .product_detail{float:left;}
@@ -916,7 +916,7 @@ transition: background-color 0.5s ease;
     position:absolute;
     top:3px;
     right:4px;
-    font-size:18px;
+    font-size:14px;
     color:#2965be;
     text-align:center;
     font-weight:bold;
@@ -1330,7 +1330,7 @@ border-radius: 8px;
     border: 0px;
 }
 .account-settings-wrap .panel-title {
-    font-size: 20px;
+    font-size: 18px;
     color: #2965be;
     font-weight: 200;
 }
@@ -1438,7 +1438,7 @@ border-radius: 8px;
 }
 .table-ads-wrap .table>thead>tr>th,
 .table-ads-msg-wrap .table>thead>tr>th {
-    border-bottom: 1px;
+    border-bottom: 1px solid #f1f1f1 !important;
     border-top: 1px solid #f1f1f1 !important;
     font-weight: normal;
 }
@@ -3213,3 +3213,34 @@ input[type=button] {
 .table > tbody > tr > td:first-child{border-left:none;}
 .table > tbody > tr > td:last-child{border-right:none;}
 .useradttl{font:18px Verdana, Geneva, Tahoma, sans-serif;color:#a4b502}
+
+.custm-check{width:100%;float: left;margin-bottom:12px;}
+
+.custm-check label {
+    color: #000;
+    float: left;
+    font-weight: 400;
+    margin: 5px 12px 0px 0;
+    text-align: right;
+    width: 25%;
+}
+
+.custom-box-ch{border: 1px solid #ccc;
+    float: left;
+    height: 15px;
+    margin-right: 8px;
+    width: 15px;
+margin-top:10px !important;}
+
+span.txt-shk{ float: left;
+    margin-left: 5px;
+    margin-right: 10px;
+    margin-top: 6px;
+    width: auto;}
+
+.twnty-padng{padding:20px;}
+
+.bg-none{background: none !important;}
+
+.mrgn-padng{margin:0 !important; padding: 0 !important;}
+

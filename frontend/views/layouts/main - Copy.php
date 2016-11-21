@@ -31,9 +31,6 @@ if (class_exists('yii\debug\Module')) {
     <!-- Bootstrap -->
     <link href="<?php echo Yii::getAlias('@web') ?>/design/css/bootstrap.min.css" rel="stylesheet">
      <link rel="stylesheet" href="<?php echo Yii::getAlias('@web') ?>/design/css/bootstrap-select.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Font Awesome -->
     <link href="<?php echo Yii::getAlias('@web') ?>/design/css/font-awesome.min.css" rel="stylesheet">
      <link href="<?php echo Yii::getAlias('@web') ?>/design/css/theme.css" rel="stylesheet">
@@ -53,11 +50,11 @@ if (class_exists('yii\debug\Module')) {
     <![endif]-->
 
  
-    <!--<script src="<?php echo Yii::getAlias('@web') ?>/design/js/jquery-1.9.1.min.js"></script>-->
-	<!--<script src="<?php echo Yii::getAlias('@web') ?>/design/js/jquery.js"></script>-->
-	<!--<script src="<?php echo Yii::getAlias('@web') ?>/design/js/jssor.js" type="text/javascript"></script>-->
-    <!--<script src="<?php echo Yii::getAlias('@web') ?>/design/js/jssor.slider.js" type="text/javascript"></script>-->
-     <!--<script src="<?php echo Yii::getAlias('@web') ?>/design/js/bootstrap-select.js"></script>-->
+    <script src="<?php echo Yii::getAlias('@web') ?>/design/js/jquery-1.9.1.min.js"></script>
+	<script src="<?php echo Yii::getAlias('@web') ?>/design/js/jquery.js"></script>
+	<script src="<?php echo Yii::getAlias('@web') ?>/design/js/jssor.js" type="text/javascript"></script>
+    <script src="<?php echo Yii::getAlias('@web') ?>/design/js/jssor.slider.js" type="text/javascript"></script>
+     <script src="<?php echo Yii::getAlias('@web') ?>/design/js/bootstrap-select.js"></script>
 	<script type="text/javascript">
 
         jQuery(document).ready(function ($) {
@@ -381,7 +378,7 @@ $id=0;
 
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
 <script>
     
@@ -983,8 +980,6 @@ $('.back').click(function() {
 });
 
 $(".myLi").click(function() {
-//      str = str.trim();
-//        document.getElementById('category').value = str; 
     $('#location').val($(this).text().trim());
     if($(this).text()=="All Norge"){
         $('#location').val('');
@@ -1034,7 +1029,6 @@ function modal_cat(item) {
                     cat += '<a href="#"><li onclick="modal_sub(this)" class="active" id="' + response[i]["id"] + '">' + response[i]["title"] + '</li><a>';
                 }
                 document.getElementById('c3').innerHTML = cat;
-                 $("#myModal").modal('show');
             } else {
                 document.getElementById('modal-body').innerHTML = "";
                 
@@ -1065,7 +1059,7 @@ function modal_sub(item) {
             if (response.length > 0) {
                 for (i = 0; i < response.length; i++) {
                     cat += '<a herf="<?php echo Yii::$app->getUrlManager()->createUrl('
-                    site / search ')?>&id="' + response[i]['id'] + '""><li onclick="link(this)" id="' + response[i]["id"] + '" class="active"><span style="cursor:pointer">' + response[i]["title"] + '</span> </li></a>';
+                    site / search ')?>&id="' + response[i]['id'] + '""><li onclick="link(this)" id="' + response[i]["id"] + '" class="active">' + response[i]["title"] + ' </li></a>';
                     //                 alert(response[i]["title"]);
                 }
                 document.getElementById('cs').innerHTML = cat;
@@ -1108,13 +1102,13 @@ function mark_sold(id) {
 </script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<!--<script src="<?php echo Yii::getAlias('@web') ?>/design/js/bootstrap.min.js"></script>-->
+<script src="<?php echo Yii::getAlias('@web') ?>/design/js/bootstrap.min.js"></script>
 <!-- boostrap lightbox -->
-<!--<script src="<?php echo Yii::getAlias('@web') ?>/design/js/bootstrap-lightbox.min.js"></script>-->
+<script src="<?php echo Yii::getAlias('@web') ?>/design/js/bootstrap-lightbox.min.js"></script>
 <!-- jquery -->
-<!--<script src="<?php echo Yii::getAlias('@web') ?>/design/js/jquery.js"></script>-->
+<script src="<?php echo Yii::getAlias('@web') ?>/design/js/jquery.js"></script>
 <!-- jquery -->
-<!--<script src="<?php echo Yii::getAlias('@web') ?>/design/js/custom-script.js"></script>-->
+<script src="<?php echo Yii::getAlias('@web') ?>/design/js/custom-script.js"></script>
   
 <script>
   $(document).ready(function () {
@@ -1139,7 +1133,7 @@ function mark_sold(id) {
      document.getElementById("lasetlocation").innerHTML = localStorage.getItem("lasetlocation");
      }
 </script>
-  <?php //  $this->endBody() ?>
+  <?php  $this->endBody() ?>
   </body>
 </html>
 <?php  $this->endPage() ?>

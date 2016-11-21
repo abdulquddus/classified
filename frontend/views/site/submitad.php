@@ -100,11 +100,19 @@ use backend\models\FilterName;
             </div><!-- /custom-field-wrap-->
              <div class="row">
                
-                 <div class="col-md-9 col-sm-9 pull-right ">
+                 <div class="col-md-9 col-sm-9 pull-right twnty-padng ">
             
            <atextarea name="Advertisements[description]" id="advertisements-description" class="form-control abc"></atextarea>
             </div>
             </div>
+           <?php if($user->is_company==1){
+          echo $form->field($model, 'link', ['template' => ' <div class="input-group hvr_div  custom-field-wrap">
+              <label>Video/product link</label>
+              {input}
+              <div class="error-placement">{error}<span id="textarea_feedback"></span></div>
+                    </div>']);?>
+        <?php   } ?>
+               
             </div><!-- /submitad-main-->
            
 <!--        <div class="col-md-3 col-sm-3 hidden-xs adpost-offer">
@@ -120,9 +128,9 @@ use backend\models\FilterName;
         </div> /adpost-offer-->
       <!--</form>-->
       <h4 class="form-ttl">Contact Details</h4>
-      <section class="col-lg-12 col-md-12 col-sm-12 col-xs-12 contact-dtl-wrap">
+      <section class="col-md-10 col-md-offset-2 col-sm-8 col-sm-offset-2 contact-dtl-wrap">
         <!--form role="form"-->
-         <div class="col-md-9 col-md-offset-1 col-sm-8 col-sm-offset-2 contact-dtl-main">
+         <div class="col-md-9 col-sm-9 contact-dtl-main">
 
               <?= $form->field($model, 'contact_name', ['template' => ' <div class="input-group hvr_div contact-field-wrap">
                 <div class="popup_shw"></div>              
@@ -135,6 +143,12 @@ use backend\models\FilterName;
               <label>Phone<b class="asterisk">*</b></label>
               {input}<div class="error-placement">{error}</div>
             </div>'])->textInput(['value'=>$user->mobile,'class'=>'form-control abc']); ?> 
+              <?php if($user->is_company==1){
+             echo $form->field($model, 'com_url', ['template' => '<div class="input-group  hvr_div contact-field-wrap">
+              <label>Company URL<b class="asterisk">*</b></label>
+              {input}<div class="error-placement">{error}</div>
+            </div>'])->textInput(['value'=>$user->com_url,'class'=>'form-control abc']);  
+              } ?>
     <?php
          $city_name = \frontend\models\City::findOne($user->city);
           
@@ -201,17 +215,14 @@ use backend\models\FilterName;
               </div>
             </div>
             
-           </div><!-- /contact-dtl-main-->
+          
   <input type="hidden" name="perview_true" value="0" id="new_record" />
       <?php ActiveForm::end(); ?>
-          <div class="col-md-3 col-sm-3 contact-dtl-right">
-<!--            <div class="contact-dtl-user-img">
-            </div> /contact-dtl-user-img-->
-          </div><!-- /contact-dtl-right-->
+          </div><!-- /contact-dtl-main-->
           
         <!--/form-->
-        <div class="col-md-2 contact-dtl-right">
-            <br /><br />
+        <div class="col-md-2 contact-dtl-right hidden-sm hidden-xs">
+            <br><br><br>
            <?php if(!empty($user->img)){?>
             <img class="img-responsive" src="<?=Yii::$app->request->baseUrl?>/user/<?= $user->id?>.<?= $user->img?>">
             <?php } else { ?>
@@ -323,7 +334,7 @@ use backend\models\FilterName;
 //               echo $child;
                 
                 ?>
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 category-left-list example subm sb ssb" id="sb<?= $child ?>">
+                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 category-left-list example sub sb ssb" id="sb<?= $child ?>">
                     <ul class="ssb">
             <?php
                 foreach($schilds as $schild ){
@@ -406,11 +417,11 @@ use backend\models\FilterName;
         });
     }
     
-    function subDropdown(id)
+    function subdropdown(id)
     {
         var dd_id = id.value;
         dd_id = $(id).find(':selected').attr('data_value')  //this variable contains the ID of dropdown's options
-        alert(dd_id)
+      //  alert(dd_id)
           $.ajax({
             type: "GET",
             dataType: "html",
@@ -418,7 +429,9 @@ use backend\models\FilterName;
             data: {
                 id: dd_id
             },success: function(data) {
-              console.log(data)
+                // document.getElementById("additional_optional").innerHTML = "asdasdasd";
+                // debugger;
+
                 document.getElementById("additional_optional").innerHTML = data;
             },
             error: function() {
@@ -492,3 +505,4 @@ jQuery(document).ready(function($) {
 
 </script>
  
+<?php $this->endBody() ?>

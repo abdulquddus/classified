@@ -1,7 +1,18 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->   
+<script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
+  <script>tinymce.init({ selector:'atextarea' });</script>
 <?php
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+use kartik\widgets\FileInput;
+use dosamigos\ckeditor\CKEditor;
+use dosamigos\ckeditor\CKEditorInline;
+use backend\models\FilterName;
+ $po = \backend\models\Postcode::find()->all();
 
+        $pocounter=ArrayHelper::map($po,'id','code');
 ?>
 <main>
   <section class="col-lg-12 col-md-12 col-sm-12 col-xs-12 submitad-wrap">
@@ -11,16 +22,39 @@ use yii\helpers\Html;
         <?php
         $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);
         ?>
-         <div class="col-md-7 col-md-offset-2 col-sm-7 col-sm-offset-2 submitad-main">
-           <?= $form->field($model, 'advertise_title', ['template' => ' <div class="input-group custom-field-wrap">
+         <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 submitad-main">
+           <?= $form->field($model, 'advertise_title', ['template' => ' <div class="input-group hvr_div active custom-field-wrap">
               <label>Tittel<b class="asterisk">*</b></label>
-              {input}<div style="text-align:right">{error}</div>
-            </div>']) ?>
+              {input}
+              <div class="error-placement">{error}<span id="textarea_feedback"></span></div>
+                    </div>']) ?>
+              
+                
+
+              
+              
+            
+            
+            <div class="hidden" >
+                <input value="<?=$cat->id?>" id="advertisement-category_id" class="form-control fild_stle" name="Advertisements[category_id]">
+                 
+             </div>
              
-           <div class="form-group field-showcat required has-error validating">
-<div id="cate" class="input-group hvr_div custom-field-wrap">
+             <div id="optional">
+               
+             </div>
+             
+             <div id="additional_optional">
+               
+             </div>
+            
+             <div class="input-group hvr_div custom-field-wrap description-popover">
+                    
+            </div> 
+            
+           <div id="cate" class="input-group hvr_div custom-field-wrap">
 <label>
-Category
+Kategori
 <b class="asterisk">*</b>
 </label>
 <span id="cat_image">
@@ -29,48 +63,79 @@ Category
 <a class="cat_image_name"> <?= $cat->title?> </a>
 <a class="btn btn-primary tog" href="#" data-toggle="modal" data-target="#category">Change</a>
 </div>
-</div>
-              <div class="hiddene" >
-                 <input value="<?=$cat_id?>" id="advertisement-category_id" class="form-control" name="Advertisements[category_id]">
-                 
-             </div>
-             
-             <div id="optional">
-               
-             </div>
-             <input type="hidden" name="perview_true" value="0" id="new_record" />
-            <?= $form->field($model, 'description', ['template' => '  <div class="input-group custom-field-wrap">
+            <?= $form->field($model, 'description', ['template' => '  <div class="input-group hvr_div custom-field-wrap description-popover">
               <label>Beskrivelse<b class="asterisk">*</b></label>
-            {input}<div style="text-align:right">{error}</div>
-            </div>'])->textarea(array('rows'=>3, 'class'=>'form-control abc')); ?>  
-                 
-        <?= $form->field($model, 'price', ['template' => '<div class="input-group custom-field-wrap">
+            {input}<div class="error-placement">{error}<span id="textarea_description"></span></div>
+            </div>'])->textarea(array('rows'=>5, 'class'=>'form-control abc', 'placeholder'=>"Include the brand, model, age, and any included accessories.")); ?>  
+                
+        <?= $form->field($model, 'price', ['template' => '<div class="input-group hvr_div custom-field-wrap">
               <label>Pris<b class="asterisk">*</b></label>
-              {input}<div style="text-align:right">{error}</div>
-            </div>']); ?>  
-           
-
-            <div class="input-group custom-field-wrap">
+              {input}<div class="error-placement">{error}</div>
+            </div>']); ?> 
+        <?= $form->field($model, 'condition', ['template'=>'<div class="input-group hvr_div contact-field-wrap">
+              <label>Condition<b class="asterisk">*</b></label>
+              {input}<div class="error-placement">{error}</div>
+            </div>'])->dropDownList(['used'=>'Used', 'new'=>'New'],['class'=>'form-control abc']) ?>     
+           <div class="input-group custom-field-wrap">
               <label>Last opp bilder</label>
               <div class="custom-file-input-wrap">
                 <?php foreach($imgs as $img){?>
-                                    <div>
+                  <div class="row">
                                         
-                                        <img width="180" u="thumb" src="<?php echo Yii::getAlias('@web') ?>/uploads/<?= $img->advertise_id?>/<?= $img->image?>" />
-                                        <?= $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?><input type="button" onclick="delete_image('<?php echo $img->id; ?>')" value="delete" class="btn btn-danger" />
+                      <div class="col-md-6 ">   <img width="180" u="thumb" src="<?php echo Yii::getAlias('@web') ?>/uploads/<?= $img->advertise_id?>/<?= $img->image?>" /></div>
+                           <div class="col-md-6 ">             
+                                            <?php // echo $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?><input type="button" onclick="delete_image('<?php echo $img->id; ?>')" value="delete" class="btn btn-danger" /></div>
 
                                        <?php // $form->field($model, 'imageFiles[]', ['template'=>'{input}'])->fileInput(['multiple' => true, 'type'=>'file', 'accept' => 'image/*', 'class'=>'custom-file-input']) ?>
                                         <?php // Html::submitButton('Update Picture',['class'=>'btn btn-primary','id'=>'uploadButton']) ?>
-                                    </div><br/>
+                                    </div><br/><br>
                                     <?php }?>                     
                   
               </div>
              
+            </div>
+
+            <div class="input-group custom-field-wrap">
+              <label>Last opp bilder</label>
+              <div class="custom-file-input-wrap">
+                  
+               
+               
+                <?php 
+              
+ 
+
+                echo FileInput::widget([
+                    'name' => 'Advertisements[imageFiles][]',
+                     'pluginOptions' => [
+                        'id'=>'advertisements-imagefiles',
+                        'showCaption' => false,
+                        'showRemove' => true,
+                        'showUpload' => false,
+                        'browseClass' => 'btn btn-primary btn-block',
+                        'browseIcon' => '<i class="glyphicon glyphicon-camera"> Select Multiplae images(max-20)</i> ',
+                        'browseLabel' =>  'Select Photo'
+                    ],
+                    'options' => ['accept' => 'image/*', 'multiple' => true]
+                ]);
+
+                ?>
+               
+              
+                  
+              </div>
+             
             </div><!-- /custom-field-wrap-->
+             <div class="row">
+               
+                 <div class="col-md-9 col-sm-9 pull-right twnty-padng ">
+            
+           <atextarea name="Advertisements[description]" id="advertisements-description" class="form-control abc">Description.</atextarea>
+            </div>
+            </div>
+            </div><!-- /submitad-main-->
            
-         </div><!-- /submitad-main-->
-        
-        <div class="col-md-3 col-sm-3 hidden-xs adpost-offer">
+<!--        <div class="col-md-3 col-sm-3 hidden-xs adpost-offer">
           <div class="adpost-offer-inr">
             <h4>Ad Posting Offers:</h4>
             <ul>
@@ -79,82 +144,112 @@ Category
               <li>iii) Lorem ipsum dolor sit amet Lorem ipsum </li>
               <li>iv)Lorem ipsum dolor sit amet Lorem ipsum </li>
             </ul>
-          </div><!-- /adpost-offer-inr-->
-        </div><!-- /adpost-offer-->
+          </div> /adpost-offer-inr
+        </div> /adpost-offer-->
       <!--</form>-->
       <h4 class="form-ttl">Contact Details</h4>
-      <section class="col-lg-12 col-md-12 col-sm-12 col-xs-12 contact-dtl-wrap">
-        <form role="form">
-         <div class="col-md-7 col-md-offset-2 col-sm-7 col-sm-offset-2 contact-dtl-main">
+      
+      
+      
+      <section class="col-md-10 col-md-offset-2 col-sm-8 col-sm-offset-2 contact-dtl-wrap">
+          
+        <!--form role="form"-->
+         <div class="col-md-9 col-sm-9 contact-dtl-main">
 
-              <?= $form->field($model, 'contact_name', ['template' => ' <div class="input-group contact-field-wrap">
-              <label>Name<b class="asterisk">*</b></label>
-              {input}<div style="text-align:right">{error}</div>
-            </div>'])->textInput(['class'=>'form-control abc']); ?> 
-
+              <?= $form->field($model, 'contact_name', ['template' => ' <div class="input-group hvr_div contact-field-wrap">
+                <div class="popup_shw"></div>              
+                <label>Name<b class="asterisk">*</b></label>
+              {input}<div class="error-placement">{error}</div>
+            </div>'])->textInput(['value'=>$user->name, 'class'=>'form-control abc']); ?> 
             
-             <?= $form->field($model, 'mobile_number', ['template' => '<div class="input-group contact-field-wrap">
+            
+             <?= $form->field($model, 'mobile_number', ['template' => '<div class="input-group  hvr_div contact-field-wrap">
               <label>Phone<b class="asterisk">*</b></label>
-              {input}<div style="text-align:right">{error}</div>
-            </div>'])->textInput(['class'=>'form-control abc']); ?> 
-         
+              {input}<div class="error-placement">{error}</div>
+            </div>'])->textInput(['value'=>$user->mobile,'class'=>'form-control abc']); ?> 
+    <?php
+         $city_name = \frontend\models\City::findOne($user->city);
+          
+         $city_all = \frontend\models\City::find()->where(['region_id'=>$user->state])->all();
+         $city = ArrayHelper::map($city_all, 'id', 'name');
+         $po_dropdown = ArrayHelper::map($po, 'id', 'code');        
+          
+        $state = \frontend\models\Region::findOne($user->state);
+        $selected_city = \frontend\models\City::findOne($user->city);//         $state = ArrayHelper::map($array_region, 'id', 'name'); ?>
 
-             <?= $form->field($model, 'state_id', ['template'=>'<div class="input-group contact-field-wrap">
+             <?php if($state['id']==0){ ?>
+              <?= $form->field($model, 'state_id', ['template'=>'<div class="input-group hvr_div contact-field-wrap">
               <label>State<b class="asterisk">*</b></label>
-              {input}<div style="text-align:right">{error}</div>
-            </div>'])->dropDownList($region, ['prompt'=>'Select...', 'onChange'=>'select_city(this)','class'=>'form-control abc']); ?>
+              {input}<div class="error-placement">{error}</div>
+            </div>'])->dropDownList($region ,['options' => ['class'=>'form-control abc'], 'onChange'=>'select_city(this)']); ?>
+             <?php }else{ ?>
+                
+             <?= $form->field($model, 'state_id', ['template'=>'<div class="input-group hvr_div contact-field-wrap">
+              <label>State<b class="asterisk">*</b></label>
+              {input}<div class="error-placement">{error}</div>
+            </div>'])->dropDownList($region ,['options' => [$state->id => ['Selected'=>'Selected']],'class'=>'form-control abc', 'onChange'=>'select_city(this)']); ?>
+              
+           <?php  }
+             
+             ?>
              
             
-             <div class="input-group contact-field-wrap" id="city">
+              <?= $form->field($model, 'city_id', ['template'=>'<div id="city" class="input-group hvr_div contact-field-wrap">
               <label>City<b class="asterisk">*</b></label>
-              <select class="form-control abc">
-                <option>Choose</option>
+              {input}<div class="error-placement">{error}</div>
+            </div>'])->dropDownList($city, ['options' => [$user->city => ['Selected'=>'Selected']],'class'=>'form-control abc']); ?>
+             
+            
+<!--             <div class="input-group contact-field-wrap" id="city">
+              <label>City<b class="asterisk">*</b></label>
+              <select class="form-control">
+                <option><?php // $city->name ?></option>
                 
               </select>
-            </div><!-- /custom-field-wrap-->
+            </div> /custom-field-wrap-->
                
             
-             <?= $form->field($model, 'address', ['template' => '<div class="input-group contact-field-wrap">
+             <?= $form->field($model, 'address', ['template' => '<div class="input-group hvr_div contact-field-wrap">
               <label>Address</label>
-              {input}<div style="text-align:right">{error}</div>
-            </div>'])->textarea(array('rows'=>3, 'class'=>'form-control abc')); ?>  
+              {input}<div class="error-placement">{error}</div>
+            </div>'])->textinput(array('value'=>$user->address, 'rows'=>3, 'class'=>'form-control abc')); ?>  
 
-               <?php if (isset($_GET['new']))
-               { ?>
-            <div class="submit-ad-button-box">
-              <!--<a class="btn-submit-ad" href="#">Submit an Ad</a>-->
-              <input type="hidden" name="new" value="1" />
-              <?= Html::submitButton('Submit', ['class'=> 'btn-submit-ad']) ;?>
-              <?= Html::submitButton('Preview', ['class'=> 'btn-submit-ad','onclick'=>'make_perview()' ,'name'=>'preview', 'id'=>'btn_preview']) ;?>
 
+
+               
+             <?= $form->field($model, 'po_id', ['template'=>'<div id="po_id" class="input-group hvr_div contact-field-wrap">
+              <label>Post Code<b class="asterisk">*</b></label>
+              {input}<div class="error-placement">{error}</div>
+            </div>'])->dropDownList($po_dropdown,['class'=>'form-control abc', 'prompt' => ' -- Select Post Code --']); ?>
              
-              <div class="tos-box">
-                 By clicking "Submit", you accept our <a href="#">Terms of Use and conditions</a>
-              </div>
-            </div>
-               <?php } else
-               { ?>
+
+
             <div class="submit-ad-button-box">
-              <!--<a class="btn-submit-ad" href="#">Submit an Ad</a>-->
+              <!--<a class="btn-submit-ad" href="#">Submit an Ad</a>-->              
               <?= Html::submitButton('Submit', ['class'=> 'btn-submit-ad']) ;?>
               <?= Html::submitButton('Preview', ['class'=> 'btn-submit-ad','onclick'=>'make_perview()' ,'name'=>'preview', 'id'=>'btn_preview']) ;?>
               <div class="tos-box">
                  By clicking "Submit", you accept our <a href="#">Terms of Use and conditions</a>
               </div>
             </div>
-               <?php } ?>
             
            </div><!-- /contact-dtl-main-->
-  
+  <input type="hidden" name="perview_true" value="0" id="new_record" />
       <?php ActiveForm::end(); ?>
           <div class="col-md-3 col-sm-3 contact-dtl-right">
 <!--            <div class="contact-dtl-user-img">
             </div> /contact-dtl-user-img-->
           </div><!-- /contact-dtl-right-->
-        </form>
+          
+        <!--/form-->
+        <div class="col-md-2 contact-dtl-right">
+            <br /><br />
+<img class="img-responsive" src="<?=Yii::$app->request->baseUrl?>/user/<?= $user->id?>.<?= $user->img?>">
+</div>
      </section>
 
-
+      </div>
+      </section>
 <!-- category_select-->
 <div id="category" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" class="modal fade custom-modal custom-modal2">
       <div class="modal-dialog">
@@ -324,30 +419,110 @@ Category
 </main>
 <script>
     var csrfToken = $('meta[name="csrf-token"]').attr("content");
-             function make_perview()
+
+    function select_city(item) {
+        $.ajax({
+            type: "GET",
+            url: "<?php echo Yii::$app->getUrlManager()->createUrl('site/select_city'); ?>",
+            data: {
+                id: item.value
+            },
+
+            success: function(data) {
+                document.getElementById("city").innerHTML = data;
+            }
+        });
+    }
+
+    function subdropdown(id)
     {
-        $('#new_record').val('1');
-    }   
-            function select_city(item)
-            { 
-                
-              //  alert(csrfToken)
-//                alert(item.value);
-$.ajax({
-            
-         
-      type: "GET",
-  url: "<?php echo Yii::$app->getUrlManager()->createUrl('site/select_city'); ?>",
-  data: { id: item.value },
-                          
-success: function(data){
-//  alert(data);
- document.getElementById("city").innerHTML = data;
-      }
-    });
+        var dd_id = id.value;
+        dd_id = $(id).find(':selected').attr('data_value')  //this variable contains the ID of dropdown's options
+        alert(dd_id)
+          $.ajax({
+            type: "GET",
+            dataType: "html",
+            url: "<?php echo Yii::$app->getUrlManager()->createUrl('site/sub_dd_options'); ?>",
+            data: {
+                id: dd_id
+            },success: function(data) {
+              console.log(data)
+                document.getElementById("additional_optional").innerHTML = data;
+            },
+            error: function() {
+            console.log(arguments);
+            }
+
+            });
     }
     
-    function delete_image(id)
+
+
+     
+    
+    
+jQuery(document).ready(function($) {
+
+    var text_max = 99;
+    $('#textarea_feedback').html(text_max + ' letters remaining');
+
+    $('#advertisements-advertise_title').keyup(function() {
+        var text_length = $('#advertisements-advertise_title').val().length;
+        var text_remaining = text_max - text_length;
+
+        $('#textarea_feedback').html(text_remaining + ' letters remaining');
+    });
+    
+    
+    var text_max_des = 4096;
+    $('#textarea_description').html(text_max_des + ' letters remaining');
+
+    $('#advertisements-description').keyup(function() {
+        var text_length = $('#advertisements-description').val().length;
+        var text_remaining = text_max_des - text_length;
+
+        $('#textarea_description').html(text_remaining + ' letters remaining');
+    });
+    
+
+    $('[data-toggle="popover"]').popover();   
+
+    
+    $("#btn_preview").click(function(){        
+//        var idString = $( this ).text() + " = " + $( this ).attr( "target" );
+        
+//        if(idString != '1undefined'){
+//            alert("echo");
+//        }
+            
+//    alert(idString);
+        $('#w0').attr('target', '_black');
+        $('#w0').removeAttr("action");
+        $('#w0').attr('action', '<?php echo Yii::$app->getUrlManager()->createUrl('site/submitad_preview'); ?>');
+        
+//        $('#w0').renameAttr('action', 'test123' );
+    });
+    
+
+    
+    });
+    
+    function make_perview()
+    {
+        $('#new_record').val('1');
+    }
+    
+    function img(item){
+        alert(item);   
+    }
+    
+    $('.input-group').click(function() {
+    $('.input-group.active').removeClass('active');
+    $(this).closest('.input-group').addClass('active');
+    });
+
+
+ function delete_image(id)
 {
 $.ajax({
             
@@ -365,3 +540,4 @@ success: function(data){
 }
 </script>
  
+<?php $this->endBody() ?>

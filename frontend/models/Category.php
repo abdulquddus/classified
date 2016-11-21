@@ -87,20 +87,15 @@ class Category extends \yii\db\ActiveRecord
         $subcate = \frontend\models\Category::find()->where(['parent_id'=>$id])->all();
        
              foreach($subcate as $subcat){
-                  $subcate4 = \frontend\models\Category::find()->where(['parent_id'=>$subcat->id])->count();
-                  if($subcate4!=0){$arr = "<i class='fa fa-angle-right pull-right bold min_mrgn'></i>"; }  else {  
-                            $arr = "";     }
-               echo "<li class='dropdown'><a onClick='submit_frm()' class='myCategory' href='#'>$subcat->title $arr  </a>";
+               echo "<li class='dropdown'><a onClick='submit_frm_cate()' class='myCategory' href='#'>$subcat->title     <i class='fa fa-angle-right pull-right bold min_mrgn'></i></a>";
                
                         $subcate1 = \frontend\models\Category::find()->where(['parent_id'=>$subcat->id])->all();
                         if($subcate1)
                         {
                         echo '<ul class="dropdown-menu lft_menu" style="margin-left:0px">';
                         foreach($subcate1 as $subcat1){
-                            $subcate3 = \frontend\models\Category::find()->where(['parent_id'=>$subcat1->id])->count();
-                            if($subcate3!=0){$arr = "<i class='fa fa-angle-right pull-right bold min_mrgn'></i>"; }  else {  
-                            $arr = "";     }
-                           echo "<li class='dropdown'><a onClick='submit_frm()' class='myCategory'  href='#'>$subcat1->title; $arr </a>";
+                        echo "<li class='dropdown'><a onClick='submit_frm_cate()' class='myCategory'  href='#'>$subcat1->title     <i class='fa fa-angle-right pull-right bold min_mrgn'></i></a>
+                        ";
             
 
             $subcate2 = \frontend\models\Category::find()->where(['parent_id'=>$subcat1->id])->all();
@@ -108,7 +103,7 @@ class Category extends \yii\db\ActiveRecord
                         {
                         echo '<ul class="dropdown-menu lft_menun ">';
                         foreach($subcate2 as $subcat2){
-                        echo "<li class='dropdown'><a onClick='submit_frm()' class='myCategory' href='#'>$subcat2->title</a>
+                        echo "<li class='dropdown'><a onClick='submit_frm_cate()' class='myCategory' href='#'>$subcat2->title     <i class='fa fa-angle-right pull-right bold min_mrgn'></i></a>
                         ";
             
                         }

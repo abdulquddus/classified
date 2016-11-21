@@ -1,4 +1,4 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
 
 <?php
 /* @var $this yii\web\View */
@@ -59,7 +59,7 @@ $this->title = 'Classified';
         <div id="" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 subcat-box">
           <ul id="categories_list">
              <?php foreach($categories as $cate){ ?>
-              <li class="sub" data-toggle="modal" data-target="#myModal" onclick="modal_cat(this)" value="<?= $cate->id ?>" title="<?php echo $cate['title']?>" ><a  id="category_names" ><div class="cat-img-box"><img class="img-responsive"  src="<?= Yii::$app->request->baseUrl?>/admin/uploads/<?php echo $cate['image'] ?>"></div><span> <?php echo $cate['title']?></span></a> <?php //echo $cate['title']?></li>
+              <li class="sub"  onclick="modal_cat(this)" value="<?= $cate->id ?>" title="<?php echo $cate['title']?>" ><a  id="category_names" ><div class="cat-img-box"><img class="img-responsive"  src="<?= Yii::$app->request->baseUrl?>/admin/uploads/<?php echo $cate['image'] ?>"></div><span> <?php echo $cate['title']?></span></a> <?php //echo $cate['title']?></li>
              <?php } ?>
           </ul>
         </div>
@@ -128,15 +128,15 @@ function ChangeUrl(title, url) {
     }
 }
 
-jQuery(document).ready(function($) {
-    
-        jQuery('ul li a').click(function() {
-        jQuery('ul').children().removeClass('active');
-        jQuery(this).closest('li').addClass('active');
-        jQuery('span').children().removeClass('active');
+//$(document).ready(function($) {
+//     alert('hello');
+       $('ul li a').click(function() {
+        $('ul').children().removeClass('active');
+        $(this).closest('li').addClass('active');
+        $('span').children().removeClass('active');
     });
     
-    jQuery('li:not(.sub)').click(function() {
+    $('li:not(.sub)').click(function() {
         var id = this.id;
 //        window.history.pushState('obj', 'newtitle', '/classified/frontend/web/index.php?r=category%2Fcategories&id='+ this.id);
         
@@ -149,7 +149,7 @@ jQuery(document).ready(function($) {
                 
             var category =''
             for (i = 0; i < response.length; i++) {
-                category +='<li data-toggle="modal" data-target="#myModal" onclick="modal_cat(this)" value="' + response[i]["id"] +'" title="' + response[i]["title"] +'" id="' + response[i]["id"] +'"><a id="category_names" href="#"><div class="cat-img-box"><img class="img-responsive"  src="<?= Yii::$app->request->baseUrl?>/admin/uploads/'   +response[i]["image"]+'"> </div><span> '+response[i]["title"]+'</span></a></li>';
+                category +='<li onclick="modal_cat(this)" value="' + response[i]["id"] +'" title="' + response[i]["title"] +'" id="' + response[i]["id"] +'"><a id="category_names" href="#"><div class="cat-img-box"><img class="img-responsive"  src="<?= Yii::$app->request->baseUrl?>/admin/uploads/'   +response[i]["image"]+'"> </div><span> '+response[i]["title"]+'</span></a></li>';
             }
             $('#categories_list').html(category)
             }
@@ -193,5 +193,5 @@ jQuery(document).ready(function($) {
             return false; // prevent default click action from happening!            
             e.preventDefault(); // same thing as above
         });
-        });
+//        });
 </script>

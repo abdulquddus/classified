@@ -60,7 +60,7 @@ class Advertisements extends \yii\db\ActiveRecord
             [['category_id', 'state_id', 'mobile_number', 'state_id', 'city_id'], 'integer'],
             [['price'],'number'],
             [['description'], 'string'],
-            [['additional_field', 'sold_status'], 'safe'],
+            [['additional_field', 'sold_status', 'com_url', 'link'], 'safe'],
             [['user_id', 'category_id', 'advertise_title', 'photo_name', 'description', 'price', 'mobile_number', 'state_id', 'city_id', 'address', 'v_code', 'condition'], 'safe'],
 //          [['advertise_title', 'photo_name', 'contact_name', 'email'], 'string', 'max' => 45],
             [['imageFiles'], 'file', 'extensions' => 'png, jpg', 'maxFiles' => 8]

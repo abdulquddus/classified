@@ -16,20 +16,22 @@ use yii\helpers\Url;
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 header-search-main">
         
                     <div class="form-group">
-                        <input onkeydown="return false" type="text" onchange="submit_frm()" name="category"  class="form-control custom-sel-form-control"  value="<?php if(isset( $_GET['category'])) {echo $_GET['category'];  } ?>"  id="category" placeholder="Category" autocomplete="off">
+                        <input onkeydown="return false" type="text" onchange="submit_frm_cate()" name="category"  class="form-control custom-sel-form-control"  value="<?php if(isset( $_GET['id'])) { echo $ctegory_name;  } ?>"  id="category" placeholder="Category" autocomplete="off">
                         <input  type="text" name="city"  class="hidden" id="region" value="<?php if(isset( $_GET['city'])) { echo $_GET['city']; } ?>">
                         <input onkeydown="return false" onchange="submit_frm()" type="text" name="location" class="form-control" value="<?php if(isset( $_GET['location'])) { echo $_GET['location']; } ?>" id="location" placeholder="Location" data-toggle="modal" data-target="#myModal"  autocomplete="off"/><!--<input id="sel1" class="form-control custom-sel-form-control" type="text" placeholder="Category">-->
                         <input type="text" class="form-control search-box-ad-screen"  placeholder="e.g Samsung, swift, shirts etc" name="skey" value="<?php if(isset( $_GET['skey'])) { echo $_GET['skey']; } ?>" autocomplete="off"/>
                        
-                        <button type="submit" id="key" class="btn btn-default btn-hdr-search" onclick="search__()"><i class="fa fa-search"></i>Søk</button>    
+
+                        <button type="button" id="key" class="btn btn-default btn-hdr-search" onclick="submit_frm()"><i class="fa fa-search"></i>Søk</button>    
  <!--             <button onclick="search(); return false" class="btn btn-default btn-hdr-search"><i class="fa fa-search"></i>Søk</button> -->
                         <div class="header" style="display:none">
-                            <div class="container-tag" >   
+
+                            <div class="container-tag" id="mainMenu_div" >   
                                 <nav>
                                     <ul class="nav nav-pills nav-main" id="mainMenu">
                         <?php foreach ($category as $categ) { ?>
                                             <li class="dropdown">
-                                                <a onClick="submit_frm()"  class="myCategory" href="#">
+                                                <a onClick="submit_frm_cate()"  class="myCategory" href="#">
                                                     <?= $categ->title ?>
                                                     <i class="fa fa-angle-right pull-right bold"></i>
                                                 </a>
@@ -68,7 +70,7 @@ use yii\helpers\Url;
                                     ?>
                                     
                                 </datalist>	
-                                <p>Last visit: <span><a href="">karachi</a></span></p>
+                                <p>Last visit: <span><a href="" id="lasetlocation">karachi</a></span></p>
                             </div>
                         </div>
                         <div class="modal-body pad150 display-block">
@@ -83,7 +85,7 @@ use yii\helpers\Url;
                             </div>
                             <div class="col-md-12 col-sm-12 col-xs-12">
                                 <ul id="popup-hide">
-                                    <li>All Norge</li>
+                                    <li><a class='myLi' href='#'>All Norge</a></li>
                                     <?php
                                     $main_regions = [];
                                     foreach ($regions as $region) {
@@ -139,8 +141,8 @@ use yii\helpers\Url;
                     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 prc-rng-main">
 
                         <label>Price Range</label>
-                        <input id="min_price" name="min_price" type="text" value="<?php if(isset( $_GET['min_price'])) { echo $_GET['min_price']; } ?>" class=""><b>-</b>
-                        <input id="max_price" name="max_price" type="text" value="<?php if(isset( $_GET['max_price'])) { echo $_GET['max_price']; } ?>" class="">
+                        <input id="min_price" name="min_price"  onchange="submit_frm()" type="text" value="<?php if(isset( $_GET['min_price'])) { echo $_GET['min_price']; } ?>" class=""><b>-</b>
+                        <input id="max_price" name="max_price" onchange="submit_frm()" type="text" value="<?php if(isset( $_GET['max_price'])) { echo $_GET['max_price']; } ?>" class="">
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 my-thumb">
                         <div class="pull-left">
@@ -156,7 +158,7 @@ use yii\helpers\Url;
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 sort-main">
                         <label>Sort By</label>
-                        <select onchange="submit_frm()" name="sort_by" class="form-control custom-sel-form-control selct_fld" id="sel1">
+                        <select name="sort_by" onchange="submit_frm()" class="form-control custom-sel-form-control selct_fld" id="sel1">
                             <option value="most_recent" >Most Recent</option>
                             <option value="low_price" >Price Low to High</option>
                             <option value="high_price">Price High to Low</option>
@@ -279,16 +281,14 @@ use yii\helpers\Url;
                         <h3>Filters <?php ?></h3>
                         <ul id="myList" class="rdio_btn" >
                             <?php   foreach ($filters as $filter) {
-                                ?>
-
-                                <?php 
+                                 
                                 $dd_option_id =   \backend\models\FilterName::find()->where(['parent_filter'=>$filter->id])->all();
 
                                 if($filter->display_for_screen_page == 1) //Dropdown
                                 {
-                                   echo "<div class='input-group contact-field-wrap'>
-                                             <label>" . $filter['filter_name'] . "</label>
-                                             <select name='Advertisements[additional_optional][". $filter['id'] ."][]' id='advertisements-advertise_title' onchange='subdropdown(this)' name='' class='form-control'>
+                                   echo "  <form class='form-horizontal' role='form'> <div class='form-group bg-none mrgn-padng'>
+                                             <label class='col-md-12 control-label mrgn-padng'>" . $filter['filter_name'] . "</label>
+                                             <select name='Advertisements[additional_optional][". $filter['id'] ."][]' id='basic' class='selectpicker bg-none mrgn-padng form-control ' onchange='subdropdown(this)' name=''><option>Please Select</option>
                                              ";
                                    
                                    foreach ($dd_option_id as $a_value) 
@@ -297,7 +297,7 @@ use yii\helpers\Url;
                                        // $dd_option_main = \backend\models\FilterName::find()->where(['id'=>$a_value->filter_field_key])->all();
                                         echo '<option data_value="'. $a_value['id']  .'" value="'. $a_value['filter_name']  .'">'. $a_value['filter_name'] .'</option>';         
                                    }
-                                   echo "</select></div><div id='additional_optional'></div>";
+                                   echo "</select></div><div id='additional_optional'></div></form>";
                                 }
 
                                 if($filter->display_for_screen_page == 2) //CheckBox
@@ -335,12 +335,12 @@ use yii\helpers\Url;
                                 //First Range Textbox
                                 echo "<div class='input-group contact-field-wrap'>
                                 <label>" . $filter['filter_name'] . "</label>
-                                      <input type='number' class='form-control' name='Advertisements[additional_optional][". $filter['id'] ."][]' value=''></div>";
+                                      <input type='number' placeholder='From' class='form-control' name='Advertisements[additional_optional][". $filter['id'] ."][]' value=''></div>";
 
                                 //Second Range Textbox
                                 echo "<div class='input-group contact-field-wrap'>
                                 <label>" .                         "</label>
-                                      <input type='number' class='form-control'  name='Advertisements[additional_optional][". $filter['id'] ."][]'
+                                      <input type='number' placeholder='To' class='form-control'  name='Advertisements[additional_optional][". $filter['id'] ."][]'
                                   value=''></div>";
                                 }
 
@@ -408,7 +408,7 @@ use yii\helpers\Url;
                                             Adress  12 p 1271 Oslo
   
                                         </div>
-<!--                                        <span>Honda Civic » Parado Foxy </span>
+<!--                                        <span>Honda Civic Â» Parado Foxy </span>
                                         <h1>NOK: 150,0000</h1>
                                         <p>Lorem Ipsum is simply dummy text of the printing and type setting industry.</p>
                                         <span>Karachi, Pakistan </span>-->
@@ -435,26 +435,28 @@ use yii\helpers\Url;
                                     </div>
 				    </div>
                                     <div class="col-md-8 col-sm-12 col-xs-12 product_detail">
-                                        <div class="top-detail">
+<!--                                        <div class="top-detail">
                                             <span>Detail</span> 8000KM
                                         </div>
                                         <div class="top-detail pull-right">
                                             <span>Detail</span> Detail 2016 model
-                                        </div>
+                                        </div>-->
                                         <a href="<?= Yii::$app->urlManager->createUrl(['advertisement/ad-view', 'id' => $cate->id]) ?>" class="title_head">
                                             <?= $cate->advertise_title ?>
                                         </a>
-                                        <div class="top-detail">
-                                            <span>Detail</span> Deisel  
-                                        </div>
-                                        <div class="top-detail">
-                                            <span>Detail</span> Automatic
-                                        </div>
+                                        
+                                        <?php $results = \frontend\models\FormAdditionalValues::find()->where(['ad_id'=>$cate->id])->all(); 
+                                        
+                                        foreach ($results as $value) {
+                                            $filter_names = \backend\models\FilterName::find()->where(['id'=>$value->field_id])->one();    
+                                            echo '<div class="top-detail"><span>' . $filter_names->filter_name . '</span>' . ltrim(str_replace("|","-",$value->values), '-') .'</div>'; 
+                                        }
+                                        ?>
                                         <div class="address-detail">
-                                            Adress  12 p 1271 Oslo
+                                            <?php echo $cate->address?>
   
                                         </div>
-<!--                                        <span>Honda Civic » Parado Foxy </span>
+<!--                                        <span>Honda Civic Â» Parado Foxy </span>
                                         <h1>NOK: 150,0000</h1>
                                         <p>Lorem Ipsum is simply dummy text of the printing and type setting industry.</p>
                                         <span>Karachi, Pakistan </span>-->
@@ -468,7 +470,7 @@ use yii\helpers\Url;
                             }
                         } else {
 
-                            echo "<h1> no result found </h1>";
+                            echo "<h1 style='text-align: center;'> No Results Found </h1>";
                         }
                         ?>
 
@@ -641,6 +643,33 @@ $(".myCategory").click(function(){
 <!-- jquery -->
 <script src="template/js/custom-script.js"></script>
 <script>
+
+function submit_frm_cate()
+        {
+           // alert('sdsdsd')
+            var str ;
+
+
+         setTimeout(function(){  str =  document.getElementById('category').value;  
+        str = str.trim();
+        document.getElementById('category').value = str; 
+            $.ajax({
+        type: "GET",
+        url: "<?php  echo Yii::$app->getUrlManager()->createUrl('site/getfilters'); ?>",
+        data: "cate_name="+str,
+        success: function(data) {
+            console.log('get data '+data )
+            document.getElementById("myList").innerHTML = data;
+        }
+    });
+
+            }, 100);
+
+
+            submit_frm();
+        }
+
+
     function submit_frm()
     {         
           var str;

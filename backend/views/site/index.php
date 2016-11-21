@@ -188,7 +188,7 @@ $this->registerJs(
                                     <i class="fa fa-american-sign-language-interpreting" aria-hidden="true"></i>
                                 </div>
 				<?= Html::a(Yii::t('app', 'Category').' <i class="fa fa-arrow-circle-right"></i>', ['/category/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
-                                <?= Html::a(Yii::t('app', 'optionals fields').' <i class="fa fa-arrow-circle-right"></i>', ['/optional-fields/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
+                                
                                 <?= Html::a(Yii::t('app', 'Credit Packages').' <i class="fa fa-arrow-circle-right"></i>', ['/credit-packages/index'], ['target' => '_blank', 'class' => 'small-box-footer']); ?>
                             </div>
                         </div><!-- ./col -->

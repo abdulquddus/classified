@@ -39,7 +39,8 @@ class Details extends \yii\db\ActiveRecord
             [['mobile'], 'integer'],
             [['name','address'], 'string'],
 			[['img'], 'file'],
-            [['state', 'city'], 'integer']
+            [['state', 'city'], 'integer'],
+             [['com_url'], 'safe'],   
             
 //            [['created_at', 'updated_at'], 'safe'],
 //            [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
@@ -58,7 +59,8 @@ class Details extends \yii\db\ActiveRecord
             'mobile' => 'Mobile Number',
             'state' => 'State',
             'city' => 'city',
-            'address' => 'Address'
+            'address' => 'Address',
+             'com_url' => Yii::t('app', 'ompany URL')
 //            'auth_key' => 'Auth Key',
 //            'password_hash' => 'Password Hash',
 //            'password_reset_token' => 'Password Reset Token',

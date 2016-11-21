@@ -39,6 +39,15 @@ $this->params['breadcrumbs'][] = $this->title;
                          <!--<span>Enter your password</span>-->
                      </div>
                   
+                    <div class="input-group custom-field-wrap">
+                          <!--<label for="userPassword">Password <b class="asterisk">*</b></label>-->
+                        <!--<input id="login-password" type="password" class="form-control" name="password" placeholder="">-->
+                        
+           <?php if(isset($_GET['type'])) echo $form->field($model, 'com_url', ['template'=>'<label for="userPassword">Compnay URL <b class="asterisk">*</b></label>{input}<span>{error}</span>'])->input('integer', ['pattren'=>'[\+]\d{2}[\(]\d{2}[\)]\d{4}[\-]\d{4}'])->label(FALSE) ?>
+                        
+                         <!--<span>Enter your password</span>-->
+                     </div>
+                  
                      <div class="input-group custom-field-wrap">
                           <!--<label for="userPassword">Password <b class="asterisk">*</b></label>-->
                         <!--<input id="login-password" type="password" class="form-control" name="password" placeholder="">-->
