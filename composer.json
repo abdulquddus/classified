@@ -34,7 +34,8 @@
         "clubmaster/quickpay": "^1.3",
         "conquer/i18n": "*",
         "lajax/yii2-language-picker": "1.*",
-        "2amigos/yii2-chartjs-widget": "~2.0"
+        "2amigos/yii2-chartjs-widget": "~2.0",
+        "2amigos/yii2-date-picker-widget": "~1.0"
      
     },
     "require-dev": {

@@ -91,7 +91,7 @@ use kartik\widgets\Select2;
   
   
   $optionalfield= backend\models\FilterName::find()->where(['parent_filter'=>0])->all();
-  $listData1=ArrayHelper::map($optionalfield, 'id', 'filter_name');   
+  $listData1=ArrayHelper::map($optionalfield, 'id', 'filter_value');   
   
    $selectedvalues = backend\models\CategoryAdditionalFields::find()->where(['category_id'=>$Category_id])->all();
 //   $selectedlist = ArrayHelper::map($selectedvalues, 'id');  
@@ -136,7 +136,7 @@ use kartik\widgets\Select2;
          }
     else{ // Dropdown that appears on Create page         
         $optionalfield= backend\models\FilterName::find()->where(['parent_filter'=>0])->all();
-        $listData=ArrayHelper::map($optionalfield, 'id', 'filter_name');
+        $listData=ArrayHelper::map($optionalfield, 'id', 'filter_value');
        
         echo '<label class="control-label">Additional Fields</label>'; 
         echo Select2::widget([

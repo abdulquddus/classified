@@ -24,6 +24,7 @@ use backend\models\NotificationAdmin;
 use backend\models\OptionalfieldBridgeTable;
 use backend\models\FilterName;
 use yii\web\Response;
+use kartik\date\DatePicker;
 /**
  * Site controller
  */
@@ -159,6 +160,23 @@ class SiteController extends Controller
          
       }
      return $item;
+       
+    }
+    
+    
+    public function category_idby_name($cate)
+    {
+       
+        $cate = trim($cate);
+        $category = \frontend\models\Category::find()->where(['LIKE', 'title', $cate])->one();
+        if(isset($category->id)){
+         $id = $category->id;
+        }
+        else{
+            $id = 0;           
+        } 
+      
+     return $id;
        
     }
 
@@ -431,6 +449,7 @@ class SiteController extends Controller
     
         } else{
             //print_r($cat_ids); 
+            
        $filtes_ids = \backend\models\CategoryAdditionalFields::find()->where([ 'category_id'=>$cat_ids])->select(['optional_field_id'])->all();
 
               $f_ids =array(); 
@@ -464,17 +483,18 @@ public function actionGetfilters($cat_ids='')
 
            if(!empty($cat_name)){
               //$cate =  $_GET['category'];
-              $cat_ids = $this->category($cat_name);
+              $cat_id = $this->category_idby_name($cat_name);
               //$cat_ids = $category; 
               //$category  = ['category_id'=>$category];
-             
+//             echo $cat_id;
+//             exit();
            }else{
                 exit();
            }
 
 
       //print_r('ssssss'); exit();
-                   $filtes_ids = \backend\models\CategoryAdditionalFields::find()->where([ 'category_id'=>$cat_ids])->
+                   $filtes_ids = \backend\models\CategoryAdditionalFields::find()->where([ 'category_id'=>$cat_id])->
                       select(['optional_field_id'])->all();
 
                   $f_ids =array(); 
@@ -489,6 +509,12 @@ public function actionGetfilters($cat_ids='')
 
                                           if($filter->display_for_screen_page == 1) //Dropdown
                                           {
+                                               $fi=0;
+                                 if($fi==0){
+                                     echo '<h3>Filters <?php ?></h3>
+                        <ul id="myList" class="rdio_btn" >';
+                                 }
+                                 $fi++;
                                              echo "<div class='input-group contact-field-wrap'>
                                                        <label>" . $filter['filter_name'] . "</label>
                                                        <select name='Advertisements[additional_optional][". $filter['id'] ."][]' id='advertisements-advertise_title' onchange='subdropdown(this)' name='' class='form-control'><option>Please select</option>
@@ -543,7 +569,21 @@ public function actionGetfilters($cat_ids='')
                                                   <input type='number' placeholder='From' class='form-control'  name='Advertisements[additional_optional][". $filter['id'] ."][]'
                                               value=''></div>";
                                           }
-
+                                          
+                                          if($filter->display_for_screen_page == 6) //DatePicker
+                                          {
+                                            //First Range Textbox
+                                               echo '<label class="control-label">Birth Date</label>';
+    echo DatePicker::widget([
+        'name' => 'dp_3',
+        'type' => DatePicker::TYPE_COMPONENT_APPEND,
+        //'value' => '23-Feb-1982',
+        'pluginOptions' => [
+            'autoclose'=>true,
+            'format' => 'dd-M-yyyy'
+        ]
+    ]);
+                                          }
                                         } 
 
 
@@ -1344,7 +1384,23 @@ public function actionGetfilters($cat_ids='')
               value=''></div>";
 
             echo "<input class='form-control' type='hidden' name='Advertisements[additional_optional][id]' value='" . $field['id'] . "'></div>";
-       }       
+       }
+       
+       if($field->display_for_adpost_page == 6) //DatePicker
+        {
+          //First Range Textbox
+          echo "<div class='input-group contact-field-wrap'>";
+          echo DatePicker::widget([
+              'name' => 'Test',
+              'value' => '02-16-2012',
+              'template' => '{addon}{input}',
+                  'clientOptions' => [
+                      'autoclose' => true,
+                      'format' => 'dd-M-yyyy'
+                  ]
+          ]);
+          echo "</div>";
+        }
        }       
     }    
     public function actionGetimg($id)

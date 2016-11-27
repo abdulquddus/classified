@@ -3,6 +3,8 @@
 use yii\helpers\html;
 use yii\widgets\LinkPager;
 use yii\helpers\Url;
+use kartik\date\DatePicker;
+use kartik\date\DatePickerAsset;
 ?>
 
 <main>
@@ -277,9 +279,9 @@ use yii\helpers\Url;
                       
 
                     </div>
-                    <div class="search-left-inr-box">
-                        <h3>Filters <?php ?></h3>
-                        <ul id="myList" class="rdio_btn" >
+                    <div class="search-left-inr-box" id="myList">
+<!--                        <h3>Filters <?php ?></h3>
+                        <ul id="myList" class="rdio_btn" >-->
                             <?php   foreach ($filters as $filter) {
                                  
                                 $dd_option_id =   \backend\models\FilterName::find()->where(['parent_filter'=>$filter->id])->all();
@@ -729,9 +731,7 @@ $(".header").css('display','none');
 
 
  <script>
-     
-
-         function subdropdown(id)
+          function subdropdown(id)
     {
         var dd_id = id.value;
         dd_id = $(id).find(':selected').attr('data_value')  //this variable contains the ID of dropdown's options
