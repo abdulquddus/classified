@@ -35,12 +35,23 @@ use kartik\date\DatePickerAsset;
                                             <li class="dropdown">
                                                 <a onClick="submit_frm_cate()"  class="myCategory" href="#">
                                                     <?= $categ->title ?>
-                                                    <i class="fa fa-angle-right pull-right bold"></i>
+                                                    <?php 
+                                                     $countitem = frontend\models\Category::find()->where(['parent_id'=>$categ->id])->count();
+                  if ($countitem>0)
+                  {
+                  $showarrow =     "<i class='fa fa-angle-right pull-right bold min_mrgn'></i>";
+                  }
+                  else
+                  {
+                      $showarrow = "";
+                  }
+                                                    ?>
+                                                   <?= $showarrow ?>
                                                 </a>
 
-                                                <ul class='dropdown-menu'>
+<!--                                                <ul class='dropdown-menu'>-->
                                                <?php $submenu->getsubcate($categ->id); ?>
-                                                </ul>
+<!--                                                </ul>-->
                                             </li>
                                 <?php } ?>
 

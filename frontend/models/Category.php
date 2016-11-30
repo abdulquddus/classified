@@ -80,22 +80,63 @@ class Category extends \yii\db\ActiveRecord
     }
     
     
+    
+    
+     public function getarrow($id)
+    {
+        
+        $countitem = $this->find()->where(['parent_id'=>$id])->count();
+      
+               
+    }
+    
+    
     public function getsubcate($id)
     {
 
         
         $subcate = \frontend\models\Category::find()->where(['parent_id'=>$id])->all();
-       
+        
+        $countitem = $this->find()->where(['parent_id'=>$id])->count();
+                  if ($countitem>0)
+                  {
+                  $ul=     "<ul class='dropdown-menu'>";
+                  }
+                  else
+                  {
+                      $ul = "";
+                  }
+        
+             echo $ul;
              foreach($subcate as $subcat){
-               echo "<li class='dropdown'><a onClick='submit_frm_cate()' class='myCategory' href='#'>$subcat->title     <i class='fa fa-angle-right pull-right bold min_mrgn'></i></a>";
+                  $countitem = $this->find()->where(['parent_id'=>$subcat->id])->count();
+                  if ($countitem>0)
+                  {
+                  $showarrow =     "<i class='fa fa-angle-right pull-right bold min_mrgn'></i>";
+                  }
+                  else
+                  {
+                      $showarrow = "";
+                  }
+                  
+                 
+               echo "<li class='dropdown'><a onClick='submit_frm_cate()' class='myCategory' href='#'>".$subcat->title.$showarrow ."</a>";
                
                         $subcate1 = \frontend\models\Category::find()->where(['parent_id'=>$subcat->id])->all();
                         if($subcate1)
                         {
                         echo '<ul class="dropdown-menu lft_menu" style="margin-left:0px">';
                         foreach($subcate1 as $subcat1){
-                        echo "<li class='dropdown'><a onClick='submit_frm_cate()' class='myCategory'  href='#'>$subcat1->title     <i class='fa fa-angle-right pull-right bold min_mrgn'></i></a>
-                        ";
+                             $countitem = $this->find()->where(['parent_id'=>$subcat1->id])->count();
+                  if ($countitem>0)
+                  {
+                  $showarrow =     "<i class='fa fa-angle-right pull-right bold min_mrgn'></i>";
+                  }
+                  else
+                  {
+                      $showarrow = "";
+                  }
+                        echo "<li class='dropdown'><a onClick='submit_frm_cate()' class='myCategory'  href='#'>$subcat1->title.$showarrow </a>";
             
 
             $subcate2 = \frontend\models\Category::find()->where(['parent_id'=>$subcat1->id])->all();
@@ -103,7 +144,16 @@ class Category extends \yii\db\ActiveRecord
                         {
                         echo '<ul class="dropdown-menu lft_menun ">';
                         foreach($subcate2 as $subcat2){
-                        echo "<li class='dropdown'><a onClick='submit_frm_cate()' class='myCategory' href='#'>$subcat2->title     <i class='fa fa-angle-right pull-right bold min_mrgn'></i></a>
+                            $countitem = $this->find()->where(['parent_id'=>$subcat2->id])->count();
+                  if ($countitem>0)
+                  {
+                  $showarrow =     "<i class='fa fa-angle-right pull-right bold min_mrgn'></i>";
+                  }
+                  else
+                  {
+                      $showarrow = "";
+                  }
+                        echo "<li class='dropdown'><a onClick='submit_frm_cate()' class='myCategory' href='#'>$subcat2->title.$countitem </a>
                         ";
             
                         }
@@ -121,8 +171,16 @@ class Category extends \yii\db\ActiveRecord
                 }
         
         echo '</li>';
-        
-     
+         $countitem = $this->find()->where(['parent_id'=>$id])->count();
+                  if ($countitem>0)
+                  {
+                  $uloff=     "</ul>";
+                  }
+                  else
+                  {
+                      $uloff = "";
+                  }
+        echo $uloff;
     }
        
         public function getchildtlist($id)

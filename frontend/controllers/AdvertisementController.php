@@ -107,7 +107,10 @@ class AdvertisementController extends Controller
 //      echo "<pre>";
 //      print_r($items);
 //      echo "</pre>";
-          $random_keys=array_rand($items, 5);
+          if(count($items)>1){
+        $random_keys=array_rand($items, 5);}else{
+             $random_keys=array_rand($items, 1);
+        }
        }else{
                    
                   $related = Advertisement::find()->where(['ad_status'=>1])->asArray()->all() ;

@@ -1388,19 +1388,21 @@ public function actionGetfilters($cat_ids='')
        
        if($field->display_for_adpost_page == 6) //DatePicker
         {
-          //First Range Textbox
-          echo "<div class='input-group contact-field-wrap'>";
-          echo DatePicker::widget([
-              'name' => 'Test',
-              'value' => '02-16-2012',
-              'template' => '{addon}{input}',
-                  'clientOptions' => [
-                      'autoclose' => true,
-                      'format' => 'dd-M-yyyy'
-                  ]
-          ]);
-          echo "</div>";
-        }
+                                            //First Range Textbox
+            echo "<div class='input-group contact-field-wrap'>";      
+           echo '<label class="control-label">Birth Date</label>';
+                  echo DatePicker::widget([
+                      'name' => 'dp_3',
+                      'type' => DatePicker::TYPE_COMPONENT_APPEND,
+                      //'value' => '23-Feb-1982',
+                      'pluginOptions' => [
+                          'autoclose'=>true,
+                          'format' => 'dd-M-yyyy'
+                      ]
+                  ]);
+                  
+                  echo "</div>";
+                                          }
        }       
     }    
     public function actionGetimg($id)
