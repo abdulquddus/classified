@@ -703,12 +703,14 @@ function optionalfields(id) {
         data: {
             id: id
         },
-
         success: function(data) {
+            
             //  alert(data);
             document.getElementById("optional").innerHTML = data;
-        }
-    });
+                    $('#datafilter').datetimepicker();
+    
+                        }
+                    });
 }
 // optional fields End
 
