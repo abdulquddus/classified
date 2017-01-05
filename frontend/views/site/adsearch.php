@@ -165,8 +165,8 @@ use kartik\date\DatePickerAsset;
                             </div>
                             <div class="small-icon">
                             </div>
-                            <div class="compact">
-                            </div>
+<!--                            <div class="compact">
+                            </div>-->
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 sort-main">
@@ -510,7 +510,7 @@ use kartik\date\DatePickerAsset;
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="template/js/jquery-1.9.1.min.js"></script>
+
 <!--<script>
         
         jQuery(document).ready(function(){
@@ -648,13 +648,7 @@ $(".myCategory").click(function(){
         });
 </script>-->
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="template/js/bootstrap.min.js"></script>
-<!-- boostrap lightbox -->
-<script src="template/js/bootstrap-lightbox.min.js"></script>
-<!-- jquery -->
-<script src="template/js/jquery.js"></script>
-<!-- jquery -->
-<script src="template/js/custom-script.js"></script>
+
 <script>
 
 function submit_frm_cate()
@@ -673,6 +667,9 @@ function submit_frm_cate()
         success: function(data) {
             console.log('get data '+data )
             document.getElementById("myList").innerHTML = data;
+            
+        //The below one line open the datepicker option.    
+        $('#datafilter').datepicker();
         }
     });
 
@@ -754,7 +751,6 @@ $(".header").css('display','none');
             data: {
                 id: dd_id
             },success: function(data) {
-              console.log(data)
                 document.getElementById("additional_optional").innerHTML = data;
             },
             error: function() {

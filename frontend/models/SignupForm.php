@@ -1,4 +1,5 @@
-<?php
+<?php
+
 namespace frontend\models;
 
 use frontend\models\User;

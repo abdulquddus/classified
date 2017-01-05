@@ -278,7 +278,7 @@ use yii\widgets\LinkPager;
  
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-<script src="template/js/jquery-1.9.1.min.js"></script>
+
 <!--<script>
 	
 	jQuery(document).ready(function(){
@@ -416,13 +416,6 @@ $(".myCategory").click(function(){
 	});
 </script>-->
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<script src="template/js/bootstrap.min.js"></script>
-<!-- boostrap lightbox -->
-<script src="template/js/bootstrap-lightbox.min.js"></script>
-<!-- jquery -->
-<script src="template/js/jquery.js"></script>
-<!-- jquery -->
-<script src="template/js/custom-script.js"></script>
 <script>
     $(document).ready(function(){
         var cate = 'All';

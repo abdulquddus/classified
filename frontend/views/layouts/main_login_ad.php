@@ -205,7 +205,7 @@ if (class_exists('yii\debug\Module')) {
 
   
    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="<?php echo Yii::getAlias('@web') ?>/design/template/js/jquery-1.9.1.min.js"></script>
+    
      <script>
         $('.main li').click(function(){
             var sel = $(this).attr("id");
@@ -243,12 +243,6 @@ if (class_exists('yii\debug\Module')) {
     </script>
    
     <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="<?php echo Yii::getAlias('@web') ?>/design/template/js/bootstrap.min.js"></script>
-    <!-- boostrap lightbox -->
-    <script src="<?php echo Yii::getAlias('@web') ?>/design/template/js/bootstrap-lightbox.min.js"></script>
-    <!-- jquery -->
-    <!-- jquery -->
-    <script src="<?php echo Yii::getAlias('@web') ?>/design/template/js/custom-script.js"></script>
 <?php  $this->endBody() ?>
   </body>
 </html>
@@ -463,7 +457,7 @@ if (class_exists('yii\debug\Module')) {
 
   
    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="<?php echo Yii::getAlias('@web') ?>/design/template/js/jquery-1.9.1.min.js"></script>
+    
     
     <script>
         $(".hiddene").hide();

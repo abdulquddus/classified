@@ -130,6 +130,7 @@ header {
 }
 .navbar-default .navbar-nav>li>a,
 .navbar-default .navbar-nav>.open>a {
+    font-family: verdana;
     color: #2965be;
     font-weight: 700;
     font-size: 17px;
@@ -1100,6 +1101,11 @@ border-radius: 8px;
 }
 .contact-field-wrap input {
     height: 30px;
+}
+
+p
+{
+font-family:verdana;
 }
 .contact-field-wrap .form-control:focus {
     box-shadow: none;
@@ -2391,6 +2397,7 @@ footer {
     border-bottom: 1px solid #ededed;
 }
 .offerheadinner h1 {
+    font-family: verdana;
     font-size: 26px;
     line-height: 28px;
     margin-bottom: 10px;
@@ -2414,6 +2421,7 @@ footer {
     top: 5px;
 }
 .offerheadtxt {
+    font-family: verdana;
     display: inline-block;
     color: #414141;
     text-decoration: underline;
@@ -2423,19 +2431,24 @@ footer {
     padding: 15px 20px;
 }
 .addescriptiontoptxt {
+    font-family: verdana;
     margin: 5px 0 20px 0;
     font-size: 14px;
 }
 .addescriptiontoptxt h5 {
+    font-family: verdana;
     color: #2965be;
     font-weight: bold;
 }
 .adnote {
+    font-family: verdana;
     color: #a0a0a0;
     font-style: italic;
     line-height: 16px;
     padding: 15px 0;
 }
+.adview{font-family:verdana;}
+
 .hdr-search2 {
     padding: 15px;
 }
@@ -2469,6 +2482,7 @@ footer {
 
 
 .pricelabel {
+    font-family: verdana;
     margin: 0;
     position: relative;
     border-radius: 0 5px 5px 0;
@@ -2493,6 +2507,7 @@ footer {
 }
 
 .userdatabox, .safetyTipsBox, .verifiednumberbox, .sendmsgbox{
+    font-family: verdana;
 	float: left;
 	width: 100%;
 	padding: 12px 17px;
@@ -2519,6 +2534,7 @@ footer {
 }
 
 .ad-user-name {
+    font-family: verdana;
 	font-size: 20px;
 	line-height: 20px;
 }

@@ -40,8 +40,8 @@ $this->title = 'My Yii Application';
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <div class="text-div">
-                <input id="locatio" type="text" id="default" list="languages" class="form-control" placeholder="e.g. JavaScript" style="width:40%;float:left;box-shadow: none ;">
-			  <datalist id="languages">
+                <input id="locatio" type="text" id="default" list="languages" class="form-control" placeholder="e.g. Oslo" style="width:40%;float:left;box-shadow: none ;">
+<!--			  <datalist id="languages">
 				<option value="HTML">
 				<option value="CSS">
 				<option value="JavaScript">
@@ -54,7 +54,7 @@ $this->title = 'My Yii Application';
 				<option value="C">
 				<option value="C#">
 				<option value="C++">
-			  </datalist>	
+			  </datalist>	-->
 			  <p>Last visit: <span><a href="" id="lasetlocation">karachi</a></span></p>
 			</div>
           </div>

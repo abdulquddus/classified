@@ -10,19 +10,10 @@ use kartik\widgets\FileInput;
 use dosamigos\ckeditor\CKEditor;
 use dosamigos\ckeditor\CKEditorInline;
 use backend\models\FilterName;
+ $po = \backend\models\Postcode::find()->all();
 
+        $pocounter=ArrayHelper::map($po,'id','code');
 ?>
-  <style>
-      .abc {
-          z-index: 1 !important;
-      }
-      .abcd {
-          z-index: 1 !important;
-      }
-      #ui-datepicker-div {
-          z-index: 2 !important;
-      }
-      </style>
 <main>
   <section class="col-lg-12 col-md-12 col-sm-12 col-xs-12 submitad-wrap">
       <div class="container submitad-main-outer">
@@ -44,12 +35,8 @@ use backend\models\FilterName;
               
             
             
-            <?= $form->field($model, 'category_id', ['template' => ' <div class="input-group hvr_div custom-field-wrap" id="cate">
-              <label>Kategori<b class="asterisk">*</b></label>
-              {input}<div class="error-placement">{error}</div>
-            </div>'])->textInput(['data-target'=>'#category', 'data-toggle'=>'modal', 'id'=>'showcat','readonly'=>true,'placeholder'=>"Please select category by clicking here"]); ?> 
-             <div class="hiddene" >
-                 <input id="advertisement-category_id" class="form-control fild_stle" name="Advertisements[category_id]">
+            <div class="hidden" >
+                <input value="<?=$cat->id?>" id="advertisement-category_id" class="form-control fild_stle" name="Advertisements[category_id]">
                  
              </div>
              
@@ -64,14 +51,24 @@ use backend\models\FilterName;
              <div class="input-group hvr_div custom-field-wrap description-popover">
                     
             </div> 
-             
-           
+            
+           <div id="cate" class="input-group hvr_div custom-field-wrap">
+<label>
+Kategori
+<b class="asterisk">*</b>
+</label>
+<span id="cat_image">
+<img width="60px" height="65px" src="admin/uploads/<?= $cat->image?>" style="padding-top:4px">
+</span>
+<a class="cat_image_name"> <?= $cat->title?> </a>
+<a class="btn btn-primary tog" href="#" data-toggle="modal" data-target="#category">Change</a>
+</div>
             <?= $form->field($model, 'description', ['template' => '  <div class="input-group hvr_div custom-field-wrap description-popover">
               <label>Beskrivelse<b class="asterisk">*</b></label>
             {input}<div class="error-placement">{error}<span id="textarea_description"></span></div>
             </div>'])->textarea(array('rows'=>5, 'class'=>'form-control abc', 'placeholder'=>"Include the brand, model, age, and any included accessories.")); ?>  
                 
-        <?= $form->field($model, 'price', ['template' => '<div class="input-group hvr_div custom-field-wrap abcd">
+        <?= $form->field($model, 'price', ['template' => '<div class="input-group hvr_div custom-field-wrap">
               <label>Pris<b class="asterisk">*</b></label>
               {input}<div class="error-placement">{error}</div>
             </div>']); ?> 
@@ -79,12 +76,31 @@ use backend\models\FilterName;
               <label>Condition<b class="asterisk">*</b></label>
               {input}<div class="error-placement">{error}</div>
             </div>'])->dropDownList(['used'=>'Used', 'new'=>'New'],['class'=>'form-control abc']) ?>     
-           
+           <div class="input-group custom-field-wrap">
+              <label>Last opp bilder</label>
+              <div class="custom-file-input-wrap">
+                <?php foreach($imgs as $img){?>
+                  <div class="row">
+                                        
+                      <div class="col-md-6 ">   <img width="180" u="thumb" src="<?php echo Yii::getAlias('@web') ?>/uploads/<?= $img->advertise_id?>/<?= $img->image?>" /></div>
+                           <div class="col-md-6 ">             
+                                            <?php // echo $form->field($model, 'imageFiles[]')->fileInput(['multiple' => true, 'accept' => 'image/*']) ?><input type="button" onclick="delete_image('<?php echo $img->id; ?>')" value="delete" class="btn btn-danger" /></div>
+
+                                       <?php // $form->field($model, 'imageFiles[]', ['template'=>'{input}'])->fileInput(['multiple' => true, 'type'=>'file', 'accept' => 'image/*', 'class'=>'custom-file-input']) ?>
+                                        <?php // Html::submitButton('Update Picture',['class'=>'btn btn-primary','id'=>'uploadButton']) ?>
+                                    </div><br/><br>
+                                    <?php }?>                     
+                  
+              </div>
+             
+            </div>
 
             <div class="input-group custom-field-wrap">
               <label>Last opp bilder</label>
               <div class="custom-file-input-wrap">
                   
+               
+               
                 <?php 
               
  
@@ -104,7 +120,8 @@ use backend\models\FilterName;
                 ]);
 
                 ?>
-                  
+               
+              
                   
               </div>
              
@@ -113,17 +130,9 @@ use backend\models\FilterName;
                
                  <div class="col-md-9 col-sm-9 pull-right twnty-padng ">
             
-           <atextarea name="Advertisements[description]" id="advertisements-description" class="form-control abc"></atextarea>
+           <atextarea name="Advertisements[description]" id="advertisements-description" class="form-control abc">Description.</atextarea>
             </div>
             </div>
-           <?php if($user->is_company==1){
-          echo $form->field($model, 'link', ['template' => ' <div class="input-group hvr_div  custom-field-wrap">
-              <label>Video/product link</label>
-              {input}
-              <div class="error-placement">{error}<span id="textarea_feedback"></span></div>
-                    </div>']);?>
-        <?php   } ?>
-               
             </div><!-- /submitad-main-->
            
 <!--        <div class="col-md-3 col-sm-3 hidden-xs adpost-offer">
@@ -139,7 +148,11 @@ use backend\models\FilterName;
         </div> /adpost-offer-->
       <!--</form>-->
       <h4 class="form-ttl">Contact Details</h4>
+      
+      
+      
       <section class="col-md-10 col-md-offset-2 col-sm-8 col-sm-offset-2 contact-dtl-wrap">
+          
         <!--form role="form"-->
          <div class="col-md-9 col-sm-9 contact-dtl-main">
 
@@ -154,12 +167,6 @@ use backend\models\FilterName;
               <label>Phone<b class="asterisk">*</b></label>
               {input}<div class="error-placement">{error}</div>
             </div>'])->textInput(['value'=>$user->mobile,'class'=>'form-control abc']); ?> 
-              <?php if($user->is_company==1){
-             echo $form->field($model, 'com_url', ['template' => '<div class="input-group  hvr_div contact-field-wrap">
-              <label>Company URL<b class="asterisk">*</b></label>
-              {input}<div class="error-placement">{error}</div>
-            </div>'])->textInput(['value'=>$user->com_url,'class'=>'form-control abc']);  
-              } ?>
     <?php
          $city_name = \frontend\models\City::findOne($user->city);
           
@@ -226,20 +233,19 @@ use backend\models\FilterName;
               </div>
             </div>
             
-          
+           </div><!-- /contact-dtl-main-->
   <input type="hidden" name="perview_true" value="0" id="new_record" />
       <?php ActiveForm::end(); ?>
-          </div><!-- /contact-dtl-main-->
+          <div class="col-md-3 col-sm-3 contact-dtl-right">
+<!--            <div class="contact-dtl-user-img">
+            </div> /contact-dtl-user-img-->
+          </div><!-- /contact-dtl-right-->
           
         <!--/form-->
-        <div class="col-md-2 contact-dtl-right hidden-sm hidden-xs">
-            <br><br><br>
-           <?php if(!empty($user->img)){?>
-            <img class="img-responsive" src="<?=Yii::$app->request->baseUrl?>/user/<?= $user->id?>.<?= $user->img?>">
-            <?php } else { ?>
-                <img alt="LOGO" class="img-responsive" src="<?=Yii::$app->request->baseUrl?>/uploads/noimg.png">
-                <?php } ?>
-        </div>
+        <div class="col-md-2 contact-dtl-right">
+            <br /><br />
+<img class="img-responsive" src="<?=Yii::$app->request->baseUrl?>/user/<?= $user->id?>.<?= $user->img?>">
+</div>
      </section>
 
       </div>
@@ -277,7 +283,7 @@ use backend\models\FilterName;
                             <?php foreach( $main_cat as $scat){ ?>
                           
             <!--------------------------2rd Step Start-------------------------------------------->
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 category-left-list example sub3 subm" id="s<?= $scat->id; ?>">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 category-left-list example sub3 sub" id="s<?= $scat->id; ?>">
               <ul> 
                 <?php
                
@@ -305,7 +311,7 @@ use backend\models\FilterName;
             <?php foreach( $main_cat as $scat){ ?>
                           
             <!--------------------------2rd Step Start-------------------------------------------->
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 category-left-list example sub3 subm sb ssb" id="sb<?= $scat->id; ?>">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 category-left-list example sub3 sub sb ssb" id="sb<?= $scat->id; ?>">
               <ul> 
                 <?php
                
@@ -375,7 +381,7 @@ use backend\models\FilterName;
              foreach( $main_cat_lst as $scat){ ?>
                           
             <!--------------------------2rd Step Start-------------------------------------------->
-            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 category-left-list example sub3 subm sb ssb lst" id="lst<?= $scat->id; ?>">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 category-left-list example sub3 sub sb ssb lst" id="lst<?= $scat->id; ?>">
               <ul> 
                 <?php
                
@@ -427,12 +433,12 @@ use backend\models\FilterName;
             }
         });
     }
-    
+
     function subdropdown(id)
     {
         var dd_id = id.value;
         dd_id = $(id).find(':selected').attr('data_value')  //this variable contains the ID of dropdown's options
-      //  alert(dd_id)
+        alert(dd_id)
           $.ajax({
             type: "GET",
             dataType: "html",
@@ -440,9 +446,7 @@ use backend\models\FilterName;
             data: {
                 id: dd_id
             },success: function(data) {
-                // document.getElementById("additional_optional").innerHTML = "asdasdasd";
-                // debugger;
-
+              console.log(data)
                 document.getElementById("additional_optional").innerHTML = data;
             },
             error: function() {
@@ -451,6 +455,10 @@ use backend\models\FilterName;
 
             });
     }
+    
+
+
+     
     
     
 jQuery(document).ready(function($) {
@@ -505,15 +513,31 @@ jQuery(document).ready(function($) {
     }
     
     function img(item){
-    alert(item);   
+        alert(item);   
     }
     
-  $('.input-group').click(function() {
+    $('.input-group').click(function() {
     $('.input-group.active').removeClass('active');
     $(this).closest('.input-group').addClass('active');
-});
+    });
 
 
+ function delete_image(id)
+{
+$.ajax({
+            
+         
+      type: "GET",
+  url: "<?php echo Yii::$app->getUrlManager()->createUrl('site/delete-image'); ?>",
+  data: { id: id },
+                          
+success: function(data){
+//  alert(data);
+       location.reload();
+// document.getElementById("city").innerHTML = data;
+      }
+    });
+}
 </script>
  
 <?php $this->endBody() ?>

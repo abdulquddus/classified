@@ -382,7 +382,13 @@ $id=0;
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>-->
-
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  
+  
 <script>
     
     $(document).ready(function () {
@@ -704,10 +710,9 @@ function optionalfields(id) {
             id: id
         },
         success: function(data) {
-            
-            //  alert(data);
             document.getElementById("optional").innerHTML = data;
-                    $('#datafilter').datetimepicker();
+            
+                    $('#datafilter').datepicker();
     
                         }
                     });
@@ -1110,13 +1115,7 @@ function mark_sold(id) {
 </script>
 
 <!-- Include all compiled plugins (below), or include individual files as needed -->
-<!--<script src="<?php echo Yii::getAlias('@web') ?>/design/js/bootstrap.min.js"></script>-->
-<!-- boostrap lightbox -->
-<!--<script src="<?php echo Yii::getAlias('@web') ?>/design/js/bootstrap-lightbox.min.js"></script>-->
-<!-- jquery -->
-<!--<script src="<?php echo Yii::getAlias('@web') ?>/design/js/jquery.js"></script>-->
-<!-- jquery -->
-<!--<script src="<?php echo Yii::getAlias('@web') ?>/design/js/custom-script.js"></script>-->
+
   
 <script>
   $(document).ready(function () {

@@ -81,7 +81,7 @@ use yii\widgets\LinkPager;
                                         
                                         foreach ($results as $value) {
                                             $filter_names = \backend\models\FilterName::find()->where(['id'=>$value->field_id])->one();    
-                                            echo '<div class="top-detail"><span>' . $filter_names->filter_name . '</span>' .  ltrim(str_replace("|","-",$value->values), '-') .'</div>'; 
+                                            echo '<div class="top-detail"><span>' . $filter_names['filter_name'] . '</span>' .  ltrim(str_replace("|","-",$value->values), '-') .'</div>'; 
                                         }
                                         ?>
 <!--                                        <div class="top-detail">

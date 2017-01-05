@@ -44,7 +44,7 @@ class Conversation extends \yii\db\ActiveRecord
     }
      public function ad_name($id){
         $ad = Advertisement::findOne($id);
-        return $ad->advertise_title;
+        return $ad['advertise_title'];
     }
     
     public function last_message_date($id){
