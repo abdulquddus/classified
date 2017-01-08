@@ -1,4 +1,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+
 <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->   
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
   <script>tinymce.init({ selector:'atextarea' });</script>
@@ -15,6 +19,18 @@ use backend\models\FilterName;
         $pocounter=ArrayHelper::map($po,'id','code');
 ?>
 <main>
+    
+    <style>
+      .abc {
+          z-index: 1 !important;
+      }
+      .abcd {
+          z-index: 1 !important;
+      }
+      #ui-datepicker-div {
+          z-index: 2 !important;
+      }
+      </style>
   <section class="col-lg-12 col-md-12 col-sm-12 col-xs-12 submitad-wrap">
       <div class="container submitad-main-outer">
       <h4 class="form-ttl">Ad Details</h4>
@@ -40,13 +56,13 @@ use backend\models\FilterName;
                  
              </div>
              
-             <div id="optional">
+<!--             <div id="optional">
                
              </div>
              
              <div id="additional_optional">
                
-             </div>
+             </div>-->
             
              <div class="input-group hvr_div custom-field-wrap description-popover">
                     
@@ -61,7 +77,100 @@ Kategori
 <img width="60px" height="65px" src="admin/uploads/<?= $cat->image?>" style="padding-top:4px">
 </span>
 <a class="cat_image_name"> <?= $cat->title?> </a>
-<a class="btn btn-primary tog" href="#" data-toggle="modal" data-target="#category">Change</a>
+<a class="btn btn-primary tog" href="#" data-toggle="modal" disabled data-target="#category">Change</a>
+
+    <?php
+    
+    $cat_op_fld = \frontend\models\FormAdditionalValues::find()->where(['ad_id'=>$_GET['id']])->all();
+
+        foreach($cat_op_fld as $optionals){
+        $field = \backend\models\FilterName::find()->where(['id'=>$optionals->field_id, 'status'=>1])->one();
+
+        $dd_option_id =   \backend\models\FilterName::find()->where(['parent_filter'=>$field->id])->all();
+
+        if($field->display_for_adpost_page == 1) //Dropdown
+        {
+            $typed_value = ltrim($optionals->values, '|');
+            echo "<div id= '". $field['filter_name'] ."' class='input-group contact-field-wrap'>
+                      <label>" . $field['filter_name'] . "</label>
+                      <select  name='Advertisements[additional_optional][". $field['id'] ."][]' id='advertisements-advertise_title' onchange='subdropdown_edit(this, \"$typed_value\" )' name='' class='form-control ". $field['filter_name'] . "'><option>Please select</option>
+                      </div>";
+
+            foreach ($dd_option_id as $a_value) 
+            {
+                $selected= "";
+                if($a_value['filter_name'] == $typed_value && $field->id == $optionals->field_id){ $selected="selected";}
+                echo '<option '. $selected .' data_value="'. $a_value['id']  .'" value="'. $a_value['filter_name']  .'">'. $a_value['filter_name'] .'</option>';         
+            }//}
+            echo "</select></div>";
+        }
+       
+       if($field->display_for_adpost_page == 2) //CheckBox
+       {
+           echo "<div class='custm-check'>
+                     <label>" . $field['filter_name'] . "</label>";
+           
+           foreach ($dd_option_id as $a_value) 
+           {
+               $checked= "";
+               if($a_value['filter_name'] == $typed_value && $field->id == $optionals->field_id){ $checked="checked";}
+               echo "<input '. $checked .' name='Advertisements[additional_optional][". $field['id'] ."][]' type='checkbox' class='custom-box-ch' value='" . $a_value['filter_name'] . "'><span class='txt-shk'>" . $a_value['filter_name'] . "</span>";               
+           }
+           
+           echo "</div>";
+       }
+       
+       if($field->display_for_adpost_page == 3) //TextBox Number
+       {
+            $typed_value = ltrim($optionals->values, '|');
+            echo "<div class='input-group contact-field-wrap'>
+            <label>" . $field['filter_name'] ."</label>
+            <input class='form-control' type='number' name='Advertisements[additional_optional][". $field['id'] ."][]' value='". $typed_value ."'>
+            </div>";
+       }
+       
+       if($field->display_for_adpost_page == 4) //TextBox
+       {
+            $typed_value = ltrim($optionals->values, '|');
+            echo "<div class='input-group contact-field-wrap'>
+            <label>" . $field['filter_name'] . "test</label>
+            <input class='form-control' type='text'   name='Advertisements[additional_optional][". $field['id'] ."][]' value='". $typed_value ."'>
+            </div>";
+       }
+       
+       if($field->display_for_adpost_page == 5) //Range
+       {
+           $typed_value = ltrim($optionals->values, '|');
+            echo "<div class='input-group contact-field-wrap'>
+            <label>" . $field['filter_name'] . "</label>
+                  <input type='number' placeholder ='To' class='form-control' name='Advertisements[additional_optional][". $field['id'] ."][]' value='". $typed_value ."'></div>";
+            
+            //Second Range Textbox
+            echo "<div class='input-group contact-field-wrap'>
+            <label>" .                         "</label>
+                  <input type='number' placeholder ='From' class='form-control'  name='Advertisements[additional_optional][". $field['id'] ."][]'
+              value=''></div>";
+
+            echo "<input class='form-control' type='hidden' name='Advertisements[additional_optional][id]' value='" . $field['id'] . "'></div>";
+       }
+       
+       if($field->display_for_adpost_page == 6) //DatePicker
+        {
+            $typed_value = ltrim($optionals->values, '|');
+            echo "<div class='input-group contact-field-wrap'>";      
+            echo '<label class="control-label">Birth Date</label>';
+            echo '<input type="text" id="datafilter" name="Advertisements[additional_optional]['. $field['id'] .'][]" value="'. $typed_value .'"/> ';
+            echo "</div>";
+        }    
+    }
+
+
+
+    ?>
+
+
+
+
 </div>
             <?= $form->field($model, 'description', ['template' => '  <div class="input-group hvr_div custom-field-wrap description-popover">
               <label>Beskrivelse<b class="asterisk">*</b></label>
@@ -126,13 +235,13 @@ Kategori
               </div>
              
             </div><!-- /custom-field-wrap-->
-             <div class="row">
+<!--             <div class="row">
                
                  <div class="col-md-9 col-sm-9 pull-right twnty-padng ">
             
            <atextarea name="Advertisements[description]" id="advertisements-description" class="form-control abc">Description.</atextarea>
             </div>
-            </div>
+            </div>-->
             </div><!-- /submitad-main-->
            
 <!--        <div class="col-md-3 col-sm-3 hidden-xs adpost-offer">
@@ -438,7 +547,7 @@ Kategori
     {
         var dd_id = id.value;
         dd_id = $(id).find(':selected').attr('data_value')  //this variable contains the ID of dropdown's options
-        alert(dd_id)
+        //alert(dd_id)
           $.ajax({
             type: "GET",
             dataType: "html",
@@ -456,12 +565,35 @@ Kategori
             });
     }
     
+    function subdropdown_edit(id, dd_id_name)
+    {
+        var dd_id = id.value;
+        dd_id = $(id).find(':selected').attr('data_value')  //this variable contains the ID of dropdown's options
+          $.ajax({
+            type: "GET",
+            dataType: "html",
+            url: "<?php echo Yii::$app->getUrlManager()->createUrl('site/sub_dd_options'); ?>",
+            data: {
+                id: dd_id
+            },success: function(data) {
+              console.log(data)
+                document.getElementById(dd_id_name).innerHTML = data;
+            },
+            error: function() {
+            console.log(arguments);
+            }
 
+            });
+    }
+    
 
      
     
     
 jQuery(document).ready(function($) {
+
+
+    $('#datafilter').datepicker();
 
     var text_max = 99;
     $('#textarea_feedback').html(text_max + ' letters remaining');

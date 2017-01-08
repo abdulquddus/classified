@@ -838,13 +838,54 @@ public function actionGetfilters($cat_ids='')
        $cat_id = $cat->id;
        
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-       $model->user_id = Yii::$app->user->id;
-       $model->created_date = date("Y-m-d H:i:s");
-       $model->v_code = rand(1000, 9999);
-       $model->email = $user->email;
-       $model->status = 0;
-       $model->ad_status = 0;
-        
+            
+            
+            
+            $model->user_id = Yii::$app->user->id;
+            $model->created_date = date("Y-m-d H:i:s");
+            $model->v_code = rand(1000, 9999);
+            $model->email = $user->email;
+            $model->status = 0;
+            $model->ad_status = 0;
+            
+            
+//           FOR SOME REASON THE BELOW QUERY IS NOT WORKING.. YOU JUST NEED TO RUN THIS BELOW QUERY AS I AM AREADY DOING INSERTION
+            $delete_fitlers_values = "DELETE FROM form_additional_values WHERE ad_id=$id";
+           
+            \Yii::$app->db->createCommand($delete_fitlers_values)->execute();
+             
+            //exit();
+            
+            
+             
+
+             
+            if(isset($_POST['Advertisements']['additional_optional'])){
+
+             foreach($_POST['Advertisements']['additional_optional'] as $op_field => $value){
+
+                  $ad_f = new \frontend\models\FormAdditionalValues();
+                  $ad_f->ad_id = $model->id;
+                  $ad_f->field_id = $op_field;
+
+                  $val_string = "";
+                  if(gettype($value) == 'array'){
+                  foreach ($value as $val) {
+                    $val_string.='|'.$val;
+                    
+                  }
+                }
+                else{
+                  $val_string = $value;
+                }
+
+                  $ad_f->values = $val_string;
+                 
+                 $ad_f->save();
+               }
+               
+             }
+            
         
            if($model->save()){
             if(isset($model->additional_field)){
@@ -855,7 +896,9 @@ public function actionGetfilters($cat_ids='')
                  $ad_f->values = $_POST['Advertisements'][$op_field];
                  $ad_f->save();
            
-               }}
+               }
+               
+             }
                
            }
            $model->imageFiles = UploadedFile::getInstances($model, 'imageFiles');

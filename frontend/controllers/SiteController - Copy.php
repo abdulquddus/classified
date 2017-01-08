@@ -24,6 +24,7 @@ use backend\models\NotificationAdmin;
 use backend\models\OptionalfieldBridgeTable;
 use backend\models\FilterName;
 use yii\web\Response;
+use kartik\date\DatePicker;
 /**
  * Site controller
  */
@@ -161,6 +162,23 @@ class SiteController extends Controller
      return $item;
        
     }
+    
+    
+    public function category_idby_name($cate)
+    {
+       
+        $cate = trim($cate);
+        $category = \frontend\models\Category::find()->where(['LIKE', 'title', $cate])->one();
+        if(isset($category->id)){
+         $id = $category->id;
+        }
+        else{
+            $id = 0;           
+        } 
+      
+     return $id;
+       
+    }
 
 
 
@@ -269,16 +287,38 @@ class SiteController extends Controller
           
              if(isset($_GET['Advertisements']['additional_optional'])){
              $mydata = array();
+             //print_r($_GET['Advertisements']['additional_optional']);
            foreach($_GET['Advertisements']['additional_optional'] as $op_field => $value){
+ //            print_r($value);
+   //          print_r('-----');
+             //  if($value=='Honda')
+              // {
+$temp = array();
+foreach ($value as $key => $val)
+{
+//    print_r($val);
 
- $data = \frontend\models\FormAdditionalValues::find()->where(['LIKE', 'values', $value])->andWhere(['field_id'=>$op_field])->all();
-                  
+ $data = \frontend\models\FormAdditionalValues::find()->where(['LIKE', 'values', $val])->andWhere(['field_id'=>$op_field])->all();
 
-                    foreach($data as $data_item)
+ foreach($data as $data_item)
                     {
-                     array_push($mydata, $data_item->ad_id);
-                    }
-
+//                        if (in_array($data_item->ad_id, $mydata)) {
+//                            
+//                        }
+// else {
+                     array_push($temp, $data_item->ad_id);
+ //}
+                       // print_r($data_item->ad_id.'<br/>');
+     
+               } } //}
+                    //exit();
+if (count($mydata)>0)
+{
+$mydata = array_intersect($mydata, $temp);
+}
+ else {
+    $mydata =  $temp;
+}
                     $myids = ['id'=>$mydata];
              }}  else {
                  
@@ -286,9 +326,7 @@ class SiteController extends Controller
     
     
 }
-             
-             
-             
+//           print_r($myids);  
             if(!empty($_GET['skey'])){
             $key =  $_GET['skey'];
             $key = ['LIKE', 'advertise_title', $key];
@@ -388,7 +426,9 @@ class SiteController extends Controller
               andWhere($key)->
             andWhere($myids)->
               orderBy($order_by);
-    
+    //print_r($search);
+ 
+/// commercial adds 
     $search_commer = \backend\models\CommercialSearchAds::find()->
               where(['status'=>1])->
               andWhere($category)->
@@ -410,7 +450,7 @@ class SiteController extends Controller
           $count = $search->count();
           $pagination = new Pagination(['totalCount'=>$count, 'pageSize'=>10]);
           $ads=$search->offset($pagination->offset)->limit($pagination->limit)->all();
-  
+         // print_r($ads);
           $regions = \frontend\models\Region::findAll(['status'=>1]);
         $categories_list = \frontend\models\Category::find()->where(['status'=>1, 'parent_id'=>0])->all();
         $submenu = new \frontend\models\Category();
@@ -420,6 +460,8 @@ class SiteController extends Controller
     //    $category = \frontend\models\Category::find()->where(['status'=>1, 'parent_id'=>0])->all();
         $submenu = new \frontend\models\Category();
         $_GET['skey'] = $key;
+        //echo 'good';
+        //exit();
          return $this->renderPartial('_adsearch', ['regions'=>$regions,
                                                   'category'=>$category,
                                                   'submenu'=>$submenu, 
@@ -431,6 +473,7 @@ class SiteController extends Controller
     
         } else{
             //print_r($cat_ids); 
+            
        $filtes_ids = \backend\models\CategoryAdditionalFields::find()->where([ 'category_id'=>$cat_ids])->select(['optional_field_id'])->all();
 
               $f_ids =array(); 
@@ -464,17 +507,18 @@ public function actionGetfilters($cat_ids='')
 
            if(!empty($cat_name)){
               //$cate =  $_GET['category'];
-              $cat_ids = $this->category($cat_name);
+              $cat_id = $this->category_idby_name($cat_name);
               //$cat_ids = $category; 
               //$category  = ['category_id'=>$category];
-             
+//             echo $cat_id;
+//             exit();
            }else{
                 exit();
            }
 
 
       //print_r('ssssss'); exit();
-                   $filtes_ids = \backend\models\CategoryAdditionalFields::find()->where([ 'category_id'=>$cat_ids])->
+                   $filtes_ids = \backend\models\CategoryAdditionalFields::find()->where([ 'category_id'=>$cat_id])->
                       select(['optional_field_id'])->all();
 
                   $f_ids =array(); 
@@ -489,9 +533,15 @@ public function actionGetfilters($cat_ids='')
 
                                           if($filter->display_for_screen_page == 1) //Dropdown
                                           {
+                                               $fi=0;
+                                 if($fi==0){
+                                     echo '<h3>Filters <?php ?></h3>
+                        <ul id="myList" class="rdio_btn" >';
+                                 }
+                                 $fi++;
                                              echo "<div class='input-group contact-field-wrap'>
                                                        <label>" . $filter['filter_name'] . "</label>
-                                                       <select name='Advertisements[additional_optional][". $filter['id'] ."][]' id='advertisements-advertise_title' onchange='subdropdown(this)' name='' class='form-control'><option>Please select</option>
+                                                       <select onclick='submit_frm()' name='Advertisements[additional_optional][". $filter['id'] ."][]' id='advertisements-advertise_title' onchange='subdropdown(this)' name='' class='form-control'><option>Please select</option>
                                                        ";
                                              
                                              foreach ($dd_option_id as $a_value) 
@@ -510,14 +560,14 @@ public function actionGetfilters($cat_ids='')
                                             foreach ($dd_option_id as $a_value) 
                                             {
                                                
-                                               echo "<input name='Advertisements[additional_optional][". $filter['id'] ."][]' type='checkbox' class='checkbox'  value='" . $a_value['filter_name'] . "'>" . $a_value['filter_name'] ."<br>";
+                                               echo "<input onclick='submit_frm()' name='Advertisements[additional_optional][". $filter['id'] ."][]' type='checkbox' class='checkbox'  value='" . $a_value['filter_name'] . "'>" . $a_value['filter_name'] ."<br>";
                                             }
                                           }
                                           if($filter->display_for_screen_page == 3) //TextBox Number
                                           {
                                               echo "<div class='input-group contact-field-wrap'>
                                               <label>" . $filter['filter_name'] . "</label>
-                                              <input class='form-control' type='number' name='Advertisements[additional_optional][". $filter['id'] ."][]' value=''>
+                                              <input onclick='submit_frm()' class='form-control' type='number' name='Advertisements[additional_optional][". $filter['id'] ."][]' value=''>
                                               </div>";
                                           }
 
@@ -525,7 +575,7 @@ public function actionGetfilters($cat_ids='')
                                           {
                                               echo "<div class='input-group contact-field-wrap'>
                                               <label>" . $filter['filter_name'] . "</label>
-                                              <input class='form-control' type='text' name='Advertisements[additional_optional][". $filter['id'] ."][]' value=''>
+                                              <input onclick='submit_frm()' class='form-control' type='text' name='Advertisements[additional_optional][". $filter['id'] ."][]' value=''>
                                               </div>";
                                           }
 
@@ -540,10 +590,18 @@ public function actionGetfilters($cat_ids='')
                                             //Second Range Textbox
                                             echo "<div class='input-group contact-field-wrap'>
                                             <label>" .                         "</label>
-                                                  <input type='number' placeholder='From' class='form-control'  name='Advertisements[additional_optional][". $filter['id'] ."][]'
+                                                  <input onclick='submit_frm()' type='number' placeholder='From' class='form-control'  name='Advertisements[additional_optional][". $filter['id'] ."][]'
                                               value=''></div>";
                                           }
-
+                                          
+                                          if($filter->display_for_screen_page == 6) //DatePicker
+                                          {
+                                                //Datepicker Range Textbox
+                                                echo "<div class='input-group contact-field-wrap'>";      
+                                                echo '<label class="control-label">Birth Date</label>';
+                                                echo '<input type="text" id="datafilter" name="Advertisements[additional_optional]['. $filter['id'] .'][]" /> ';
+                                                echo "</div>";
+                                            }
                                         } 
 
 
@@ -614,7 +672,7 @@ public function actionGetfilters($cat_ids='')
         $code = $_GET['id'];
        $city_code= \frontend\models\City::find()->where(['region_id'=>$code])->all();
       
-        echo '<label>City<b class="asterisk">*</b></label><select id="advertisement-state_id" class="form-control" name="Advertisements[city_id]">';
+        echo '<label>City<b class="asterisk">*</b></label><select id="advertisement-state_id" class="form-control abc" name="Advertisements[city_id]">';
         foreach ($city_code as $city){
              echo' <option value="'. $city->id .'">'. $city->name .'</option>';
              }
@@ -1344,7 +1402,16 @@ public function actionGetfilters($cat_ids='')
               value=''></div>";
 
             echo "<input class='form-control' type='hidden' name='Advertisements[additional_optional][id]' value='" . $field['id'] . "'></div>";
-       }       
+       }
+       
+       if($field->display_for_adpost_page == 6) //DatePicker
+        {
+            //Datepicker Range Textbox
+            echo "<div class='input-group contact-field-wrap'>";      
+            echo '<label class="control-label">Birth Date</label>';
+            echo '<input type="text" id="datafilter" name="Advertisements[additional_optional]['. $field['id'] .'][]" /> ';
+            echo "</div>";
+        }
        }       
     }    
     public function actionGetimg($id)
@@ -1509,9 +1576,11 @@ public function actionGetfilters($cat_ids='')
         $filter_main =   \backend\models\FilterName::find()->where(['id'=>$id])->one();
 
         $dd_option_id =   \backend\models\FilterName::find()->where(['parent_filter'=>$id])->all();
+        $dd_option_id_count =   \backend\models\FilterName::find()->where(['parent_filter'=>$id])->count();
      
        if($filter_main->display_for_adpost_page == 1) //Dropdown
        {
+           if($dd_option_id_count != 0){
            echo "<div class='input-group contact-field-wrap'>
                      <label>" . $filter_main['filter_name'] . "</label>
                      <select name='Advertisements[additional_optional][". $filter_main['id'] ."][]' id='advertisements-advertise_title' onchange='subDropdown(this)' name='' class='form-control'><option>Please select</option>
@@ -1524,10 +1593,12 @@ public function actionGetfilters($cat_ids='')
                 echo '<option value="'. $a_value['filter_name']  .'">'. $a_value['filter_name'] .'</option>';         
            }
            echo "</select></div>";
+            }
        }
        
        if($filter_main->display_for_adpost_page == 2) //CheckBox
        {
+           if($dd_option_id_count != 0){
            echo "<div class='custm-check'>
                      <label>" . $filter_main['filter_name'] . "</label>";
            
@@ -1537,6 +1608,7 @@ public function actionGetfilters($cat_ids='')
            }
            
            echo "</div>";
+           }
        }
     }        
     
