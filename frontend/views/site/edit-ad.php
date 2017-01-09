@@ -2,7 +2,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
-
+  <script src="<?php echo Yii::getAlias('@web') ?>/design/js/jquery-2.1.4.min.js"></script>
 <!--<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>-->   
 <script src="//cdn.tinymce.com/4/tinymce.min.js"></script>
   <script>tinymce.init({ selector:'atextarea' });</script>
@@ -211,25 +211,47 @@ Kategori
                
                
                 <?php 
-              
- 
-
-                echo FileInput::widget([
-                    'name' => 'Advertisements[imageFiles][]',
-                     'pluginOptions' => [
-                        'id'=>'advertisements-imagefiles',
-                        'showCaption' => false,
-                        'showRemove' => true,
-                        'showUpload' => false,
-                        'browseClass' => 'btn btn-primary btn-block',
-                        'browseIcon' => '<i class="glyphicon glyphicon-camera"> Select Multiplae images(max-20)</i> ',
-                        'browseLabel' =>  'Select Photo'
-                    ],
-                    'options' => ['accept' => 'image/*', 'multiple' => true]
-                ]);
+//              
+// 
+//
+//                echo FileInput::widget([
+//                    'name' => 'Advertisements[imageFiles][]',
+//                     'pluginOptions' => [
+//                        'id'=>'advertisements-imagefiles',
+//                        'showCaption' => false,
+//                        'showRemove' => true,
+//                        'showUpload' => false,
+//                        'browseClass' => 'btn btn-primary btn-block',
+//                        'browseIcon' => '<i class="glyphicon glyphicon-camera"> Select Multiplae images(max-20)</i> ',
+//                        'browseLabel' =>  'Select Photo'
+//                    ],
+//                    'options' => ['accept' => 'image/*', 'multiple' => true]
+//                ]);
 
                 ?>
                
+                    <div class="row"><div class="anyName1 col-md-3">
+            <input name='Advertisements[imageFiles][]' type="file" accept="image/gif, image/jpeg, image/png">
+        </div>
+                <div class="anyName2 col-md-3">
+            <input name='Advertisements[imageFiles][]' type="file" accept="image/gif, image/jpeg, image/png">
+        </div><div class="anyName3 col-md-3" >
+            <input name='Advertisements[imageFiles][]' type="file" accept="image/gif, image/jpeg, image/png">
+        </div><div class="anyName4 col-md-3">
+            <input name='Advertisements[imageFiles][]' type="file" accept="image/gif, image/jpeg, image/png">
+        </div></div>
+                <div class="row">
+              <div class="anyName5 col-md-3">
+            <input name='Advertisements[imageFiles][]' type="file" accept="image/gif, image/jpeg, image/png">
+        </div><div class="anyName6 col-md-3">
+            <input name='Advertisements[imageFiles][]' type="file" accept="image/gif, image/jpeg, image/png">
+        </div><div class="anyName7 col-md-3">
+            <input name='Advertisements[imageFiles][]' type="file" accept="image/gif, image/jpeg, image/png">
+        </div><div class="anyName8 col-md-3">
+            <input name='Advertisements[imageFiles][]' type="file" accept="image/gif, image/jpeg, image/png">
+        </div>
+             
+            </div>
               
                   
               </div>
@@ -672,4 +694,80 @@ success: function(data){
 }
 </script>
  
+
+<script src="<?php echo Yii::getAlias('@web') ?>/design/js/jquery.upload_preview.min.js"></script>
+    <script type="text/javascript">
+        $('.anyName1').uploadPreview({
+            width: '80px',
+            height: '80px',
+            backgroundSize: 'cover',
+            fontSize: '8px',
+            borderRadius: '80px',
+            border: '3px solid #dedede',
+            lang: 'en', //language
+        });
+          $('.anyName2').uploadPreview({
+            width: '80px',
+            height: '80px',
+            backgroundSize: 'cover',
+            fontSize: '8px',
+            borderRadius: '80px',
+            border: '3px solid #dedede',
+            lang: 'en', //language
+        });
+          $('.anyName3').uploadPreview({
+            width: '80px',
+            height: '80px',
+            backgroundSize: 'cover',
+            fontSize: '8px',
+            borderRadius: '80px',
+            border: '3px solid #dedede',
+            lang: 'en', //language
+        });
+          $('.anyName4').uploadPreview({
+            width: '80px',
+            height: '80px',
+            backgroundSize: 'cover',
+            fontSize: '8px',
+            borderRadius: '80px',
+            border: '3px solid #dedede',
+            lang: 'en', //language
+        });
+          $('.anyName5').uploadPreview({
+            width: '80px',
+            height: '80px',
+            backgroundSize: 'cover',
+            fontSize: '8px',
+            borderRadius: '80px',
+            border: '3px solid #dedede',
+            lang: 'en', //language
+        });
+          $('.anyName6').uploadPreview({
+            width: '80px',
+            height: '80px',
+            backgroundSize: 'cover',
+            fontSize: '8px',
+            borderRadius: '80px',
+            border: '3px solid #dedede',
+            lang: 'en', //language
+        });
+          $('.anyName7').uploadPreview({
+            width: '80px',
+            height: '80px',
+            backgroundSize: 'cover',
+            fontSize: '8px',
+            borderRadius: '80px',
+            border: '3px solid #dedede',
+            lang: 'en', //language
+        });
+          $('.anyName8').uploadPreview({
+            width: '80px',
+            height: '80px',
+            backgroundSize: 'cover',
+            fontSize: '8px',
+            borderRadius: '80px',
+            border: '3px solid #dedede',
+            lang: 'en', //language
+        });
+    </script>
 <?php $this->endBody() ?>
