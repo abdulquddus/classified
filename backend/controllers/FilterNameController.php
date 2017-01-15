@@ -52,6 +52,20 @@ class FilterNameController extends Controller
             'model' => $this->findModel($id),
         ]);
     }
+    
+     public function actionFilterDetails()
+    {
+      // $searchModel = new filterSearch();
+        //$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $filters = FilterName::find()->where(['parent_filter'=>0])->all();
+        $category = new FilterName();
+
+        return $this->render('filter-details', [
+             'filters' => $filters,
+            'category' =>$category,
+                    ]);
+        
+    }
 
     /**
      * Creates a new FilterName model.

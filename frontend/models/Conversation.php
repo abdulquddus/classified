@@ -54,7 +54,7 @@ class Conversation extends \yii\db\ActiveRecord
     public function ad_created_date($id){
       $date = Advertisement::find()->where(['id'=>$id])->one();
 //        $date = Messages::find()->where(['conv_id'=>$id])->orderBy(['id'=> SORT_DESC])->one();
-        return $date->created_date;
+        return $date['created_date'];
     }
 
     /**

@@ -850,7 +850,7 @@ public function actionGetfilters($cat_ids='')
             
             
 //           FOR SOME REASON THE BELOW QUERY IS NOT WORKING.. YOU JUST NEED TO RUN THIS BELOW QUERY AS I AM AREADY DOING INSERTION
-            $delete_fitlers_values = "DELETE FROM form_additional_values WHERE ad_id=$id";
+            $delete_fitlers_values = "DELETE FROM form_additional_values WHERE ad_id=$model->id";
            
             \Yii::$app->db->createCommand($delete_fitlers_values)->execute();
              

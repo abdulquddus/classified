@@ -33,7 +33,7 @@ class FilterName extends \yii\db\ActiveRecord
     {
         return [
             [['filter_name', 'status'], 'required'],
-            [['parent_filter', 'status', 'display_for_adpost_page', 'display_for_screen_page'], 'integer'],
+            [['parent_filter', 'status', 'display_for_adpost_page', 'display_for_screen_page','search_display'], 'integer'],
             [['filter_name'], 'string', 'max' => 255],
             [['filter_description'], 'string', 'max' => 500],
             [['filter_value'], 'string', 'max' => 225],
@@ -55,6 +55,25 @@ class FilterName extends \yii\db\ActiveRecord
             'display_for_adpost_page' => 'Display For Adpost Page',
             'display_for_screen_page' => 'Display For Screen Page',
             'status' => 'Status',
+            'search_display' => 'Display on Search Resultss'
         ];
     }
+    
+    
+      public function cat_find($id){
+        $list = $this->findAll(['parent_filter'=>$id]);
+        return $list;
+     }
+     
+     
+     
+     public function check_child($id){
+       $data = $this->find()->where(['parent_filter'=>$id])->one();
+       if(isset($data)){
+           return ' <a href="#"><span data-element="'.$id.'" class="glyphicon glyphicon glyphicon-arrow-right"></span></a>';
+       }else {
+            return FALSE;
+       }
+       
+     }
 }

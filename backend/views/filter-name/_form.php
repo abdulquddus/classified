@@ -35,6 +35,8 @@ use backend\models\FilterName;
     <?= $form->field($model, 'display_for_screen_page')->dropDownList(['0' => 'None', '1' => 'Dropdown - ID1', '2' => 'Chcekbox - ID2', '3' => 'Textbox - Numbers- ID3', '4' => 'Textbox - Value - ID4', '5' => 'Range - ID5', '6' => 'DatePicker - ID6'], ['onchange'=>'custom_validation()']);  ?>
 
     <?php echo $form->field($model, 'status')->dropDownList(['1' => 'Activate', '0' => 'Deactivate']); ?>
+    
+    <?php echo $form->field($model, 'search_display')->dropDownList(['1' => 'On', '0' => 'Off']); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
