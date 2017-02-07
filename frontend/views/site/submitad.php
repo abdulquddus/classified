@@ -75,11 +75,12 @@ use backend\models\FilterName;
         <?= $form->field($model, 'price', ['template' => '<div class="input-group hvr_div custom-field-wrap abcd">
               <label>Pris<b class="asterisk">*</b></label>
               {input}<div class="error-placement">{error}</div>
-            </div>']); ?> 
-        <?= $form->field($model, 'condition', ['template'=>'<div class="input-group hvr_div contact-field-wrap">
+            </div>'])->textarea(array('rows'=>0, 'style' => 'resize:none', 'placeholder'=>"Enter Price", 'onchange' => 'ChangePriceCondition()')); ?> 
+        
+        <?= $form->field($model, 'condition', ['template'=>'<div class="input-group hvr_div contact-field-wrap">,
               <label>Condition<b class="asterisk">*</b></label>
               {input}<div class="error-placement">{error}</div>
-            </div>'])->dropDownList(['used'=>'Used', 'new'=>'New'],['class'=>'form-control abc']) ?>     
+            </div>'])->dropDownList(['used'=>'Used', 'new'=>'New'],['class'=>'form-control abc', 'onchange' => 'ChangePriceCondition()']) ?>     
            
 
             <div class="input-group custom-field-wrap">
@@ -434,6 +435,22 @@ use backend\models\FilterName;
 <!-- /Ads Boxes -->
 </main>
 <script>
+    
+    //This function copy the Price and Condition values from the original text box
+    //and put in into filters textboxes.
+    function ChangePriceCondition()
+    {
+        var original_price = document.getElementById('advertisements-price').value;
+        var original_condition = document.getElementById('advertisements-condition').value;
+        var hidden_price = document.getElementById('hidden_filter_price');
+        var hidden_condition = document.getElementById('hidden_filter_condition');
+        //alert("test" + original_price);
+        //alert("sceond   " + original_condition);
+        hidden_price.value = original_price;
+        hidden_condition.value = original_condition;        
+    }
+    
+    
     var csrfToken = $('meta[name="csrf-token"]').attr("content");
 
     function select_city(item) {

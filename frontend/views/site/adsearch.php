@@ -1,4 +1,4 @@
-﻿ <?php
+ <?php
 
 use yii\helpers\html;
 use yii\widgets\LinkPager;
@@ -165,8 +165,8 @@ use kartik\date\DatePickerAsset;
                             </div>
                             <div class="small-icon">
                             </div>
-<!--                            <div class="compact">
-                            </div>-->
+                            <div class="compact">
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 sort-main">
@@ -251,9 +251,9 @@ use kartik\date\DatePickerAsset;
                     <div class="search-left-inr-box hidden-sm hidden-xs">
                         <h3>Conditions</h3>
                         <ul class="rdio_btn">
-                            <li><input type="radio" class="rdo_main" onclick="submit_frm()" value="all" name="condition" checked/> All</li>
-                            <li><input type="radio" class="rdo_main" onclick="submit_frm()" value="used" name="condition" class="rdo_main" <?php if(isset($_GET['condition']) && $_GET['condition']=='used' ) { echo "checked"; } ?> /> Used</li>
-                            <li><input type="radio" onclick="submit_frm()" value="new" name="condition" <?php if(isset($_GET['condition']) && $_GET['condition']=='new' ) { echo "checked"; } ?> /> New</li>
+                            <li><input type="radio" onclick="submit_frm()" class="rdo_main"  value="all" name="condition" checked/> All</li>
+                            <li><input type="radio" onclick="submit_frm()" class="rdo_main"  value="used" name="condition" class="rdo_main" <?php if(isset($_GET['condition']) && $_GET['condition']=='used' ) { echo "checked"; } ?> /> Used</li>
+                            <li><input type="radio" onclick="submit_frm()" class="rdo_main" value="new" name="condition" <?php if(isset($_GET['condition']) && $_GET['condition']=='new' ) { echo "checked"; } ?> /> New</li>
 
                         </ul>
 
@@ -300,7 +300,7 @@ use kartik\date\DatePickerAsset;
                                 if($filter->display_for_screen_page == 1) //Dropdown
                                 {
                                    echo "  <form class='form-horizontal' role='form'> <div class='form-group bg-none mrgn-padng'>
-                                             <label class='col-md-12 control-label mrgn-padng'>" . $filter['filter_name'] . "</label>
+                                             <label class='col-md-12 control-label mrgn-padng'><h3>" . $filter['filter_name'] . "</h3></label>
                                              <select name='Advertisements[additional_optional][". $filter['id'] ."][]' id='basic' class='selectpicker bg-none mrgn-padng form-control ' onchange='subdropdown(this)' name=''><option>Please Select</option>
                                              ";
                                    
@@ -316,19 +316,19 @@ use kartik\date\DatePickerAsset;
                                 if($filter->display_for_screen_page == 2) //CheckBox
                                 {
                                 echo "<div class='input-group contact-field-wrap'>
-                                         <label>" . $filter['filter_name'] . "</label></div>";
+                                         <label><h3>" . $filter['filter_name'] . "</h3></label></div>";
 
                                 foreach ($dd_option_id as $a_value) 
                                 {
                                    //$dd_option_main = \backend\models\FilterName::find()->where(['id'=>$a_value->filter_field_key])->all();
                                    //echo '<option value="'. $dd_option_main[0]['id']  .'">'. $dd_option_main[0]['filter_name'] .'</option>';         
-                                   echo "<input name='Advertisements[additional_optional][". $filter['id'] ."][]' type='checkbox' class='checkbox'  value='" . $a_value['filter_name'] . "'>" . $a_value['filter_name'] ."<br>";
+                                   echo "<input name='Advertisements[additional_optional][". $filter['id'] ."][]' type='checkbox' class='checkbox'  value='" . $a_value['filter_name'] . "'>" . " " .$a_value['filter_name'] ."<br>";
                                 }
                                 }
                                 if($filter->display_for_screen_page == 3) //TextBox Number
                                 {
                                     echo "<div class='input-group contact-field-wrap'>
-                                    <label>" . $filter['filter_name'] . "</label>
+                                    <label><h3>" . $filter['filter_name'] . "</h3></label>
                                     <input class='form-control' type='number' name='Advertisements[additional_optional][". $filter['id'] ."][]' value=''>
                                     </div>";
                                 }
@@ -336,7 +336,7 @@ use kartik\date\DatePickerAsset;
                                 if($filter->display_for_screen_page == 4) //TextBox
                                 {
                                     echo "<div class='input-group contact-field-wrap'>
-                                    <label>" . $filter['filter_name'] . "</label>
+                                    <label><h3>" . $filter['filter_name'] . "</h3></label>
                                     <input class='form-control' type='text' name='Advertisements[additional_optional][". $filter['id'] ."][]' value=''>
                                     </div>";
                                 }
@@ -347,7 +347,7 @@ use kartik\date\DatePickerAsset;
                                 {
                                 //First Range Textbox
                                 echo "<div class='input-group contact-field-wrap'>
-                                <label>" . $filter['filter_name'] . "</label>
+                                <label><h3>" . $filter['filter_name'] . "</h3></label>
                                       <input type='number' placeholder='From' class='form-control' name='Advertisements[additional_optional][". $filter['id'] ."][]' value=''></div>";
 
                                 //Second Range Textbox
@@ -356,8 +356,26 @@ use kartik\date\DatePickerAsset;
                                       <input type='number' placeholder='To' class='form-control'  name='Advertisements[additional_optional][". $filter['id'] ."][]'
                                   value=''></div>";
                                 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                 ?>
-                       
+
+
+
+                            
+                                 
                             <?php  } ?>
                         </ul>
 
@@ -443,8 +461,11 @@ use kartik\date\DatePickerAsset;
                                         <?php $results = \frontend\models\FormAdditionalValues::find()->where(['ad_id'=>$cate->id])->all(); 
                                         
                                         foreach ($results as $value) {
-                                            $filter_names = \backend\models\FilterName::find()->where(['id'=>$value->field_id])->andWhere(['search_display'=>1])->one();    
-                                            echo '<div class="top-detail"><span>' . $filter_names['filter_name'] . '</span>' . ltrim(str_replace("|","-",$value->values), '-') .'</div>'; 
+                                            $filter_names = \backend\models\FilterName::find()->where(['id'=>$value->field_id])->one();    
+                                            if($filter_names->search_display == 1)
+                                            {
+                                                echo '<div class="top-detail"><span>' . $filter_names->filter_name . '</span>' . ltrim(str_replace("|","-",$value->values), '-') .'</div>'; 
+                                            }
                                         }
                                         ?>
                                         <div class="address-detail">

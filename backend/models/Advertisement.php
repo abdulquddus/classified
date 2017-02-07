@@ -54,7 +54,8 @@ class Advertisement extends \yii\db\ActiveRecord
             [['photo_name'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg', 'on' => self::SCENARIO_CREATE],
             [['user_id', 'category_id', 'price', 'mobile_number', 'state_id', 'city_id', 'status'], 'integer'],
             [['description', 'address'], 'string'],
-            [['advertise_title', 'contact_name', 'email'], 'string', 'max' => 45],
+            [['advertise_title',], 'string', 'max' => 200],
+            [['contact_name', 'email'], 'string', 'max' => 45],
             [['user_id', 'category_id', 'advertise_title', 'photo_name', 'description', 'price', 'contact_name', 'mobile_number', 'state_id', 'city_id', 'address', 'v_code'], 'safe']
         ];
     }

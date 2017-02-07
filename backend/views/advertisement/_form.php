@@ -65,8 +65,9 @@ use dosamigos\ckeditor\CKEditor;
         
         for($i=0; $i<$ads_images_count; $i++){
             echo '<img width="180" src= ../uploads/'. $model->id . '/'. $ads_images_record[$i]['image'] . '>';
-//        echo $form->field($model, 'photo_name')->fileInput();    
-            
+//        echo $form->field($model, 'photo_name')->fileInput();  ?>  
+            <input type="button" onclick="delete_image('<?php echo $ads_images_record[$i]['id']; ?>')" value="delete" class="btn btn-danger" />
+            <?php
         }
         
         
@@ -186,3 +187,22 @@ function submit() {
 
 }
 </script>
+<script>
+      
+       function delete_image(id)
+{
+$.ajax({
+            
+         
+      type: "GET",
+  url: "<?php echo Yii::$app->getUrlManager()->createUrl('advertisement/delete-image'); ?>",
+  data: { id: id },
+                          
+success: function(data){
+ //alert(data);
+       location.reload();
+//document.getElementById("city").innerHTML = data;
+      }
+    });
+}
+    </script>

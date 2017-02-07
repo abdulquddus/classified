@@ -1,4 +1,4 @@
-﻿<?php 
+<?php 
 use yii\helpers\html;
 use yii\widgets\LinkPager;
 ?>
@@ -80,8 +80,11 @@ use yii\widgets\LinkPager;
                                         <?php $results = \frontend\models\FormAdditionalValues::find()->where(['ad_id'=>$cate->id])->all(); 
                                         
                                         foreach ($results as $value) {
-                                            $filter_names = \backend\models\FilterName::find()->where(['id'=>$value->field_id])->andWhere(['search_display'=>1])->one();    
-                                            echo '<div class="top-detail"><span>' . $filter_names['filter_name'] . '</span>' .  ltrim(str_replace("|","-",$value->values), '-') .'</div>'; 
+                                            $filter_names = \backend\models\FilterName::find()->where(['id'=>$value->field_id])->one();
+                                            if($filter_names->search_display == 1)
+                                            {
+                                                echo '<div class="top-detail"><span>' . $filter_names['filter_name'] . '</span>' .  ltrim(str_replace("|","-",$value->values), '-') .'</div>'; 
+                                            }
                                         }
                                         ?>
 <!--                                        <div class="top-detail">
@@ -101,7 +104,7 @@ use yii\widgets\LinkPager;
                                        
                                     </div>
                                     <div class="productprice">
-                                       Kr. <?php echo $cate->price; ?></div>
+                                        Kr. <?php echo $cate->price; ?></div>
                                      <a href="#" class="verifyadd"></a>
                                 </div>
 

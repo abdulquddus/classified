@@ -59,7 +59,7 @@ $this->title = 'Classified';
         <div id="" class="col-lg-12 col-md-12 col-sm-12 col-xs-12 subcat-box">
           <ul id="categories_list">
              <?php foreach($categories as $cate){ ?>
-              <li class="sub"  onclick="modal_cat(this)" value="<?= $cate->id ?>" title="<?php echo $cate['title']?>" ><a  id="category_names" ><div class="cat-img-box"><img class="img-responsive"  src="<?= Yii::$app->request->baseUrl?>/admin/uploads/<?php echo $cate['image'] ?>"></div><span> <?php echo $cate['title']?></span></a> <?php //echo $cate['title']?></li>
+              <li class="sub" onclick="modal_cat(this)" value="<?= $cate->id ?>" title="<?php echo $cate['title']?>" ><a  id="category_names" ><div class="cat-img-box"><img class="img-responsive"  src="<?= Yii::$app->request->baseUrl?>/admin/uploads/<?php echo $cate['image'] ?>"></div><span> <?php echo $cate['title']?></span></a> <?php //echo $cate['title']?></li>
              <?php } ?>
           </ul>
         </div>

@@ -180,7 +180,12 @@ class AdvertisementController extends Controller
 
         return $this->redirect(['index']);
     }
-
+public function actionDeleteImage($id)
+    {
+    // $id =  $tmpuser->id;
+            \backend\models\Images::findOne($id)->delete(); 
+            return true;
+    }
     /**
      * Finds the Advertisement model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.

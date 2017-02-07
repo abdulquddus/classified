@@ -1225,7 +1225,7 @@ $i=1; foreach($conversation_ids as $tinbox)
 
                       <td class="ad-dtl-msg">
 
-                        <h4><?= $addse->advertise_title ?></h4>
+                        <h4><?= $addse['advertise_title'] ?></h4>
 
                         <p><?= $sents->message ?> </p>
 

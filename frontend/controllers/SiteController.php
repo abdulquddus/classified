@@ -540,7 +540,7 @@ public function actionGetfilters($cat_ids='')
                                  }
                                  $fi++;
                                              echo "<div class='input-group contact-field-wrap'>
-                                                       <label>" . $filter['filter_name'] . "</label>
+                                                       <label><h3>" . $filter['filter_name'] . "</h3></label>
                                                        <select onclick='submit_frm()' name='Advertisements[additional_optional][". $filter['id'] ."][]' id='advertisements-advertise_title' onchange='subdropdown(this)' name='' class='form-control'><option>Please select</option>
                                                        ";
                                              
@@ -555,18 +555,18 @@ public function actionGetfilters($cat_ids='')
                                           if($filter->display_for_screen_page == 2) //CheckBox
                                           {
                                             echo "<div class='input-group contact-field-wrap'>
-                                                     <label>" . $filter['filter_name'] . "</label></div>";
+                                                     <label><h3>" . $filter['filter_name'] . "</h3></label></div>";
 
                                             foreach ($dd_option_id as $a_value) 
                                             {
                                                
-                                               echo "<input onclick='submit_frm()' name='Advertisements[additional_optional][". $filter['id'] ."][]' type='checkbox' class='checkbox'  value='" . $a_value['filter_name'] . "'>" . $a_value['filter_name'] ."<br>";
+                                               echo "<input onclick='submit_frm()' name='Advertisements[additional_optional][". $filter['id'] ."][]' type='checkbox' class='checkbox'  value='" . $a_value['filter_name'] . "'>" . " ".$a_value['filter_name'] ."<br>";
                                             }
                                           }
                                           if($filter->display_for_screen_page == 3) //TextBox Number
                                           {
                                               echo "<div class='input-group contact-field-wrap'>
-                                              <label>" . $filter['filter_name'] . "</label>
+                                              <label><h3>" . $filter['filter_name'] . "</h3></label>
                                               <input onclick='submit_frm()' class='form-control' type='number' name='Advertisements[additional_optional][". $filter['id'] ."][]' value=''>
                                               </div>";
                                           }
@@ -574,7 +574,7 @@ public function actionGetfilters($cat_ids='')
                                           if($filter->display_for_screen_page == 4) //TextBox
                                           {
                                               echo "<div class='input-group contact-field-wrap'>
-                                              <label>" . $filter['filter_name'] . "</label>
+                                              <label><h3>" . $filter['filter_name'] . "</h3></label>
                                               <input onclick='submit_frm()' class='form-control' type='text' name='Advertisements[additional_optional][". $filter['id'] ."][]' value=''>
                                               </div>";
                                           }
@@ -584,7 +584,7 @@ public function actionGetfilters($cat_ids='')
                                           {
                                             //First Range Textbox
                                             echo "<div class='input-group contact-field-wrap'>
-                                            <label>" . $filter['filter_name'] . "</label>
+                                            <label><h3>" . $filter['filter_name'] . "</h3></label>
                                                   <input type='number' placeholder='To' class='form-control' name='Advertisements[additional_optional][". $filter['id'] ."][]' value=''></div>";
 
                                             //Second Range Textbox
@@ -598,7 +598,7 @@ public function actionGetfilters($cat_ids='')
                                           {
                                                 //Datepicker Range Textbox
                                                 echo "<div class='input-group contact-field-wrap'>";      
-                                                echo '<label class="control-label">Birth Date</label>';
+                                                echo '<label class="control-label"><h3>Birth Date<h3></label>';
                                                 echo '<input type="text" id="datafilter" name="Advertisements[additional_optional]['. $filter['id'] .'][]" /> ';
                                                 echo "</div>";
                                             }
@@ -850,11 +850,10 @@ public function actionGetfilters($cat_ids='')
             
             
 //           FOR SOME REASON THE BELOW QUERY IS NOT WORKING.. YOU JUST NEED TO RUN THIS BELOW QUERY AS I AM AREADY DOING INSERTION
-            $delete_fitlers_values = "DELETE FROM form_additional_values WHERE ad_id=$model->id";
-           
+            $delete_fitlers_values = "DELETE FROM form_additional_values WHERE ad_id=$id";
             \Yii::$app->db->createCommand($delete_fitlers_values)->execute();
              
-            //exit();
+            exit();
             
             
              
@@ -1405,7 +1404,7 @@ public function actionGetfilters($cat_ids='')
        if($field->display_for_adpost_page == 2) //CheckBox
        {
            echo "<div class='custm-check'>
-                     <label>" . $field['filter_name'] . "</label>";
+                    <label>" . $field['filter_name'] . "</label>";
            
            foreach ($dd_option_id as $a_value) 
            {
@@ -1417,26 +1416,45 @@ public function actionGetfilters($cat_ids='')
        
        if($field->display_for_adpost_page == 3) //TextBox Number
        {
-            echo "<div class='input-group contact-field-wrap'>
-            <label>" . $field['filter_name'] . "</label>
-            <input class='form-control' type='number' name='Advertisements[additional_optional][". $field['id'] ."][]' value=''>
-            </div>";
+           if ($field['filter_name'] == 'Pris'){
+                echo "<div class='input-group contact-field-wrap'>
+                <input  id='hidden_filter_price' class='form-control' type='hidden' name='Advertisements[additional_optional][". $field['id'] ."][]' value=''>
+                </div>";
+           }
+           else
+           {
+                echo "<div class='input-group contact-field-wrap'>
+                <label>" . $field['filter_name'] . "</label>
+                <input class='form-control' type='number' name='Advertisements[additional_optional][". $field['id'] ."][]' value=''>
+                </div>";
+               
+           }
        }
        
        if($field->display_for_adpost_page == 4) //TextBox
        {
-            echo "<div class='input-group contact-field-wrap'>
-            <label>" . $field['filter_name'] . "</label>
-            <input class='form-control' type='text' name='Advertisements[additional_optional][". $field['id'] ."][]' value=''>
-            </div>";
+            if ($field['filter_name'] == 'Nytt/brukt'){
+                echo "<div class='input-group contact-field-wrap'>
+                <input id='hidden_filter_condition' class='form-control' type='hidden' name='Advertisements[additional_optional][". $field['id'] ."][]' value=''>
+                </div>";
+            }
+            else
+            {
+                echo "<div class='input-group contact-field-wrap'>
+                <label>" . $field['filter_name'] . "</label>
+                <input class='form-control' type='text' name='Advertisements[additional_optional][". $field['id'] ."][]' value=''>
+                </div>";
+                
+            }
+           
+            
        }
        
        if($field->display_for_adpost_page == 5) //Range
        {
            //First Range Textbox
             echo "<div class='input-group contact-field-wrap'>
-            <label>" . $field['filter_name'] . "</label>
-                  <input type='number' placeholder ='To' class='form-control' name='Advertisements[additional_optional][". $field['id'] ."][]' value=''></div>";
+            <label>" . $field['filter_name'] . "</label>                  <input type='number' placeholder ='To' class='form-control' name='Advertisements[additional_optional][". $field['id'] ."][]' value=''></div>";
             
             //Second Range Textbox
             echo "<div class='input-group contact-field-wrap'>
@@ -1625,7 +1643,7 @@ public function actionGetfilters($cat_ids='')
        {
            if($dd_option_id_count != 0){
            echo "<div class='input-group contact-field-wrap'>
-                     <label>" . $filter_main['filter_name'] . "</label>
+                     <label><h3>" . $filter_main['filter_name'] . "</h3></label>
                      <select name='Advertisements[additional_optional][". $filter_main['id'] ."][]' id='advertisements-advertise_title' onchange='subDropdown(this)' name='' class='form-control'><option>Please select</option>
                      ";
            
@@ -1643,7 +1661,7 @@ public function actionGetfilters($cat_ids='')
        {
            if($dd_option_id_count != 0){
            echo "<div class='custm-check'>
-                     <label>" . $filter_main['filter_name'] . "</label>";
+                     <label><h3>" . $filter_main['filter_name'] . "</h3></label>";
            
            foreach ($dd_option_id as $a_value) 
            {
