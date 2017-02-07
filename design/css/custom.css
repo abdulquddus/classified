@@ -1093,9 +1093,9 @@ border-radius: 8px;
 }
 .contact-field-wrap label {
     float: left;
-    width: 25%;
+    width: 100%;
     margin: 5px 12px 0 0;
-    text-align: right;
+    text-align: left;
     color: #000;
     font-weight: 400;
 }
@@ -3202,9 +3202,14 @@ input[type=button] {
 .rdio_btnnew li:hover{background:#f5f5f5;}
 .rdio_btnnew li:last-child{border-bottom:none;}
 .rdio_btnnew li .rdo_main{float:left;margin-right:10px !important;}
-.search-left-inr-box h3{font-size: 16px;
+.search-left-inr-box h3 {
+    font-size: 14px;
     margin: 8px 0;
-    padding: 0;}
+    padding: 0;
+    width: 100%;
+    float: left;
+    
+}
     
     .help-block {
     display: block;
@@ -3260,3 +3265,5 @@ span.txt-shk{ float: left;
 
 .mrgn-padng{margin:0 !important; padding: 0 !important;}
 
+.fld-wdth{width: 100% !important;
+    float: left;}

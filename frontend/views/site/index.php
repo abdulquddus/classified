@@ -59,40 +59,45 @@ $this->title = 'My Yii Application';
 			</div>
           </div>
           <div class="modal-body pad150 display-block">
-			<div class="cities">
-			<p>Populære byer:</p>
-                       <?php foreach($regions as $regiond){?>
-			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 myLi"><a href="#"><?= $regiond->name?></a></div>
-			
-                   <?php    }  ?>
-			</div>
-			<div class="col-md-12 col-sm-12 col-xs-12">
-				<ul id="popup-hide">
-				<li>All Norge</li>
-                                <?php 
-                                $main_regions=[];
-                                foreach($regions as $region){
-                                    array_push($main_regions, $region->id);
-                                    echo "<li id='azad' onclick='city($region->id, this)'><a href='#'>$region->name <i class='fa fa-angle-right pull-right bold'></i></a></li>";
-                                }?>
-				</ul>
-			</div>
-             
-			<div class="col-md-12 col-sm-12 col-xs-12 cities-name">
-                            <?php foreach($main_regions as $main_region){
-              $reg_cities=\frontend\models\City::find()->where(['region_id'=>$main_region])->all();
-                                ?>
-                                <ul class="subcities" id="<?= $main_region ?>" style="display:none;">
-                                    <li class="back"><a href="#">Back</a></li>
-                                    <?php 
-        foreach ($reg_cities as $reg_city ){
-            echo "<li class='myLi'><a href='#'>$reg_city->name</a></li>";
-        }
+                            <div class="cities">
+                                <p>Populære byer:</p>
+<?php foreach ($regions as $regiond) { ?>
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 myLi">
+                                        <a href="#"><?= $regiond->name ?></a>
+                                    </div>
+
+<?php } ?>
+                            </div>
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <ul id="popup-hide">
+                                    <li><a class='myLi' href='#'>All Norge</a></li>
+                                    <?php
+                                    $main_regions = [];
+                                    foreach ($regions as $region) {
+                                        array_push($main_regions, $region->id);
+                                        echo "<li id='azad' onclick='city($region->id, this)'><a class='myLi' href='#'>$region->name</a> "
+                                                . "<a href='#'><i class='fa fa-angle-right pull-right bold'></i></a></li>";
+                                    }
                                     ?>
-				</ul>
-                         <?php   }?>
-			</div>
-          </div>
+                                </ul>
+                            </div>
+
+                            <div class="col-md-12 col-sm-12 col-xs-12 cities-name">
+                                <?php
+                                foreach ($main_regions as $main_region) {
+                                    $reg_cities = \frontend\models\City::find()->where(['region_id' => $main_region])->all();
+                                    ?>
+                                    <ul class="subcities" id="<?= $main_region ?>" style="display:none;">
+                                        <li class="back"><a href="#">Back</a></li>
+                                        <?php
+                                        foreach ($reg_cities as $reg_city) {
+                                            echo "<li class='myLi'><a href='#'>$reg_city->name</a></li>";
+                                        }
+                                        ?>
+                                    </ul>
+<?php } ?>
+                            </div>
+                        </div>
 <!--           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           </div> -->

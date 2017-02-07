@@ -93,7 +93,7 @@ class SiteController extends Controller
         $content_inner=  \backend\models\ContentInner::find()->where(['status'=>1])->all();
        
     //       $regions = \frontend\models\Region::findAll(['status'=>1]);
- $regions =  \frontend\models\City::find()->where(['status'=>1])->limit(20)->all();     
+    $regions = \frontend\models\Region::findAll(['status'=>1]);     
       return $this->render('index', ['regions'=>$regions, 'content_inner'=>$content_inner]);
     }
     /**
